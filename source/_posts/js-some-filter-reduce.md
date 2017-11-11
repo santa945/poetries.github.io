@@ -7,11 +7,12 @@ tags:
 categories: Front-End
 ---
 
-map
+一、map
 ---
 
-> 有返回值，返回一个新的数组，每个元素为调用`func`的结果
+> `map()` 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果
 
+- `callback` 函数会被自动传入三个参数：数组元素，元素索引，原数组本身
 
 ```javascript
 let list = [1, 2, 3, 4, 5];
@@ -23,24 +24,75 @@ console.log(other);
 ```
 
 
-filter
+二、filter
 ---
 
-> 有返回值，返回一个符合`func`条件的元素数组
+**语法**
 
 ```javascript
-let list = [1, 2, 3, 4, 5];
-let other = list.filter((d, i) => {
-    return d % 2;
-});
-console.log(other);
-// print: [1, 3, 5] 
+var new_array = arr.filter(callback[, thisArg])
 ```
 
-reduce和reduceRight
+> `filter()` 方法创建一个新数组, 其包含通过所提供函数实现的测试的所有元素
+
+
+**参数**
+
+- `callback` 返回`true`表示保留该元素（通过测试），`false`则不保留
+  - 用来测试数组的每个元素的函数。调用时使用参数 `(element, index, array)`。
+  - 返回true表示保留该元素（通过测试），`false`则不保留
+
+```javascript
+function isBigEnough(value) {
+  return value >= 10;
+}
+
+var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);
+
+// filtered is [12, 130, 44]
+```
+
+三、some
+---
+
+> 返回一个`boolean`，判断是否有元素符合`func`条件，如果有一个元素符合`func`条件，则循环会终止
+- `some() `方法测试数组中的某些元素是否通过由提供的函数实现的测试
+
+```javascript
+const isBiggerThan10 = (element, index, array) => {
+  return element > 10;
+}
+
+[2, 5, 8, 1, 4].some(isBiggerThan10);  
+// false
+
+[12, 5, 8, 1, 4].some(isBiggerThan10); 
+// true
+```
+
+四、every
+---
+
+> 返回一个`boolean`，判断每个元素是否符合`func`条件，有一个元素不满足`func`条件，则循环终止，返回`false`
+
+- `every` 方法为数组中的每个元素执行一次 `callback` 函数，直到它找到一个使 `callback` 返回 `false`（表示可转换为布尔值 `false` 的值）的元素。如果发现了一个这样的元素，`every` 方法将会立即返回 `false`。否则，`callback` 为每一个元素返回 `true`，`every` 就会返回 `true`
+
+```javascript
+function isBigEnough(element, index, array) {
+  return (element >= 10);
+}
+var passed = [12, 5, 8, 130, 44].every(isBigEnough);
+// passed is false
+passed = [12, 54, 18, 130, 44].every(isBigEnough);
+// passed is true
+```
+
+五、reduce和reduceRight
 ---
 
 > `.reduce`从左到右而`.reduceRight`从右到左循环遍历数组，每次调用接收目前为止的部分结果和当前遍历的值
+
+- `reduce()` 方法对累加器和数组中的每个元素（从左到右）应用一个函数，将其减少为单个值
 
 - 两种方法都有如下典型用法：`.reduce(callback(previousValue, currentValue, index, array), initialValue)`。
 - `previousValue`是最后被调用的回调函数的返回值，`initialValue`是开始时`previousValue`被初始化的值。`currentValue`
@@ -77,22 +129,9 @@ concat([
 // <- 'George, Sam, Pear'
 ```
 
-some
----
 
-> 返回一个`boolean`，判断是否有元素符合`func`条件，如果有一个元素符合`func`条件，则循环会终止
 
-```javascript
-let list = [1, 2, 3, 4, 5];
-list.some((d, i) => {
-    console.log(d, i);
-    return d > 3;
-});
-// print: 1,0 2,1 3,2 4,3
-// return false
-```
-
-sort
+六、sort
 ---
 
 > `Array.prototype.sort(fn(a,b))`需要一个包含两个测试参数的回调函数，并且要产生一下三种返回值之一
@@ -111,22 +150,10 @@ sort
 // <- [3, 5, 6, 9, 10, 80]
 ```
 
-every
----
 
-> 返回一个`boolean`，判断每个元素是否符合`func`条件，有一个元素不满足`func`条件，则循环终止，返回`false`
 
-```javascript
-let list = [1, 2, 3, 4, 5];
-list.every((d, i) => {
-    console.log(d, i);
-    return d < 3;
-});
-// print: 1,0 2,1 3,2
-// return false
-```
 
-forEach
+七、forEach
 ---
 
 - 没有返回值，只针对每个元素调用`func`。
@@ -148,7 +175,7 @@ console.log(other);
 // print: [2, 4, 6, 8, 10]
 ```
 
-for in
+八、for in
 ---
 
 > `for-in`循环实际是为循环”enumerable“对象而设计的，`for in`也可以循环数组，但是不推荐这样使用，`for–in`是用来循环带有字符串`key`的对象的方法
@@ -161,7 +188,7 @@ for (var prop in obj) {
 // print:  "obj.a = 1" "obj.b = 2" "obj.c = 3"
 ```
 
-for of
+九、for of
 ---
 
 > `for of`为`ES6`提供，具有`iterator`接口，就可以用`for of`循环遍历它的成员
