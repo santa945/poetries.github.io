@@ -1,5 +1,5 @@
 ---
-title: React学习系列之JSX语法及非DOM操作属性（二）
+title: React之JSX语法及非DOM操作属性（二）
 date: 2017-11-19 01:10:24
 tags: 
  - JavaScript
@@ -93,7 +93,8 @@ var HelloWorld = React.createClass({
     }
 })
 ReactDOM.render(<HelloWorld/>,document.getElementById("app"))
-```        
+```     
+
 五、JSX中使用样式
 ---
 
@@ -139,7 +140,6 @@ render:function(){
 })
 ReactDOM.render(<HelloWorld/>,document.getElementById("app"))
 ```
-
 
 
 六、条件判断的四种写法
