@@ -1,5 +1,5 @@
 ---
-title: React学习系列之环境的搭建（一）
+title: React之环境的搭建（一）
 date: 2017-11-19 01:10:24
 tags: 
  - JavaScript
