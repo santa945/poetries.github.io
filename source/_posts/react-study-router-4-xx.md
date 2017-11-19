@@ -40,7 +40,7 @@ ReactDOM.render((
 ), document.getElementById('root'))
 ```
 
-五、<App>
+五、`<App>`
 ---
 
 > 应用通过`<App>`组件定义。简化一下，我们将应用拆分成两个部分。`<Header>`组件包含网站的导航链接。`<Main>`组件则呈现其余内容
