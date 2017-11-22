@@ -9,6 +9,7 @@ categories: Front-End
 
 
 
+
 一、简介
 ---
 
@@ -26,6 +27,28 @@ const Title = styled.h1`
     text-align: center;
     color: palevioletred;
 `;
+
+WrapSearchBox=styled.div`
+    width : 200px;
+    // 媒体查询
+    @media (max-width : 800px){
+    	width : 100%;
+    	padding-left:15px;	
+    	margin-top:-14px;
+    }
+    >div{
+    	@media (max-width : 800px){
+    		width : 100%  !important;
+    	}
+    }
+    >div>input {
+    	width:200px !important;
+    	padding-left:25px !important;
+    	@media (max-width : 800px){
+    		width : 100%  !important;
+    	}
+}
+`
  
 class App extends React.Component {
     render() {
@@ -69,6 +92,59 @@ render(
   </div>
 );
 ```
+
+```javascript
+export const StyledSlider = styled(Slider)`
+	${props => {
+		const theme = props.theme.slider;
+
+		return css`
+			div.rc-slider-track {
+				background-color: ${theme.themeColor};
+			}
+			div.rc-slider-handle {
+				border: 2px solid ${theme.themeColor};
+			}
+			span.rc-slider-dot-active {
+				border-color: ${theme.themeColor};
+			}
+		`;
+	}}
+`;
+
+```
+
+```javascript
+export const SmallSelectWrapper = styled.div `
+  
+  // div下面的类样式
+  .Select-control {
+    height: 30px;
+  }
+  .Select-input {
+    height: 28px;
+  }
+  .Select-value,
+  .Select-placeholder {
+    line-height: 28px !important;
+  }
+  .Select-menu-outer {
+    max-height: 270px;
+    .Select-option.is-disabled {
+      cursor: default;
+      padding-left: .5em;
+      font-weight: bold;
+      color: #333;
+      background: #f8f8f8;
+    }
+  }
+  .Select-menu {
+    max-height:268px;
+  }
+  text-align: left;
+`
+```
+
 
 > 我们在组件中传入的所有 `props` 都可以在定义组件时获取到，这样就可以很容易实现组件主题的定制。如果没有 `styled-components `的情况下，需要使用组件 `style` 属性或者定义多个 `class` 的方式来实现
 
@@ -334,6 +410,8 @@ button.active {
 ```html
 <Button primary></Button>
 ```
+
+
 
 
 
