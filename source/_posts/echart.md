@@ -12,7 +12,8 @@ categories: Front-End
 
 - 时间轴，每个图表最多仅有一个时间轴控件
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926091603057-1699327040.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-6a02bd853069b904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 二、Title选项
 ---
@@ -21,14 +22,16 @@ categories: Front-End
 
 > 可以对标题文字的大小样式进行设置
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926091615464-1998058414.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-aeae6a9ace95a4aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 三、toolbox
 ---
 
 - 工具箱，每个图表最多仅有一个工具箱。工具箱里面可以实现图表类型的切换，保存图片，刷新，查看数据等功能。可以对其像素进行设置
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092001589-1749876111.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-dcc780629ce8ad78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ```javascript
 {
@@ -162,21 +165,21 @@ categories: Front-End
 
 - 提示框，鼠标悬浮交互时的信息提示
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092045010-1806005784.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-b9c8f725f2f4a50a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 五、legend
 ---
 
 - 图例，每个图表最多仅有一个图例，混搭图表共享
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092330151-988615088.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-0d79caad2b169951.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 六、dataRange
 ---
 
 - 值域选择，每个图表最多仅有一个值域控件
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092342979-1018585097.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-c0df8ad67dbd51b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 七、dataZoom
 ---
@@ -188,14 +191,14 @@ roamController
 
 - [缩放漫游组件](http://echarts.baidu.com/echarts2/doc/example/map1.html)，仅对地图有效
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092658073-114686415.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-15c5718cc0299a2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 八、grid
 ---
 
 > 直角坐标系内绘图网格
 
-![](https://images2017.cnblogs.com/blog/1067969/201709/1067969-20170926092711448-504122093.png)
+![image.png](http://upload-images.jianshu.io/upload_images/1480597-264f17badedea9f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 九、xAxis
 ---
