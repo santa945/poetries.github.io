@@ -192,3 +192,7 @@ categories: Front-End
 
 ![image.png](http://upload-images.jianshu.io/upload_images/1480597-af1c1d5a7359e24b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ![image.png](http://upload-images.jianshu.io/upload_images/1480597-fcff980c6603351b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 八、移动H5前端性能优化指南
+
+![](https://camo.githubusercontent.com/db045941b5adebe26eae1202b9286fe8c39e5fa2/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f3934383631342d313735326635633839393363633161302e6a7065673f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970253743696d61676556696577322f322f772f31323430)
