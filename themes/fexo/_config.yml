@@ -28,6 +28,9 @@ home_nav:
   - name: Handbook
     url: http://blog.poetries.top/handbook
     target_blank: true
+  - name: Life
+    url: http://life.poetries.top
+    target_blank: true
     
 # config page nav
 page_nav:
