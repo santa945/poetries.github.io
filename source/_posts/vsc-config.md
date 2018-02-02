@@ -38,7 +38,7 @@ categories: Tools
 - `Faker` 可以生成随机的名称，地址，图像，电话号码
 - `Color Info` 颜色信息及转换 
 - `SVG Viewer SVG `预览
-- [TODO Highlight TODO 高亮](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)
+- `TODO Highlight` TODO 高亮
 - `Minify` 代码压缩 
 - `Regex Previewer` 正则表达式预览
 - `File Tree View`  提供几个常见编程语言的函数或状态的树集合展示,可以快速点击跳转!
@@ -49,6 +49,18 @@ categories: Tools
 - `vscode-CSS Peek`------`class`类定义跳转
 - `vscode-Git Lens`-----增强`vscode`的`git`管理工具
 - `vscode-Live Server`-----`http`服务器（相当于使用`nodejs`的`http-server` ）
+- `EditorConfig for VS Code EditorConfig` 插件
+- `Emoji` 在代码中输入`emoji`
+- `File Peek` 根据路径字符串，快速定位到文件
+- `Font-awesome codes for html FontAwesome`提示代码段
+- `Guides` 高亮缩进基准线
+- `JavaScript (ES6) code snippets ES6`语法代码段
+- `language-stylus Stylus`语法高亮和提示
+- `Lodash Lodash`代码段
+- `Prettify JSON` 格式化`JSON`
+- `Test Spec Generator` 测试用例生成（支持`chai`、`should`、`jasmine`）
+- `vetur` 目前比较好的`Vue`语法高亮
+- `cssrem` css值转rem插件
 
 ## 配置
 
