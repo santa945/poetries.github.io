@@ -227,11 +227,11 @@ const t2 = Immutable.fromJS({a: {b: [10, 20, 30]}, c: 40}, function(key, value) 
 console.log(t2);
 ```
 
-**2、toJS()**
+**2、is()**
 
 > 先来看官网的一段话: `immutable`数据应该被当作值而不是对象，值是表示该事件在特定时刻的状态。这个原则对理解不可变数据的适当使用是最重要的。为了将`Immutable.js`数据视为值，就必须使用`Immutable.is()`函数或`.equals()`方法来确定值相等，而不是确定对象引用标识的 `===` 操作符
 
-- 所以`toJS()`就是用来对两个`immutable`对象进行值比较的。使用方式类似于 `Object.is(obj1, obj2)`，接收两个参数
+- 所以`is()`就是用来对两个`immutable`对象进行值比较的。使用方式类似于 `Object.is(obj1, obj2)`，接收两个参数
 
 ```javascript
 const map1 = Immutable.Map({a:1, b:1, c:1});
