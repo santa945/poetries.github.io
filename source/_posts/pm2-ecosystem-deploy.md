@@ -95,3 +95,8 @@ server {
 -A OUTPUT -s 127.0.0.1 -p tcp --destination-port 3001 -m state ESTABLISHED -j ACCEPT
 ```
 
+## 五、部署命令
+
+- `pm2 deploy ecosystem.json production setup` 初始化
+- `pm2 deploy ecosystem.json production ` 部署
+
