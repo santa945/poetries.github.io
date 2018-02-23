@@ -48,22 +48,23 @@ script: py.test
 
 > `install`字段用来指定安装脚本
 
-```bash
+```
 install: ./install-dependencies.sh
 ```
 
 - 如果有多个脚本，可以写成下面的形式
 
-```bash
+```
 install:
   - command1
   - command2
 ```  
 
+
 - 上面代码中，如果`command1`失败了，整个构建就会停下来，不再往下进行。
 - 如果不需要安装，即跳过安装阶段，就直接设为`true`。
 
-```bash
+```
 install: true
 ```
 
@@ -71,13 +72,13 @@ install: true
 
 - script字段用来指定构建或测试脚本
 
-```bash
+```
 script: bundle exec thor build
 ```
 
 - 如果有多个脚本，可以写成下面的形式
 
-```bash
+```
 script:
   - command1
   - command2
@@ -85,7 +86,7 @@ script:
 
 > **注意**，`script`与`install`不一样，如果`command1`失败，`command2`会继续执行。但是，整个构建阶段的状态是失败。如果`command2`只有在`command1`成功后才能执行，就要写成下面这样。
 
-```bash
+```
 script: command1 && command2
 ```
 ##### 3.3 实例：Node 项目
