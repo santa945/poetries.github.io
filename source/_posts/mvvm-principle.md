@@ -7,9 +7,9 @@ tags:
 categories: Front-End
 ---
 
-完成的效果
+> 完成的效果
 
-```html
+```
 <div id="mvvm-app">
     <input type="text" v-model="word">
     <p>{{word}}</p>
@@ -82,7 +82,7 @@ var vm = new MVVM({
 ### 2.1 实现Observer
 
 - 我们知道可以利用`Obeject.defineProperty()`来监听属性变动
-- 那么将需要`observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上	`setter`和`getter`
+- 那么将需要`observe`的数据对象进行递归遍历，包括子属性对象的属性，都加上`setter`和`getter`
 - 这样的话，给这个对象的某个值赋值，就会触发`setter`，那么就能监听到了数据变化。相关代码可以是这样：
 
 ```javascript
@@ -394,12 +394,9 @@ MVVM.prototype = {
             }
         });
 	}
-};
-
+}
 ```
 
 完整代码 https://github.com/poetries/mvvm/blob/master/mvvm.js
 
 - 这里主要还是利用了`Object.defineProperty()`这个方法来劫持了`vm`实例对象的属性的读写权，使读写`vm`实例的属性转成读写了`vm._data`的属性值，达到鱼目混珠的效果
-
-
