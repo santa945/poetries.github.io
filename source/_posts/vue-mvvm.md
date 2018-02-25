@@ -62,4 +62,56 @@ var vm = new MVVM({
 
 - `vue.js`则是采用数据劫持结合发布者-订阅者模式的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
+## 三、实现MVVM
+
+> `MVVM`作为数据绑定的入口，整合`Observer`、`Compile`和`Watcher`三者，通过`Observer`来监听自己的`model`数据变化，通过`Compile`来解析编译模板指令，最终利用`Watcher`搭起`Observer`和`Compile`之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(`input`) -> 数据`model`变更的双向绑定效果。
+
+- 一个简单的`MVVM`构造器是这样子：
+
+```javascript
+function MVVM(options) {
+    this.$options = options;
+    var data = this._data = this.$options.data;
+    observe(data, this);
+    this.$compile = new Compile(options.el || document.body, this)
+}
+```
+
+- 但是这里有个问题，从代码中可看出监听的数据对象是`options.data`，每次需要更新视图，则必须通过`var vm = new MVVM({data:{name: 'kindeng'}}); vm._data.name = 'dmq'; `这样的方式来改变数据。
+- 显然不符合我们一开始的期望，我们所期望的调用方式应该是这样的：
+`var vm = new MVVM({data: {name: 'kindeng'}}); vm.name = 'dmq';`
+- 所以这里需要给`MVVM`实例添加一个属性代理的方法，使访问`vm`的属性代理为访问`vm._data`的属性，改造后的代码如下：
+
+```javascript
+function MVVM(options) {
+    this.$options = options;
+    var data = this._data = this.$options.data, me = this;
+    // 属性代理，实现 vm.xxx -> vm._data.xxx
+    Object.keys(data).forEach(function(key) {
+        me._proxy(key);
+    });
+    observe(data, this);
+    this.$compile = new Compile(options.el || document.body, this)
+}
+
+MVVM.prototype = {
+	_proxy: function(key) {
+		var me = this;
+        Object.defineProperty(me, key, {
+            configurable: false,
+            enumerable: true,
+            get: function proxyGetter() {
+                return me._data[key];
+            },
+            set: function proxySetter(newVal) {
+                me._data[key] = newVal;
+            }
+        });
+	}
+}
+```
+
+完整代码 https://github.com/poetries/mvvm/blob/master/mvvm.js
+
+- 这里主要还是利用了`Object.defineProperty()`这个方法来劫持了`vm`实例对象的属性的读写权，使读写`vm`实例的属性转成读写了`vm._data`的属性值，达到鱼目混珠的效果
 
