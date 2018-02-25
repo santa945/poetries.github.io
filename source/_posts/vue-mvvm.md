@@ -5,35 +5,6 @@ tags: MVVM
 categories: Front-End
 ---
 
-> 完成的效果
-
-```html
-<div id="mvvm-app">
-    <input type="text" v-model="word">
-    <p>{{word}}</p>
-    <button v-on:click="sayHi">change model</button>
-</div>
-
-<script src="observer.js"></script>
-<script src="watcher.js"></script>
-<script src="compile.js"></script>
-<script src="mvvm.js"></script>
-<script>
-var vm = new MVVM({
-    el: '#mvvm-app',
-    data: {
-        word: 'Hello World!'
-    },
-    methods: {
-        sayHi: function() {
-            this.word = 'Hi, everybody!';
-        }
-    }
-    });
-</script>
-```
-
-![](https://github.com/honeydlp/mvvm/raw/master/defineProperty/img/1.gif)
 
 ## 一、几种实现双向绑定的做法
 
