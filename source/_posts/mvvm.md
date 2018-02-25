@@ -16,10 +16,10 @@ categories: Front-End
     <button v-on:click="sayHi">change model</button>
 </div>
 
-<script src="./js/observer.js"></script>
-<script src="./js/watcher.js"></script>
-<script src="./js/compile.js"></script>
-<script src="./js/mvvm.js"></script>
+<script src="observer.js"></script>
+<script src="watcher.js"></script>
+<script src="compile.js"></script>
+<script src="mvvm.js"></script>
 <script>
 var vm = new MVVM({
     el: '#mvvm-app',
@@ -36,7 +36,6 @@ var vm = new MVVM({
 ```
 
 ![](https://github.com/honeydlp/mvvm/raw/master/defineProperty/img/1.gif)
-
 
 ## 一、几种实现双向绑定的做法
 
@@ -63,11 +62,9 @@ var vm = new MVVM({
 
 ### 1.3 数据劫持 
 
-- `vue.js` 则是采用数据劫持结合发布者-订阅者模式的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
+- `vue.js`则是采用数据劫持结合发布者-订阅者模式的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
-
-## 二、思路整理
-
+## 二、实现思路
 
 > 已经了解到`vue`是通过数据劫持的方式来做数据绑定的，其中最核心的方法便是通过`Object.defineProperty()`来实现对属性的劫持，达到监听数据变动的目的，无疑这个方法是本文中最重要、最基础的内容之一，如果不熟悉defineProperty，猛戳[这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
@@ -117,7 +114,6 @@ function defineReactive(data, key, val) {
         }
     });
 }
-
 ```
 
 完整代码 https://github.com/poetries/mvvm/blob/master/observer.js
