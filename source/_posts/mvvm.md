@@ -1,9 +1,9 @@
 ---
 title: 实现数据的双向绑定mvvm-剖析Vue的原理
-date: 2018-02-25 16:55:40
+date: 2018-02-25 17:12:40
 tags: 
- - Vue
- - MVVM
+  - Vue
+  - MVVM
 categories: Front-End
 ---
 
