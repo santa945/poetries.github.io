@@ -1,15 +1,13 @@
 ---
-title: 实现数据的双向绑定mvvm-剖析Vue的原理
-date: 2018-02-25 17:12:40
-tags: 
-  - Vue
-  - MVVM
+title: 实现数据的双向绑定mvvm（剖析Vue的原理）
+date: 2018-02-25 17:12:32
+tags: MVVM
 categories: Front-End
 ---
 
 > 完成的效果
 
-```
+```html
 <div id="mvvm-app">
     <input type="text" v-model="word">
     <p>{{word}}</p>
@@ -66,9 +64,9 @@ var vm = new MVVM({
 
 ## 二、实现思路
 
-> 已经了解到`vue`是通过数据劫持的方式来做数据绑定的，其中最核心的方法便是通过`Object.defineProperty()`来实现对属性的劫持，达到监听数据变动的目的，无疑这个方法是本文中最重要、最基础的内容之一，如果不熟悉defineProperty，猛戳[这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
+> 已经了解到`vue`是通过数据劫持的方式来做数据绑定的，其中最核心的方法便是通过`Object.defineProperty()`来实现对属性的劫持，达到监听数据变动的目的，无疑这个方法是本文中最重要、最基础的内容之一，如果不熟悉`defineProperty`，猛戳[这里](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)
 
-**要实现mvvm的双向绑定，就必须要实现以下几点：**
+**要实现mvvm的双向绑定，就必须要实现以下几点**
 
 - 实现一个数据监听器`Observer`，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者
 - 实现一个指令解析器`Compile`，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数
@@ -116,7 +114,7 @@ function defineReactive(data, key, val) {
 }
 ```
 
-完整代码 https://github.com/poetries/mvvm/blob/master/observer.js
+- 完整代码 https://github.com/poetries/mvvm/blob/master/observer.js
 
 > 这样我们已经可以监听每个数据的变化了，那么监听到变化之后就是怎么通知订阅者了，所以接下来我们需要实现一个消息订阅器，很简单，维护一个数组，用来收集订阅者，数据变动触发`notify`，再调用订阅者的`update`方法，代码改善之后是这样
 
@@ -280,7 +278,7 @@ var updater = {
 };
 ```
 
-完整代码 https://github.com/poetries/mvvm/blob/master/compile.js
+> 完整代码 https://github.com/poetries/mvvm/blob/master/compile.js
 
 - 这里通过递归遍历保证了每个节点及子节点都会解析编译到，包括了{{}}表达式声明的文本节点。指令的声明规定是通过特定前缀的节点属性来标记，如`<span v-text="content" other-attr`中`v-text`便是指令，而`other-attr`不是指令，只是普通的属性。
 - 监听数据、绑定更新函数的处理是在`compileUtil.bind()`这个方法中，通过`new Watcher()`添加回调来接收数据变化的通知
@@ -340,7 +338,7 @@ Dep.prototype = {
 };
 ```
 
-完整代码 https://github.com/poetries/mvvm/blob/master/watcher.js
+> 完整代码 https://github.com/poetries/mvvm/blob/master/watcher.js
 
 - 实例化`Watcher`的时候，调用`get()`方法，通过`Dep.target = watcherInstance`标记订阅者是当前watcher实例，强行触发属性定义的`getter`方法，`getter`方法执行的时候，就会在属性的订阅器`dep`添加当前watcher实例，从而在属性值有变化的时候，watcherInstance就能收到更新通知。
 - ok, `Watcher`也已经实现了
