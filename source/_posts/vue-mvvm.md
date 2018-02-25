@@ -282,12 +282,7 @@ var updater = {
 ```
 
 
-> 完整代码 https://github.com/poetries/mvvm/blob/master/compile.js
 
-- 这里通过递归遍历保证了每个节点及子节点都会解析编译到，包括了`{{ }}`表达式声明的文本节点。
-- 指令的声明规定是通过特定前缀的节点属性来标记，如`<span v-text="content" ></span>`中`v-text`便是指令，而`other-attr`不是指令，只是普通的属性
-- 监听数据、绑定更新函数的处理是在`compileUtil.bind()`这个方法中，通过`new Watcher()` 添加回调来接收数据变化的通知
-- 至此，一个简单的`Compile`就完成了。接下来要看看`Watcher`这个订阅者的具体实现了
 
 ### 2.3 实现Watcher
 
