@@ -1,5 +1,5 @@
 ---
-title: Nginx学习篇
+title: nginx之location的匹配规则
 date: 2018-02-28 13:01:42
 tags: Nginx
 categories: Back-end
