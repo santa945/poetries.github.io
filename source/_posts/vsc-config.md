@@ -61,6 +61,7 @@ categories: Tools
 - `Test Spec Generator` 测试用例生成（支持`chai`、`should`、`jasmine`）
 - `vetur` 目前比较好的`Vue`语法高亮
 - `cssrem` css值转rem插件
+- `polacode` 代码截图工具
 
 ## 配置
 
