@@ -93,7 +93,7 @@ var HelloWorld = React.createClass({
     }
 })
 ReactDOM.render(<HelloWorld/>,document.getElementById("app"))
-```     
+```
 
 五、JSX中使用样式
 ---
@@ -140,7 +140,6 @@ render:function(){
 })
 ReactDOM.render(<HelloWorld/>,document.getElementById("app"))
 ```
-
 
 六、条件判断的四种写法
 ---
