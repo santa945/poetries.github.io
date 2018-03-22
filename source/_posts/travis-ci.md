@@ -54,12 +54,11 @@ install: ./install-dependencies.sh
 
 - 如果有多个脚本，可以写成下面的形式
 
-```
+```bash
 install:
-  - command1
-  - command2
-```  
-
+ - command1
+ - command2
+```
 
 - 上面代码中，如果`command1`失败了，整个构建就会停下来，不再往下进行。
 - 如果不需要安装，即跳过安装阶段，就直接设为`true`。
@@ -70,18 +69,16 @@ install: true
 
 ##### 3.2、script 字段
 
-- script字段用来指定构建或测试脚本
+- `script`字段用来指定构建或测试脚本
 
-```
-script: bundle exec thor build
-```
+`script: bundle exec thor build`
 
 - 如果有多个脚本，可以写成下面的形式
 
-```
+```bash
 script:
-  - command1
-  - command2
+ - command1
+ - command2
 ```
 
 > **注意**，`script`与`install`不一样，如果`command1`失败，`command2`会继续执行。但是，整个构建阶段的状态是失败。如果`command2`只有在`command1`成功后才能执行，就要写成下面这样。
@@ -102,8 +99,8 @@ node_js:
 
 - 上面代码中，`node_js`字段用来指定 `Node` 版本。
 - `Node` 项目的`install`和`script`阶段都有默认脚本，可以省略
-    - `install`默认值：`npm install`
-    - `script`默认值：`npm test`
+   - `install`默认值：`npm install`
+   - `script`默认值：`npm test`
 
 ##### 3.4 部署
 
