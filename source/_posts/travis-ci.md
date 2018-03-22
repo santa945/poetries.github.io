@@ -89,6 +89,7 @@ script:
 ```
 script: command1 && command2
 ```
+
 ##### 3.3 实例：Node 项目
 
 - `Node` 项目的环境需要写成下面这样
