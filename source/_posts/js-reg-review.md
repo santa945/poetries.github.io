@@ -120,7 +120,7 @@ categories: Front-End
 
 **在不加全局“g”的情况下**
 
-```
+```javascript
 var str="wo shi zhong guo ren";
 
 console.log(str.match(/o/));
@@ -130,7 +130,7 @@ console.log(str.match(/o/));
 
 **在加全局“g”的情况下**
 
-```
+```javascript
 var str="wo shi zhong guo ren";
 
 console.log(str.match(/o/g));
@@ -141,7 +141,7 @@ console.log(str.match(/o/g));
 ### 3.2 exec的用法
 
 
-```
+```javascript
 var str="wo shi zhong guo ren";
 
 var re=/o/;
@@ -155,7 +155,7 @@ console.log(re.exec(str));
 ### 3.3 test的用法
 
 
-```
+```javascript
 var str="wo shi zhong guo ren";
 
 var re=/o/;
@@ -171,7 +171,7 @@ console.log(re.test(str));
 
 - 关于search用法其实很简单，它和indexOf是一样的，就是找到index，而且是从前往后数的。
 
-```
+```javascript
 var str="wo shi zhong guo ren";
 var re=/o/;
 
