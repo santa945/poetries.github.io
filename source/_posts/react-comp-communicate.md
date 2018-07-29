@@ -1,5 +1,5 @@
 ---
-title: React组件通信的方式
+title: React之组件通信方式
 date: 2018-07-29 23:20:24
 tags: 
  - 组件通信
