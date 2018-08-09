@@ -135,7 +135,7 @@ Page({
 })
 ```
 
-```html
+```
 <view> {{message}} </view>
 <view id="item-{{id}}"> </view>
 <view wx:if="{{status}}"> </view>
@@ -144,7 +144,7 @@ Page({
 
 > 还可以进行简单的运算在`{{ }}`里
 
-```html
+```
 <view hidden="{{status ? true : false}}"> Hidden </view>
 <view> {{a + b}} + c </view> 
 <view wx:if="{{num > 6}}"> </view>
@@ -155,13 +155,13 @@ Page({
 
 > 用 `wx:if=”{{status}}”`来判断是否渲染代码块
 
-```html
+```
 <view wx:if="{{status}}"> isShow </view>
 ```
 
 > 还可以添加else块
 
-```html
+```
 <view wx:if="{{num > 5}}"> A </view>
 <view wx:elif="{{num > 2}}"> B </view>
 <view wx:else> C </view>
@@ -172,7 +172,7 @@ Page({
 - 在组件上使用 `wx:for`属性绑定一个数组，就可以渲染组件了 
 - 默认情况下数组的当前下标变量名为`index`,当前项的变量名为`item`
 
-```html
+```
 <view wx:for="{{array}}">
   {{index}}: {{item.message}}
 </view>
@@ -188,7 +188,7 @@ Page({
 
 > 使用 `wx:for-item` 可以指定数组当前元素的变量名，使用 `wx:for-index` 可以指定数组当前下标的变量名
 
-```html
+```
 <view wx:for="{{array}}" wx:for-index="num" wx:for-item="itemName">
   {{num}}: {{itemName}}
 </view>
@@ -199,7 +199,7 @@ Page({
 - `name` 定义组件模版的名称，引用模版的时候使用 is 属性指定模版的名字，is 可以进行简单的三目运算，需要传入模版需要的 `data` 数据。
 - 因为模版拥有自己的作用域，所以只能使用 `data` 传入数据，而不接受双花括号的写法
 
-```html
+```
 <template name="msgItem">
 <view>
 <text> {{index}}: {{msg}} </text>
@@ -216,7 +216,7 @@ Page({
 - `WXML` 提供 `import` 和 `include` 两种文件引用方式。
 - `import` 有作用域的概念，不能多重引用
 
-```html
+```
 <!-- B.wxml -->
 <import src="a.wxml"/>
 
@@ -228,7 +228,7 @@ Page({
 
 > include 就可以多重引用
 
-```html
+```
 <!--引用 header、其中 header.wxml 中也引用了 footer.wxml-->
 <include src="header.wxml"/>
 <view> body </view>
@@ -386,7 +386,7 @@ wx.redirectTo({
 
 ### 5.3 使用组件
 
-```html
+```
 <navigator url="pages/logs/index" hover-class="navigator-hover">跳转</navigator>
 ```
 
@@ -506,7 +506,7 @@ wx.navigateTo({
 
 > 代码如下，将要传递到另一个页面的字符串testId的值赋值到url中
 
-```html
+```
 <navigator class="test-item" url="../../pages/test/test?testId={{testData.testId}}"></navigator>
 ```
 
@@ -525,7 +525,7 @@ Page({
 
 > 如果一个页面要将一个数组，如相册列表传递到另一个页面
 
-```javascript
+```
 <navigator class="test-item" url="../../pages/test/test?albumList={{testData.albumList}}"></navigator>
 ```
 
@@ -552,7 +552,7 @@ Page({
 
 > 这种方式一般是在wxml中绑定事件，同时设置需要传递的数据，如果需要传递多个，可以写多个`data-[参数]`的方式进行传递
 
-```javascript
+```
 <view bindtap="clickMe" data-testId={{testId}}">
     ...
 </view>
@@ -573,7 +573,7 @@ Page({
 
 **wxml中配置data-albumlist传递数组**
 
-```html
+```
 <view bindtap="clickMe" data-albumlist={{testData.albumList}}">
     
 </view>
