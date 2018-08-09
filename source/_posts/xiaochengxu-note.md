@@ -10,6 +10,7 @@ categories: Front-End
 
 ![](https://upload-images.jianshu.io/upload_images/1519620-e7b4608440bc35a5.png?imageMogr2/auto-orient/)
 
+
 **须知**
 
 - `App()` 必须在 `app.js` 中注册，且不能注册多个。
@@ -45,7 +46,7 @@ tabBar  配置小程序tab栏的样式和对应的页面
 - `app.wxss` 是小程序的公共样式表，可以在其他`.wxss`文件中直接使用
 
 
-> app.json
+> `app.json`
 
 
 ```javascript
@@ -87,113 +88,6 @@ tabBar  配置小程序tab栏的样式和对应的页面
 "debug": true //项目上线后，建议关闭此项，或者不写此项
 ```
 
-### 1.2 pages
 
-> `pages`文件夹里是小程序的各个页面，每个界面一般都由`.wxml`、`.wxss`、`.js`、`.json`四个文件组成，四个文件必须是相同的名字和路径
-
-- `.js` 是页面的脚本代码，通过`Page()`函数注册页面。可以指定页面的初始数据、生命周期、事件处理等 
-- `.wxml` 是页面的布局文件，只能使用微信定义的组件 
-- `.wxss` 是样式表，需要注意
-  - 尺寸单位：`rpx` 可以根据屏幕的宽带进行自适应
-  - 样式导入：`@import`导入外联样式表，如：`@import "test.wxss"`;
-  - 定义在`app.wxss`中的全局样式，作用于每个页面。定义在`page`的`.wxss`文件只作用于对应的页面，会覆盖`app.wxss`中相同的选择器
-- `.json` 是页面的配置文件，只能设置`app.json`中的`window`配置内容，会覆盖`app.json`中`window`的相同配置项，即使不配置任何东西也需要写`{}`,否则会报错
-
-### 1.3 utils
-
-> `utils` 里面包含一些公共的代码抽取的`js`文件，作为模块方便使用。模块通过`module.exports`对外暴露接口
-
-- 其他地方使用是`var utils = require('../../utils/util.js')`;进行引用
-
-## 二、视图层 WXML
-
-### 2.1 数据绑定
-
-> 传统的视图和数据绑定
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5c24282ab5c92ea3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-**那么微信小程序是通过什么方法来管理视图和对象绑定的呢？状态模式-单向数据流**
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1212f4ef9f8b9b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
- 
-> 数据流向是单向的，即视图变化不会影响对象状态
-
-- 用户触发事件不仅要考虑当前UI元素更新，还会通过当前元素更新其他视图。
-- 所以视图上的数据都必须用过事件传递给对象，只有用户操作视图，才能获取到数据，并更新对象状态
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-cf9e543ac2446352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-> `.wxml` 中的动态数据都来自`Page`中的`data`。数据绑定使用数据绑定使用双大括号将变量包起来，可以作用于内容、组件属性(需要在双引号之内)、控制属性(需要在双引号之内)、关键字(需要在双引号之内)
-
-```javascript
-Page({
-    data: {
-        message: "Hello",
-        id:0,
-        status: true
-    }
-})
-```
-
-```
-<view> {{message}} </view>
-<view id="item-{{id}}"> </view>
-<view wx:if="{{status}}"> </view>
-<view hidden="{{status}}"> </checkbox>
-```
-
-> 还可以进行简单的运算在`{{}}`里
-
-```
-<view hidden="{{status ? true : false}}"> Hidden </view>
-<view> {{a + b}} + c </view> 
-<view wx:if="{{num > 6}}"> </view>
-<view>{{"hello" + word}}</view>
-```
-
-### 2.2 条件渲染
-
-> 用 `wx:if=”{{status}}”`来判断是否渲染代码块
-
-```
-<view wx:if="{{status}}"> isShow </view>
-```
-
-> 还可以添加else块
-
-```
-<view wx:if="{{num > 5}}"> A </view>
-<view wx:elif="{{num > 2}}"> B </view>
-<view wx:else> C </view>
-```
-
-### 2.3 列表渲染
-
-- 在组件上使用 `wx:for`属性绑定一个数组，就可以渲染组件了 
-- 默认情况下数组的当前下标变量名为`index`,当前项的变量名为`item`
-
-```
-<view wx:for="{{array}}">
-  {{index}}: {{item.message}}
-</view>
-```
-
-```javascript
-Page({
-  data: {
-    array: ["AA","BB","CC"]
-  }
-})
-```
-
-> 使用 `wx:for-item` 可以指定数组当前元素的变量名，使用 `wx:for-index` 可以指定数组当前下标的变量名
-
-```
-<view wx:for="{{array}}" wx:for-index="num" wx:for-item="itemName">
-  {{num}}: {{itemName}}
-</view>
-```
 
 
