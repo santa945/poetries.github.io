@@ -646,6 +646,7 @@ wx.getStorage({
 })
 ```
 
+
 ## 七、疑问汇总
 
 **为什么脚本内不能使用window等对象**
@@ -741,4 +742,8 @@ function assignObject(o, n) {
     }
 }
 ```
+
+## 八、小程序组件
+
+ ![image.png](https://upload-images.jianshu.io/upload_images/1480597-62a5f00053f5f0d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
