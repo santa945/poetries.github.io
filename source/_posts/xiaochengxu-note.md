@@ -107,27 +107,34 @@ tabBar  配置小程序tab栏的样式和对应的页面
 
 - 其他地方使用是`var utils = require('../../utils/util.js')` 进行引用
 
+
 ## 二、视图层 WXML
 
 ### 2.1 数据绑定
 
+
 > 传统的视图和数据绑定
+
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-5c24282ab5c92ea3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-**那么微信小程序是通过什么方法来管理视图和对象绑定的呢？状态模式-单向数据流**
+
+**那么微信小程序是通过什么方法来管理视图和对象绑定的呢,状态模式-单向数据流**
+
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-1212f4ef9f8b9b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
  
+
 > 数据流向是单向的，即视图变化不会影响对象状态
 
-- 用户触发事件不仅要考虑当前UI元素更新，还会通过当前元素更新其他视图。
+- 用户触发事件不仅要考虑当前`UI`元素更新，还会通过当前元素更新其他视图。
 - 所以视图上的数据都必须用过事件传递给对象，只有用户操作视图，才能获取到数据，并更新对象状态
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-cf9e543ac2446352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 > `.wxml` 中的动态数据都来自`Page`中的`data`。数据绑定使用数据绑定使用双大括号将变量包起来，可以作用于内容、组件属性(需要在双引号之内)、控制属性(需要在双引号之内)、关键字(需要在双引号之内)
+
 
 ```javascript
 Page({
@@ -139,6 +146,7 @@ Page({
 })
 ```
 
+
 ```
 <view> {{message}} </view>
 <view id="item-{{id}}"> </view>
@@ -146,7 +154,9 @@ Page({
 <view hidden="{{status}}"> </checkbox>
 ```
 
-> 还可以进行简单的运算在`{{}}`里
+
+> 还可以进行简单的运算在大括号里
+
 
 ```
 <view hidden="{{status ? true : false}}"> Hidden </view>
@@ -154,6 +164,7 @@ Page({
 <view wx:if="{{num > 6}}"> </view>
 <view>{{"hello" + word}}</view>
 ```
+
 
 ### 2.2 条件渲染
 
@@ -163,7 +174,9 @@ Page({
 <view wx:if="{{status}}"> isShow </view>
 ```
 
+
 > 还可以添加`else`块
+
 
 ```
 <view wx:if="{{num > 5}}"> A </view>
@@ -171,6 +184,83 @@ Page({
 <view wx:else> C </view>
 ```
 
+
+### 2.3 列表渲染
+
+- 在组件上使用 `wx:for`属性绑定一个数组，就可以渲染组件了 
+- 默认情况下数组的当前下标变量名为`index`,当前项的变量名为`item`
+
+```
+<view wx:for="{{array}}">
+  {{index}}: {{item.message}}
+</view>
+```
+
+```javascript
+Page({
+  data: {
+    array: ["AA","BB","CC"]
+  }
+})
+```
+
+> 使用 `wx:for-item` 可以指定数组当前元素的变量名，使用 `wx:for-index` 可以指定数组当前下标的变量名
+
+
+```
+<view wx:for="{{array}}" wx:for-index="num" wx:for-item="itemName">
+  {{num}}: {{itemName}}
+</view>
+```
+
+### 2.4 模板template
+
+- `name` 定义组件模版的名称，引用模版的时候使用 `is` 属性指定模版的名字，`is` 可以进行简单的三目运算，需要传入模版需要的 `data` 数据。
+- 因为模版拥有自己的作用域，所以只能使用 `data` 传入数据，而不接受双花括号的写法
+
+```
+<template name="msgItem">
+<view>
+<text> {{index}}: {{msg}} </text>
+<text> Time: {{time}} </text>
+</view>
+</template>
+
+<!-- 其他代码 -->
+<template is="msgItem" data="{{...item}}"/>
+```
+
+### 2.5 公共模块的引用
+
+- `WXML` 提供 `import` 和 `include` 两种文件引用方式。
+- `import` 有作用域的概念，不能多重引用
+
+```
+<!-- B.wxml -->
+<import src="a.wxml"/>
+
+<!-- A.wxml -->
+<template name="A">
+ <text> A template </text>
+</template>
+```
+
+> `include` 就可以多重引用
+
+```
+<!--引用 header、其中 header.wxml 中也引用了 footer.wxml-->
+<include src="header.wxml"/>
+<view> body </view>
+
+<!-- header.wxml -->
+<view> header </view>
+<include src="footer.wxml"/>
+```
+
+### 2.6 事件
+
+- 名称以 `bind` 开头的事件不阻止冒泡，名称以 `catch` 开头的事件冒泡是阻止的。如 `bindTap` 和 `catchTab`
+- 在 `WXM`L 中，可以使用 `dataset` 定义` data `中的数据，会通过事件传递。它的事件以 `data- `开头，多个单词以 - 链接，如 `data-a-b`
 
 
 
