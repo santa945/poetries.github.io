@@ -208,7 +208,6 @@ Page({
 </template>
 
 <!-- 其他代码 -->
-
 <template is="msgItem" data="{{...item}}"/>
 ```
 
@@ -367,10 +366,10 @@ Page({
 
 ```javascript
 wx.navigateTo({
-        //目的页面地址
-        url: 'pages/logs/index',
-        success: function(res){},
-        ...
+  //目的页面地址
+  url: 'pages/logs/index',
+  success: function(res){},
+  ...
 })
 ```
 
@@ -378,10 +377,10 @@ wx.navigateTo({
 
 ```javascript
 wx.redirectTo({
-    //目的页面地址
-    url: 'pages/logs/index',
-    success: function(res){},
-    ...
+  //目的页面地址
+  url: 'pages/logs/index',
+  success: function(res){},
+  ...
 })
 ```
 
@@ -465,26 +464,20 @@ url?key=value&key1=value1
 // A页面-传递数据
 
 // 需要注意的是，wx.switchTab 中的 url 不能传参数。
-
-   wx.navigateTo({
-
-                url:'../pageD/pageD?name=raymond&gender=male'
-
+ wx.navigateTo({
+   url:'../pageD/pageD?name=raymond&gender=male'
 })
 
 // B页面-接收数据//
 
- 通过onLoad的option...Page({
+//通过onLoad的option...
 
+Page({
 onLoad: function(option){ 
-
- console.log(option.name +'is'+ option.gender)// raymond is male
-
-this.setData({option: option }) 
-
+  console.log(option.name +'is'+ option.gender)// raymond is male
+  this.setData({option: option }) 
  }})
 ```
-
 
 ### 6.2 参数传递
 
@@ -513,21 +506,18 @@ wx.navigateTo({
 
 > 代码如下，将要传递到另一个页面的字符串testId的值赋值到url中
 
-
 ```html
-<navigator class="test-item" url="../../pages/test/test?testId={{testData.testId}}">
-    ...
-</navigator>
+<navigator class="test-item" url="../../pages/test/test?testId={{testData.testId}}"></navigator>
 ```
 
 > 在`js`页面中`onLoad`方法中接收
 
 ```javascript
 Page({
-    onLoad: function(options) {
-        var testId = options.testId
-        console.log(testId)
-    }
+  onLoad: function(options) {
+      var testId = options.testId
+      console.log(testId)
+  }
 })
 ```
 
@@ -536,9 +526,7 @@ Page({
 > 如果一个页面要将一个数组，如相册列表传递到另一个页面
 
 ```javascript
-<navigator class="test-item" url="../../pages/test/test?albumList={{testData.albumList}}">
-    ...
-</navigator>
+<navigator class="test-item" url="../../pages/test/test?albumList={{testData.albumList}}"></navigator>
 ```
 
 > 传递到js后从`options`中得到的是个字符串，每个图片的url通过','分隔，所以此时还需要对其进行处理，重新组装为数组
@@ -558,7 +546,6 @@ Page({
     }
 })
 ```
-
 
 
 **3、在wxml中绑定事件后，通过`data-hi="参数"`的方式传递**
@@ -588,7 +575,7 @@ Page({
 
 ```html
 <view bindtap="clickMe" data-albumlist={{testData.albumList}}">
-    ...
+    
 </view>
 ```
 
@@ -637,8 +624,6 @@ wx.getStorage({
   }
 })
 ```
-
-
 
 ## 七、疑问汇总
 
