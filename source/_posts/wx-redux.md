@@ -1,5 +1,5 @@
 ---
-title: 微信小程序集成redux-immutable方式
+title: 在小程序中集成redux/immutable/thunk第三方库
 date: 2018-08-11 13:30:43
 tags: 
   - 小程序
