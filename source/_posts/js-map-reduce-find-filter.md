@@ -65,7 +65,7 @@ console.log(totalUpvotes)//输出投票总数：92
 - 第四个参数：调用reduce方法的数据集合，比如例子中的posts
 
 
-二向对象数组添加新元素
+二、向对象数组添加新元素
 ---
 
 
@@ -91,7 +91,7 @@ const allButMe = userIds.filter(id => id !== myId);
 ```
 
 四、向数组中新增元素
-
+---
 
 ```javascript
 const books = ['Positioning by Trout', 'War by Green'];
@@ -100,7 +100,7 @@ const newBooks = [...books, 'HWFIF by Carnegie'];
 ```
 
 五、为对象新增一组键值对
-
+---
 
 ```javascript
 const user = {name: 'Shivek Khurana'};
@@ -120,7 +120,7 @@ const updatedUser = {...user, [dynamicKey]: true};
 ```
 
 七、修改数组中满足条件的元素对象
-
+---
 
 ```javascript
 const posts = [
