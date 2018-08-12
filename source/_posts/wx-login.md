@@ -25,7 +25,7 @@ categories: Front-End
 wx.login({
     success(res){
      console.log(res)
-       //code:"033Z0k3e01dfaWXQA1vwQ4e0Akg3e0Z0k3E"
+       //code:"fda41033Z0fdak3dfae01dffaaWXQA1vwQ4dfae0Akg3e0Z0k3E"
        //errMsg:"login:ok"
     }
 })
