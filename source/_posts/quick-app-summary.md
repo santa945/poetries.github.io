@@ -1,5 +1,5 @@
 ---
-title: 快应用小结
+title: 快应用学习小结篇
 date: 2018-08-21 15:05:43
 tags: 快应用
 categories: Front-End
