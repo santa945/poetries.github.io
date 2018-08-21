@@ -1,9 +1,10 @@
 ---
-title: 快应用学习小结篇
-date: 2018-08-21 15:05:43
+title: 快应用入门小结篇
+date: 2018-08-21 18:05:43
 tags: 快应用
 categories: Front-End
 ---
+
 
 
 > 注册账号通过 https://www.quickapp.cn/docCenter/post/74
@@ -84,7 +85,7 @@ npm run watch
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-5b4e639317894e37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-#### 1.4 连接手机进行调试
+### 1.4 连接手机进行调试
 
 > 注意：一定要注意手机连接的wifi与电脑所连接的网络需要在同一局域网和网段，需要能够相互访问。
 
@@ -539,7 +540,7 @@ import router from '@system.router'
 
 > 页面A实现代码如下
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <a href="/PageParams/returnParams/pageb">跳转到页面B</a>
@@ -583,7 +584,7 @@ import router from '@system.router'
 
 页面B实现代码如下：
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <text>页面B</text>
@@ -623,6 +624,7 @@ import router from '@system.router'
   }
 </script>
 ```
+
 ### 9.2 页面间通信
 
 > 会利用到一个构造函数 `new BroadcastChannel(string)`, 它接受一个字符串参数，作为实例的频道名称。它的实例具有以下属性和方法
@@ -685,7 +687,7 @@ hap://app/<package>/[path][?key=value]
 
 - 自定义变量表示`for`指令的数组索引和数组元素时，变量名不可以用`$`或`_`开头；
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <!-- 方式1：默认$item代表数组中的元素, $idx代表数组中的索引 -->
@@ -734,7 +736,7 @@ hap://app/<package>/[path][?key=value]
 - `if`条件指令，是指`if/elif/else`这3个相关指令，用于控制是否增加或者删除组件；
 - `show`指令，是指是否显示组件，用于控制组件的显示状态，并不会从DOM结构中删除
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <text onclick="onClickShow">显示隐藏：</text>
@@ -779,7 +781,7 @@ hap://app/<package>/[path][?key=value]
 
 > block组件是表达逻辑区块的组件，没有对应的Native组件。可以使用<block>实现更为灵活的"列表/条件渲染"。如在<block>上使用for指令和if指令
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <text onclick="toggleCityList">点击：控制是否显示城市</text>
@@ -826,7 +828,7 @@ hap://app/<package>/[path][?key=value]
 - 通常自定义组件的模板中提供`slot`组件，当该组件被引入到页面组件中后，开发者可以灵活定义该自定义组件内部的子内容
 
 
-```
+```javascript
 //自定义组件part1.ux
 
 <!-- par1.ux -->
@@ -847,7 +849,7 @@ hap://app/<package>/[path][?key=value]
 </script>
 ```
 
-```
+```javascript
 //自定义组件使用者页面index.ux
 
 <!-- index.ux -->
@@ -938,7 +940,7 @@ export default {
 > - 在响应函数执行时通过target获取，如：onClickHandler
 > - 在响应函数绑定时传递参数，如：onClickHandler2
 
-```
+```javascript
 <template>
   <div class="tutorial-page">
     <text id="elNode1" class="{{ elClassName + 1 }}" disabled="false" onclick="onClickHandler">组件节点1</text>
@@ -1026,7 +1028,7 @@ export default {
 ## 十四、template结构
 
 
-```
+```javascript
 <!-- temp.ux -->
 <import name="hint" src="./hint-modal"></import>  <!-- 引入外部模板 -->
 <import src="./table"></import>  <!-- 引入外部模板 -->
@@ -1115,3 +1117,4 @@ export default {
 ## 十六、快应用开发资源
 
 - [快应用API Demo 集合 QuickAPP](https://github.com/l455202325/APIDemo)
+- [awesome-quick-app](https://github.com/yesvods/awesome-quick-app)
