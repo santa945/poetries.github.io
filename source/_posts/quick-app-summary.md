@@ -6,22 +6,21 @@ categories: Front-End
 ---
 
 
-
 > 注册账号通过 https://www.quickapp.cn/docCenter/post/74
 
-## 一、环境搭建
+# 一、环境搭建
 
-### 1.1 安装NodeJS
+## 1.1 安装NodeJS
 
 > 需安装`6.0`以上版本的`NodeJS`
 
-### 1.2 安装hap-toolkit
+## 1.2 安装hap-toolkit
 
 ```shell
 // hap -V // 会显示安装版本信息
 npm install -g hap-toolkit
 ```
-### 1.3 创建项目工程
+## 1.3 创建项目工程
 
 ```
 hap init projectName
@@ -85,7 +84,7 @@ npm run watch
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-5b4e639317894e37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 1.4 连接手机进行调试
+## 1.4 连接手机进行调试
 
 > 注意：一定要注意手机连接的wifi与电脑所连接的网络需要在同一局域网和网段，需要能够相互访问。
 
@@ -109,13 +108,91 @@ npm run server
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-afd1d41337c7a3a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 1.5 安装Hap Extension
+## 1.5 安装Hap Extension
 
 > 启动Visual Studio Code，打开项目，点击左上侧扩展，搜索hap，点击安装Hap Extension
 
 - 更多详情 https://doc.quickapp.cn/tutorial/getting-started/code-edit-conf.html
 
-## 二、manifest配置
+# 二、快应用结构分析
+
+## 2.1 文件组织
+
+> 一个应用包含：描述项目配置信息的`manifest`文件，放置项目公共资源脚本的`app.ux`文件，多个描述页面/自定义组件的ux文件
+
+```
+├── manifest.json
+├── app.ux
+├── Page1
+│   ├── page1.ux
+├── Page2
+│   ├── page2.ux
+└── Common
+    ├── ComponentA.ux
+    ├── ComponentB.ux
+    └── xxx.png
+```
+
+> 其中`Common`目录下为公用的资源文件和组件文件，每个页面目录下存放各自页面私有的资源文件和组件文件，如：图片，`CSS`，`JS`等
+
+## 2.2 源码文件
+
+> `APP`，页面和自定义组件均通过`ux`文件编写，`ux`文件由`template`模板、`style`样式和`script`脚本3个部分组成，一个典型的页面`ux`文件示例如下
+
+```html
+<template>
+  <!-- template里只能有一个根节点 -->
+  <div class="demo-page">
+    <text class="title">欢迎打开{{title}}</text>
+    <!-- 点击跳转详情页 -->
+    <input class="btn" type="button" value="跳转到详情页" onclick="routeDetail">
+  </div>
+</template>
+
+<style>
+  .demo-page {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .btn {
+    width: 550px;
+    height: 86px;
+    margin-top: 75px;
+    border-radius: 43px;
+    background-color: #09ba07;
+    font-size: 30px;
+    color: #ffffff;
+  }
+</style>
+
+<script>
+  import router from '@system.router'
+
+  export default {
+    // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
+    private: {
+      title: '示例页面'
+    },
+    routeDetail () {
+      // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+      router.push ({
+        uri: '/DemoDetail'
+      })
+    }
+  }
+</script>
+```
+
+## 2.3 manifest配置
+
+> https://doc.quickapp.cn/framework/manifest.html
 
 
 ```javascript
@@ -207,17 +284,570 @@ npm run server
     - `menu` 是否显示标题栏右上角菜单按钮
     - `pages` 各个页面的显示样式，key为页面名（与路由中的页面名保持一致），`value`为窗口显示
 
+## 2.4 app.ux
+
+> 当前`app.ux`编译后会包含`manifest`配置信息（可以在`npm run build`之后查看文件内容），所以请不要删除`/**manifest**/`的注释内容标识
+
+- 您可以在`<script>`中引入一些公共的脚本，并暴露在当前app的对象上，如下所示，然后就可以在页面ux文件的`ViewModel`中，通过`this.$app.util`访问
+
+## 2.5 style样式
+
+- 样式布局采用`CSS Flexbox`（弹性盒）样式
+
+> 支持2种导入外部文件的方式
+
+```html
+<!-- 导入外部文件, 代替style内部样式 -->
+<style src="./style.css"></style>
+
+<!-- 合并外部文件 -->
+<style>
+  @import './style.css';
+  .a {
+  }
+</style>
+```
+
+**模板内部样式**
+
+```html
+<!-- 内联inline -->
+<div style="color:red; margin: 10px;"/>
+<!-- class声明 -->
+<div class="normal append"/>
+```
+
+**样式预编译**
+
+> 目前支持less, sass的预编译
+
+```html
+<!--导入外部文件, 代替style内部样式-->
+<style lang="less" src="./lessFile.less"></style>
+
+<!--合并外部文件-->
+<style lang="less">
+  @import './lessFile.less';
+  .page-less {
+    #testTag {
+      .less-font-text, .less-font-comma {
+        font-size: 60px;
+      }
+    }
+  }
+</style>
+```
 
 
+```html
+<script>
+  /**
+   * 应用级别的配置，供所有页面公用
+   */
+  import util from './util'
+
+  export default {
+    showMenu: util.showMenu,
+    createShortcut: util.createShortcut
+  }
+</script>
+```
+
+## 2.6 template模板
+
+```html
+<!-- temp.ux -->
+<import name="hint" src="./hint-modal"></import>  <!-- 引入外部模板 -->
+<import src="./table"></import>  <!-- 引入外部模板 -->
+
+<template>
+  <div class="container">
+      <div class="mod-header">
+          <text class="mod-title" style="color: red; margin: 10px;">{{title}}</text>    <!-- 行内样式 -->
+          <text class="mod-detail" onclick="showDetail">?</text>    <!-- 无参事件绑定 -->
+      </div>
+      <div class="mod-content">
+          <!-- block 用来表示逻辑，不渲染 -->
+          <block for="totalData">   <!-- for 循环遍历数组 $idx, $item 分别为数组的索引和值-->
+              <!-- 事件绑定 -->
+              <div onclick="onTabClick($idx)" class="item {{tabIndex === $idx && 'active'}}"> <!-- 支持简单表达式 -->
+                  <text class="{{tabIndex === $idx && 'text-active'}}">{{($item || {}).name}}</text>
+                  <text class="{{tabIndex === $idx && 'text-active'}}">{{($item || {}).value}}</text>  <!-- 布尔值、null、undefined、'' 不渲染，其余包括 falsy 值一律渲染 -->
+              </div>
+          </block>
+      </div>
+      <image class="mod-like" if="{{isLike}}" /> <!-- 支持if elif else, 必须是相邻节点 -->
+      <image class="mod-dislike" else />
+      <table data={{dataList}}></table>  <!-- 传入属性值，使用外部模板-->
+      <hint show="{{isHintShown}}">
+          This is children of hint templete.
+      </hint>   <!-- 使用外部模板 -->
+      <!-- if 和 show 的区别：if 为 false 分支的节点不会渲染进 DOM 树，而 show 为 false 的节点会渲染，只是 display: none; -->
+  </div>
+</template>
+
+<style lang="less" src="./lessFile.less"></style>   <!-- 引入外部 CSS/LESS -->
+
+<style lang="less">
+  /* 引入外部 CSS/LESS */
+  @import '../Common/global.less';
+
+  .container{
+    /* 定义样式，less 支持 */
+  }
+</style>
+
+<script>
+  import fetch from "@system.fetch"    // 引入系统 js
+  import conf from './globalConf';     // 引入外部 js
+  
+  export default {
+    props: ['title', 'dataList'],  // 传入属性：必须字母开头，全小写、数字和 `-` ，不能保留字和函数，不能以符号开头
+    public: {
+      // 定义变量，会被 props 和内部请求覆盖
+    },
+    private: {
+      // 定义变量，不会被 props 覆盖
+    },
+    protected: {
+      // 定义变量，不会被 props 覆盖, 但会被内部请求覆盖(获得通过 a 标签和 router 传递的参数)
+    }
+    data :{   // data 不能和 public、private、protected 一起使用，data 也可以是 function（返回 data 对象，onInit之前执行）
+      // 定义变量：不能保留字和函数，不能以符号开头
+      totalData: [{name: 'a',value: 97},{name: 'b',value: 98}];
+        // 定义变量，会被 props 覆盖
+    },
+    onTabClick(index){    // 内部事件定义
+      console.log(index);
+    },
+    events: {
+       onIDChange(){
+          // 外部事件定义
+       }
+    }
+  }
+</script>
+
+<!-- hint.ux -->
+<template>
+  <text><slot></slot></text>          <!-- slot: 获取该数据的引用的 children, 该例中即：This is children of hint templete. -->
+</template>
+```
+
+## 2.7 script脚本
+
+### 2.7.1 模块声明
+
+> 可以通过`import`引入功能模块，在代码中调用模块方法
+
+```
+import fetch from "@system.fetch"
+```
+
+> 也可以一次引入所有的模块，例如
+
+```
+import system from "@system"
+```
+
+- 在代码中使用`system.network`来调用接口方法
+
+### 2.7.2 对象
+
+#### 2.7.2.1 页面级组件
+
+**data(废弃)**
+
+- 页面级组件的数据模型，能够转换为`JSON`对象
+- 如果是函数，返回结果必须是对象，在组件初始化时会执行函数获取结果作为`data`的值
+- 使用`data`方式声明的属性会被外部数据覆盖，因此存在一定安全风险，推荐使用下面的`public`,`protected`,`rivate`来声明属性（注意：它们不能与data同时声明）
+
+**public**
+
+> 页面级组件的数据模型，影响传入数据的覆盖机制：`public`内定义的属性允许被传入的数据覆盖，如果外部传入数据的某个属性未被声明，在`public`中不会新增这个属性
+
+**protected**
+
+> 页面级组件的数据模型，影响传入数据的覆盖机制：protected内定义的属性，允许被应用内部页面请求传递的数据覆盖，不允许被应用外部请求传递的数据覆盖
+
+**private**
+
+> 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
+
+```javascript
+ export default {
+    props: ['title', 'dataList'],  // 传入属性：必须字母开头，全小写、数字和 `-` ，不能保留字和函数，不能以符号开头
+    public: {
+      // 定义变量，会被 props 和内部请求覆盖
+    },
+    private: {
+      // 定义变量，不会被 props 覆盖
+    },
+    protected: {
+      // 定义变量，不会被 props 覆盖, 但会被内部请求覆盖(获得通过 a 标签和 router 传递的参数)
+    }
+    data :{   // data 不能和 public、private、protected 一起使用，data 也可以是 function（返回 data 对象，onInit之前执行）
+      // 定义变量：不能保留字和函数，不能以符号开头
+      totalData: [{name: 'a',value: 97},{name: 'b',value: 98}];
+        // 定义变量，会被 props 覆盖
+    },
+    onTabClick(index){    // 内部事件定义
+      console.log(index);
+    },
+    events: {
+       onIDChange(){
+          // 外部事件定义
+       }
+    }
+  }
+```
+
+#### 2.7.2.2 自定义组件
+
+**data**
+
+> 自定义组件的数据模型，能够转换为JSON对象；属性名不能以$或_开头, 不要使用for, if, show, tid等保留字
+如果是函数，返回结果必须是对象，在组件初始化时会执行函数获取结果作为data的值
+
+**props**
+
+- 定义组件外部可传入的所有属性
+- 在模板代码中，请使用短横线分隔命名代替驼峰命名。如，属性定义`props: ['propA']`，可通过`<tag prop-a='xx'>`方式传递到组件内部
+
+**prop验证**
+
+> 在自定义组件中，可将props定义为带验证需求的对象。其中，key为属性名，value为属性对应的验证需求。验证失败则输出错误提示日志，增加prop验证有利于规范自定义组件的使用
+
+|属性|	类型|	描述|
+|---|---|---|
+|`type`| 	-	|检查属性值的类型。支持单一类型和多种可能类型，可在原生和自定义构造函数中任意选择，单独或组合使用。原生构造函数：`String` | `Number` | `Boolean` | `Function` | `Object` | `Array` | `Symbol`
+|`default`|-|	设置属性的默认值|
+`required`|	`Boolean`|	设置属性是否必填|
+`validator `|	`Function`|	设置自定义验证函数。若函数的返回值为真，则通过验证；否则验证失败|
+
+```javascript
+export default {
+    props: {
+      // 单一类型检查的简写
+      propA: Number,
+      // 多种可能类型的简写
+      propB: [String, Number],
+      // 必填的字符串
+      propC: {
+        type: String,
+        required: true
+      },
+      // 带默认值的数字
+      propD: {
+        type: Number,
+        default: 100
+      },
+      // 带有默认值的对象
+      propE: {
+        type: Object,
+        default () {
+          return { message: 'hello' }
+        }
+      },
+      // 自定义验证函数
+      propF: {
+        validator (value) {
+          return value === 'hello'
+        }
+      }
+    }
+  }
+ ```
+ 
+#### 2.7.2.3 公共对象
+
+|属性|	类型|	描述|
+|---|---|---|
+|`$app`|`	Object`	|应用对象|
+|`$page`|	`Object`	|页面对象|
+|`$valid`|	`Boolean`	|页面对象是否有效|
+|`$visible`|	`Boolean`	|页面是否处于用户可见状态|
+
+#### 2.7.2.4 应用对象
+
+> 可通过`$app`访问
+
+|属性|	类型|	描述|
+|---|---|---|
+|`$def`|`	Object`|	使用`this.$app.$def`获取在`app.ux`中暴露的对象|
+|`$data`|	`Object`	|使用`this.$app.$data`获取在`manifest.json`的`config.data`中声明的全局数据|
+
+#### 2.7.2.5 页面对象
+
+> 可通过`$page`访问
 
 
+|属性|	类型	|描述|
+|---|---|---|
+|`actio`n|	`String`|	获取打开当前页面的`action`。仅在当前页面是通过`filter`匹配的方式打开时有效，否则为`undefined`|
+|`uri`	|`String`	|获取打开当前页面的uri。仅在当前页面是通过filter匹配的方式打开时有效，否则为`undefined`|
+
+### 2.7.3 方法
+
+#### 2.7.3.1 数据方法
+
+|属性|	类型|	参数|	描述|
+|---|---|---|---|
+|`$set`|	`Function`|`key: String value: Any`|添加数据属性，用法`：this.$set('key',value)` `this.$vm('id').$set('key',value)`
+|`$delete`|	`Function`|	`key: String`	|删除数据属性，用法：`this.$delete('key')` ` this.$vm('id').$delete('key')`|
+
+#### 2.7.3.2 公共方法
+
+|属性  |描述|
+|---|---|
+|`$element`|获取指定`id`的组件`dom`对象，如果没有指定`id`，则返回根组件`dom`对象用法：`<template> <div id='xxx'></div> </template> this.$element('xxx')` 获取`id`为`xxx`的`div`组件实例对象 `this.$element()` 获取根组件实例对象|
+|`$root`| 获取顶层`ViewModel`|
+|`$parent`	|获取父亲`ViewModel`|
+|`$child`|	获取指定`id`的自定义组件的`ViewModel`用法：`this.$child('xxx')` 获取`id`为`xxx`的`div`组件`ViewModel`|
+|`$vm deprecated`	|请使用上面`this.$child('xxx')`替代|
+|`$rootElement deprecated`|	请使用上面`this.$element()`替代|
+|`$forceUpdate`	|更新`ViewModel`数据，可能会触发`DOM`操作，如：创建节点、更新节点、删除节点等；这些DOM操作不一定在数据更新时立即执行，而是在开发者的业务代码执行后触发；若开发者期望数据更新时立即执行相应的`DOM`操作，可使用：`this.$forceUpdate()`；一般不推荐使用|
 
 
-## 三、生命周期
+#### 2.7.3.3 事件方法
 
-### 3.1 APP的生命周期
+|属性|	参数|	描述|
+|---|---|---|
+|`$on`	|	`type: String` 事件名 <br>`handler: Function `事件句柄函数|	添加事件处理句柄用法：`this.$on('xxxx', this.fn)` `fn`是在`<script>`中定义的函数|
+|`$off`	|	`type: String` 事件名 <br>`handler`:  事件句柄函数	|删除事件处理句柄用法：`this.$off('xxxx', this.fn)` `this.$off('xxx')` 删除指定事件的所有处理句柄|
+|`$dispatch`	|	`type: String` 事件名|向上层组件发送事件通知用法：`this.$dispatch('xxx')`正常情况下，会一直向上传递事件（冒泡）如果要停止冒泡，在事件句柄函数中调用`evt.stop()`即可|
+|`$broadcast`|		`type: String` 事件名|向子组件发送事件通知用法：`this.$broadcast('xxx')`正常情况下，会一直向下传递事件如果要停止传递，在事件句柄函数中调用`evt.stop()`即可|
+|`$emit`|		`type: String` 事件名 <br>`data: Object` 事件参数|	触发事件，对应的句柄函数被调用用法：`this.$emit('xxx') this.$emit('xxx', {a:1})`传递的事件参数可在事件回调函数中，通过`evt.detail`来访问，例如`evt.detail.a`|
+|`$emitElement`|		`type: String` 事件名<br>`data: Object` 事件参数 <br>`id: String` 组件`id` (默认为`-1` 代表根元素)	|触发组件事件,对应的句柄函数被调用用法：`this.$emitElement('xxx', null, 'id') this.$emitElement('xxx',{a:1})`传递的事件参数可在事件回调函数中，通过`evt.detail`来访问，例如`evt.detail.a`|
+|`$watch	`|	`data: String` 属性名, 支持`'a.b.c'`格式，不支持数组索引 <br>`handler: String` 事件句柄函数名,函数的第一个参数为新的属性值，第二个参数为旧的属性值|	动态添加属性/事件绑定，属性必须在`data`中定义，`handler`函数必须在<script>定义；当属性值发生变化时事件才被触发用法：`this.$watch('a','handler')`|
+
+####  2.7.3.4 应用方法
+
+> 可通过$app访问
+
+|属性|	描述|
+|---|---|
+|exit |	退出快应用，结束应用生命周期。<br>调用方法：`this.$app.exit()`|
+
+#### 2.7.3.5 页面方法
+
+> 可通过`$page`访问
+
+|属性|	参数|	描述|
+|---|---|---|
+|`setTitleBar`	|	`text: String` 标题栏文字 <br>`textColor: String` 文字颜色 <br>`backgroundColor: String` 背景颜色 <br>`backgroundOpacity : Number `背景透明度 <br>`menu : Boolean` 是否在标题栏右上角显示菜单按钮|	设置当前页面的标题栏用法：`this.$page.setTitleBar({text:'Hello', textColor:'#FF0000', backgroundColor:'#FFFFFF', backgroundOpacity:0.5, menu: true})`|
+|`finish` |	无|	从本页面退出，结束页面生命周期。调用方法：`this.$page.finish()`|
+
+## 2.8 指令
+
+**for**
+
+> `for`指令用于循环输出一个数组类型的数据
+
+- 自定义变量表示`for`指令的数组索引和数组元素时，变量名不可以用`$`或`_`开头；
+
+```html
+<template>
+  <div class="tutorial-page">
+    <!-- 方式1：默认$item代表数组中的元素, $idx代表数组中的索引 -->
+    <div class="tutorial-row" for="{{list}}">
+      <text>{{$idx}}.{{$item.name}}</text>
+    </div>
+    <!-- 方式2：自定义元素变量名称 -->
+    <div class="tutorial-row" for="value in list">
+      <text>{{$idx}}.{{value.name}}</text>
+    </div>
+    <!-- 方式3：自定义元素、索引的变量名称 -->
+    <div class="tutorial-row" for="(personIndex, personItem) in list">
+      <text>{{personIndex}}.{{personItem.name}}</text>
+    </div>
+  </div>
+</template>
+
+<style lang="less">
+  .tutorial-page {
+    flex-direction: column;
+    .tutorial-row {
+      width: 85%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+<script>
+  export default {
+    private: {
+      list: [
+        {name: 'aa'},
+        { name: 'bb' }
+      ]
+    },
+    onInit () {
+      this.$page.setTitleBar({ text: '指令for' })
+    }
+  }
+</script>
+```
+
+**指令if与指令show**
+
+- `if`条件指令，是指`if/elif/else`这3个相关指令，用于控制是否增加或者删除组件；
+- `show`指令，是指是否显示组件，用于控制组件的显示状态，并不会从DOM结构中删除
+
+```html
+<template>
+  <div class="tutorial-page">
+    <text onclick="onClickShow">显示隐藏：</text>
+    <text show="{{showVar}}">show: 渲染但控制是否显示</text>
+
+    <text onclick="onClickCondition">条件指令：</text>
+    <text if="{{conditionVar === 1}}">if: if条件</text>
+    <text elif="{{conditionVar === 2}}">elif: elif条件</text>
+    <text else>else: 其余</text>
+  </div>
+</template>
+
+<style lang="less">
+  .tutorial-page {
+    flex-direction: column;
+  }
+</style>
+
+<script>
+  export default {
+    private: {
+      showVar: true,
+      conditionVar: 1
+    },
+    onInit () {
+      this.$page.setTitleBar({ text: '指令if与指令show' })
+    },
+    onClickShow () {
+      this.showVar = !this.showVar
+    },
+    onClickCondition () {
+      this.conditionVar = ++this.conditionVar % 3
+    }
+  }
+</script>
+```
+
+- 当`if/elif`指令的值为`false`时，节点会从页面中移除，当`if/elif`指令值为`true`，组件会动态插入节点中；
+- 当`show`指令的值为`true`时，节点可见， - 当其值为`false`时，组件不可见，但节点仍会保留在页面DOM结构中
+
+**组件block**
+
+> block组件是表达逻辑区块的组件，没有对应的Native组件。可以使用<block>实现更为灵活的"列表/条件渲染"。如在<block>上使用for指令和if指令
+
+
+```html
+<template>
+  <div class="tutorial-page">
+    <text onclick="toggleCityList">点击：控制是否显示城市</text>
+    <div class="city" for="city in cities" if="{{showCityList === 1}}">
+      <text>城市：{{city.name}}</text>
+      <block if="{{city.showSpots}}" for="{{city.spots}}">
+        <text>景点：{{$item.name}}</text>
+      </block>
+    </div>
+  </div>
+</template>
+
+<style lang="less">
+  .tutorial-page {
+    flex-direction: column;
+  }
+  .city {
+    flex-direction: column;
+  }
+</style>
+
+<script>
+  import {dataDirective} from '../../Common/js/data'
+
+  export default {
+    private: {
+      showCityList: 1,
+      cities: dataDirective
+    },
+    onInit () {
+      this.$page.setTitleBar({ text: '组件block' })
+    },
+    toggleCityList () {
+      this.showCityList = this.showCityList === 1 ? 0 : 1
+    }
+  }
+</script>
+```
+
+**组件slot**
+
+> slot节点用于向开发者额外开发的自定义ux组件中插入内容
+
+- 通常自定义组件的模板中提供`slot`组件，当该组件被引入到页面组件中后，开发者可以灵活定义该自定义组件内部的子内容
+
+
+```html
+//自定义组件part1.ux
+
+<!-- par1.ux -->
+<template>
+  <div>
+    <text>{{ header }}</text>
+    <slot></slot>
+    <text>{{ footer }}</text>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: [
+      'header', 'footer'
+    ]
+  }
+</script>
+```
+
+```html
+//自定义组件使用者页面index.ux
+
+<!-- index.ux -->
+<import src="./part1"></import>
+<template>
+  <part1 class="component" header="{{header}}" footer="{{footer}}">
+    <text>slot节点内容</text>
+  </part1>
+</template>
+
+<style>
+  .component {
+    flex-direction: column;
+  }
+</style>
+
+<script>
+  export default {
+    private: {
+      header: 'HEAD',
+      footer: 'FOOT'
+    },
+    onInit () {
+      this.$page.setTitleBar({ text: '组件slot' })
+    }
+  }
+</script>
+```
+
+> 在子组件中使用`slot`组件，使得子组件接纳调用者传入的子内容，从而动态渲染子组件，得到最终的页面
+
+
+# 三、生命周期
+
+## 3.1 APP的生命周期
 
 > 当前为APP的生命周期提供了两个回调函数：`onCreate`, `onDestroy`；可在`app.ux`中定义回调函数
+
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-7761414ce847115c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -271,7 +901,7 @@ console.info(`获取：manifest.json的config.data的数据：${this.$app.$data.
 - 后者对象中的`onCreate`, `onDestroy`方法并不会执行，作用仅仅只是把方法复制到前者对象上而已
 - 这些全局方法在页面中：既可以通过`this.$app.method1()`调用，也可以通过`this.$app.$def.method1()`调用；不同之处在于前者可以取到之前赋值的`variable1`变量，而后者不可以取到（因为之前的赋值是在`$app`对象上执行的）
 
-### 3.2 页面生命周期
+## 3.2 页面生命周期
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-70b55809168cd48a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -387,7 +1017,7 @@ onMenuPress () {
 - 从页面B返回页面A：`onShow()`
 - A页面返回：`onBackPress() -> onHide() -> onDestroy()`
 
-## 四、置顶对象
+# 四、置顶对象
 
 - `$app` 应用对象
 - `$app.$def` 获取在`app.ux`中暴露的对象
@@ -401,6 +1031,7 @@ onMenuPress () {
 
 > `this.$page.setTitleBar` 参数属性包括
 
+
 ```javascript
 {
   text: 'Hello QuickApp',        //标题栏文字
@@ -411,7 +1042,7 @@ onMenuPress () {
 }
 ```
 
-## 五、全局对象
+# 五、全局对象
 
 - `$element` 获取指定id的组件dom对象，如果没有指定id，则返回根组件`dom`对象用法：`this.$element('xxx')`获取id为xxx的组件实例对象 `this.$element()` 获取根组件实例对象
 - `$root` 获取顶层`ViewModel`
@@ -423,7 +1054,7 @@ onMenuPress () {
 - `$delete` 删除数据属性，如果在`onInit`函数中使用，用法：`this.$delete('key')`
 
 
-## 六、元素属性方法
+# 六、元素属性方法
 
 > 注意，获取元素应该在页面已渲染后，如 onReady 事件中或 onReady 事件执行完以后
 
@@ -433,7 +1064,7 @@ onMenuPress () {
 - `$off` 移除事件监听，参数 `fnHandler` 为可选，传递仅移除指定的响应函数，不传递则移除此事件的所有监听
 - `$emit` 触发当前实例监听事件函数，与 `$on()` 配合使用
 
-## 七、页面设计
+# 七、页面设计
 
 **布局和尺寸**
 
@@ -449,7 +1080,7 @@ onMenuPress () {
 - 颜色值不支持缩写，伪类支持不完全（支持`:disabled`,`:checked`,`:focus`等)
 
 
-## 八、组件
+# 八、组件
 
 > `<text>`、`<a>`、`<span>`、`<label>`组件为文本容器组件，其它组件不能直接放置文本内容
 
@@ -480,9 +1111,9 @@ onMenuPress () {
 > 更多详情 https://doc.quickapp.cn/widgets/div.html
 
 
-## 九、页面切换和参数传递
+# 九、页面切换和参数传递
 
-### 9.1 参数传递
+## 9.1 参数传递
 
 **传递方法1**
 
@@ -540,7 +1171,7 @@ import router from '@system.router'
 
 > 页面A实现代码如下
 
-```javascript
+```html
 <template>
   <div class="tutorial-page">
     <a href="/PageParams/returnParams/pageb">跳转到页面B</a>
@@ -584,7 +1215,7 @@ import router from '@system.router'
 
 页面B实现代码如下：
 
-```javascript
+```html
 <template>
   <div class="tutorial-page">
     <text>页面B</text>
@@ -625,7 +1256,9 @@ import router from '@system.router'
 </script>
 ```
 
-### 9.2 页面间通信
+## 9.2 页面间通信
+
+> https://doc.quickapp.cn/framework/script.html
 
 > 会利用到一个构造函数 `new BroadcastChannel(string)`, 它接受一个字符串参数，作为实例的频道名称。它的实例具有以下属性和方法
 
@@ -634,13 +1267,13 @@ import router from '@system.router'
 - `onmessage` 订阅消息。在频道中接收到广播消息之后，会给所有订阅者派发消息事件
 - `close` 关闭当前的频道
 
-> 其中 onmessage 事件有2个属性(通过 event 对象访问)
+> 其中 `onmessage` 事件有2个属性(通过 `event` 对象访问)
 
 - `type` message
 - `data` 接收到的消息内容
 
 
-## 十、组件通信
+# 十、组件通信
 
 **父组件到子组件**
 
@@ -658,7 +1291,7 @@ import router from '@system.router'
 > * 注：触发时传递参数，再接收时使用`event.detail`来获取参数
 > * 注：当传递结束后，可以调用`event.stop()`来结束传递
 
-## 十一、Deeplink
+# 十一、Deeplink
 
 > 配合`<web>`标签框架支持通过链接从外部打开应用，格式
 
@@ -679,209 +1312,7 @@ hap://app/<package>/[path][?key=value]
 ```
 
 
-## 十二、指令
-
-**for**
-
-> `for`指令用于循环输出一个数组类型的数据
-
-- 自定义变量表示`for`指令的数组索引和数组元素时，变量名不可以用`$`或`_`开头；
-
-```javascript
-<template>
-  <div class="tutorial-page">
-    <!-- 方式1：默认$item代表数组中的元素, $idx代表数组中的索引 -->
-    <div class="tutorial-row" for="{{list}}">
-      <text>{{$idx}}.{{$item.name}}</text>
-    </div>
-    <!-- 方式2：自定义元素变量名称 -->
-    <div class="tutorial-row" for="value in list">
-      <text>{{$idx}}.{{value.name}}</text>
-    </div>
-    <!-- 方式3：自定义元素、索引的变量名称 -->
-    <div class="tutorial-row" for="(personIndex, personItem) in list">
-      <text>{{personIndex}}.{{personItem.name}}</text>
-    </div>
-  </div>
-</template>
-
-<style lang="less">
-  .tutorial-page {
-    flex-direction: column;
-    .tutorial-row {
-      width: 85%;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-  }
-</style>
-
-<script>
-  export default {
-    private: {
-      list: [
-        {name: 'aa'},
-        { name: 'bb' }
-      ]
-    },
-    onInit () {
-      this.$page.setTitleBar({ text: '指令for' })
-    }
-  }
-</script>
-```
-
-**指令if与指令show**
-
-- `if`条件指令，是指`if/elif/else`这3个相关指令，用于控制是否增加或者删除组件；
-- `show`指令，是指是否显示组件，用于控制组件的显示状态，并不会从DOM结构中删除
-
-```javascript
-<template>
-  <div class="tutorial-page">
-    <text onclick="onClickShow">显示隐藏：</text>
-    <text show="{{showVar}}">show: 渲染但控制是否显示</text>
-
-    <text onclick="onClickCondition">条件指令：</text>
-    <text if="{{conditionVar === 1}}">if: if条件</text>
-    <text elif="{{conditionVar === 2}}">elif: elif条件</text>
-    <text else>else: 其余</text>
-  </div>
-</template>
-
-<style lang="less">
-  .tutorial-page {
-    flex-direction: column;
-  }
-</style>
-
-<script>
-  export default {
-    private: {
-      showVar: true,
-      conditionVar: 1
-    },
-    onInit () {
-      this.$page.setTitleBar({ text: '指令if与指令show' })
-    },
-    onClickShow () {
-      this.showVar = !this.showVar
-    },
-    onClickCondition () {
-      this.conditionVar = ++this.conditionVar % 3
-    }
-  }
-</script>
-```
-
-- 当`if/elif`指令的值为`false`时，节点会从页面中移除，当`if/elif`指令值为`true`，组件会动态插入节点中；
-- 当`show`指令的值为`true`时，节点可见， - 当其值为`false`时，组件不可见，但节点仍会保留在页面DOM结构中
-
-**组件block**
-
-> block组件是表达逻辑区块的组件，没有对应的Native组件。可以使用<block>实现更为灵活的"列表/条件渲染"。如在<block>上使用for指令和if指令
-
-```javascript
-<template>
-  <div class="tutorial-page">
-    <text onclick="toggleCityList">点击：控制是否显示城市</text>
-    <div class="city" for="city in cities" if="{{showCityList === 1}}">
-      <text>城市：{{city.name}}</text>
-      <block if="{{city.showSpots}}" for="{{city.spots}}">
-        <text>景点：{{$item.name}}</text>
-      </block>
-    </div>
-  </div>
-</template>
-
-<style lang="less">
-  .tutorial-page {
-    flex-direction: column;
-  }
-  .city {
-    flex-direction: column;
-  }
-</style>
-
-<script>
-  import {dataDirective} from '../../Common/js/data'
-
-  export default {
-    private: {
-      showCityList: 1,
-      cities: dataDirective
-    },
-    onInit () {
-      this.$page.setTitleBar({ text: '组件block' })
-    },
-    toggleCityList () {
-      this.showCityList = this.showCityList === 1 ? 0 : 1
-    }
-  }
-</script>
-```
-
-**组件slot**
-
-> slot节点用于向开发者额外开发的自定义ux组件中插入内容
-
-- 通常自定义组件的模板中提供`slot`组件，当该组件被引入到页面组件中后，开发者可以灵活定义该自定义组件内部的子内容
-
-
-```javascript
-//自定义组件part1.ux
-
-<!-- par1.ux -->
-<template>
-  <div>
-    <text>{{ header }}</text>
-    <slot></slot>
-    <text>{{ footer }}</text>
-  </div>
-</template>
-
-<script>
-  export default {
-    props: [
-      'header', 'footer'
-    ]
-  }
-</script>
-```
-
-```javascript
-//自定义组件使用者页面index.ux
-
-<!-- index.ux -->
-<import src="./part1"></import>
-<template>
-  <part1 class="component" header="{{header}}" footer="{{footer}}">
-    <text>slot节点内容</text>
-  </part1>
-</template>
-
-<style>
-  .component {
-    flex-direction: column;
-  }
-</style>
-
-<script>
-  export default {
-    private: {
-      header: 'HEAD',
-      footer: 'FOOT'
-    },
-    onInit () {
-      this.$page.setTitleBar({ text: '组件slot' })
-    }
-  }
-</script>
-```
-
-> 在子组件中使用`slot`组件，使得子组件接纳调用者传入的子内容，从而动态渲染子组件，得到最终的页面
-
-## 十三、事件监听与触发
+# 十二、事件监听与触发
 
 > `$on` 用于监听自定义事件；`$off`移除对应的事件监听
 
@@ -940,7 +1371,7 @@ export default {
 > - 在响应函数执行时通过target获取，如：onClickHandler
 > - 在响应函数绑定时传递参数，如：onClickHandler2
 
-```javascript
+```html
 <template>
   <div class="tutorial-page">
     <text id="elNode1" class="{{ elClassName + 1 }}" disabled="false" onclick="onClickHandler">组件节点1</text>
@@ -978,13 +1409,13 @@ export default {
 
 **触发原生组件事件**
 
-> 通过$emitElement()完成事件的动态触发
+> 通过`$emitElement()`完成事件的动态触发
 
 - **$emitElement(evtName, evtDetail, id)**
 
-> 可以触发指定组件id的事件，通过evt.detail获取传递的参数；该方法对自定义组件无效
+> 可以触发指定组件`id`的事件，通过`evt.detail`获取传递的参数；该方法对自定义组件无效
 
-```javascript
+```html
 <template>
   <div class="tutorial-page">
     <text onclick="emitElement">触发组件节点的事件：click</text>
@@ -1025,86 +1456,8 @@ export default {
 </script>
 ```
 
-## 十四、template结构
 
-
-```javascript
-<!-- temp.ux -->
-<import name="hint" src="./hint-modal"></import>  <!-- 引入外部模板 -->
-<import src="./table"></import>  <!-- 引入外部模板 -->
-<template>
-  <div class="container">
-      <div class="mod-header">
-          <text class="mod-title" style="color: red; margin: 10px;">{{title}}</text>    <!-- 行内样式 -->
-          <text class="mod-detail" onclick="showDetail">?</text>    <!-- 无参事件绑定 -->
-      </div>
-      <div class="mod-content">
-          <!-- block 用来表示逻辑，不渲染 -->
-          <block for="totalData">   <!-- for 循环遍历数组 $idx, $item 分别为数组的索引和值-->
-              <!-- 事件绑定 -->
-              <div onclick="onTabClick($idx)" class="item {{tabIndex === $idx && 'active'}}"> <!-- 支持简单表达式 -->
-                  <text class="{{tabIndex === $idx && 'text-active'}}">{{($item || {}).name}}</text>
-                  <text class="{{tabIndex === $idx && 'text-active'}}">{{($item || {}).value}}</text>  <!-- 布尔值、null、undefined、'' 不渲染，其余包括 falsy 值一律渲染 -->
-              </div>
-          </block>
-      </div>
-      <image class="mod-like" if="{{isLike}}" /> <!-- 支持if elif else, 必须是相邻节点 -->
-      <image class="mod-dislike" else />
-      <table data={{dataList}}></table>  <!-- 传入属性值，使用外部模板-->
-      <hint show="{{isHintShown}}">
-          This is children of hint templete.
-      </hint>   <!-- 使用外部模板 -->
-      <!-- if 和 show 的区别：if 为 false 分支的节点不会渲染进 DOM 树，而 show 为 false 的节点会渲染，只是 display: none; -->
-  </div>
-</template>
-
-<style lang="less" src="./lessFile.less"></style>   <!-- 引入外部 CSS/LESS -->
-<style lang="less">
-  /* 引入外部 CSS/LESS */
-  @import '../Common/global.less';
-
-  .container{
-    /* 定义样式，less 支持 */
-  }
-</style>
-
-<script>
-  import fetch from "@system.fetch"    // 引入系统 js
-  import conf from './globalConf';     // 引入外部 js
-  export default {
-    props: ['title', 'dataList'],  // 传入属性：必须字母开头，全小写、数字和 `-` ，不能保留字和函数，不能以符号开头
-    public: {
-      // 定义变量，会被 props 和内部请求覆盖
-    },
-    private: {
-      // 定义变量，不会被 props 覆盖
-    },
-    protected: {
-      // 定义变量，不会被 props 覆盖, 但会被内部请求覆盖(获得通过 a 标签和 router 传递的参数)
-    }
-    data :{   // data 不能和 public、private、protected 一起使用，data 也可以是 function（返回 data 对象，onInit之前执行）
-      // 定义变量：不能保留字和函数，不能以符号开头
-      totalData: [{name: 'a',value: 97},{name: 'b',value: 98}];
-        // 定义变量，会被 props 覆盖
-    },
-    onTabClick(index){    // 内部事件定义
-      console.log(index);
-    },
-    events: {
-       onIDChange(){
-          // 外部事件定义
-       }
-    }
-  }
-</script>
-
-<!-- hint.ux -->
-<template>
-  <text><slot></slot></text>          <!-- slot: 获取该数据的引用的 children, 该例中即：This is children of hint templete. -->
-</template>
-```
-
-## 十五、一些问题
+# 十三、一些问题
 
 - 自定义属性名不能采用驼峰命名，否则值永远是 `undefined`
 - `show` 属性并不好用，没起什么作用
@@ -1114,7 +1467,7 @@ export default {
 - 不遵循盒子模型，类似但不完全等同于 `border-box`
 
 
-## 十六、快应用开发资源
+# 十四、快应用开发资源
 
 - [快应用API Demo 集合 QuickAPP](https://github.com/l455202325/APIDemo)
 - [awesome-quick-app](https://github.com/yesvods/awesome-quick-app)
