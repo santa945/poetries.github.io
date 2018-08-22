@@ -621,7 +621,7 @@ export default {
 |`$broadcast`|		`type: String` 事件名|向子组件发送事件通知用法：`this.$broadcast('xxx')`正常情况下，会一直向下传递事件如果要停止传递，在事件句柄函数中调用`evt.stop()`即可|
 |`$emit`|		`type: String` 事件名 <br>`data: Object` 事件参数|	触发事件，对应的句柄函数被调用用法：`this.$emit('xxx') this.$emit('xxx', {a:1})`传递的事件参数可在事件回调函数中，通过`evt.detail`来访问，例如`evt.detail.a`|
 |`$emitElement`|		`type: String` 事件名<br>`data: Object` 事件参数 <br>`id: String` 组件`id` (默认为`-1` 代表根元素)	|触发组件事件,对应的句柄函数被调用用法：`this.$emitElement('xxx', null, 'id') this.$emitElement('xxx',{a:1})`传递的事件参数可在事件回调函数中，通过`evt.detail`来访问，例如`evt.detail.a`|
-|`$watch	`|	`data: String` 属性名, 支持`'a.b.c'`格式，不支持数组索引 <br>`handler: String` 事件句柄函数名,函数的第一个参数为新的属性值，第二个参数为旧的属性值|	动态添加属性/事件绑定，属性必须在`data`中定义，`handler`函数必须在<script>定义；当属性值发生变化时事件才被触发用法：`this.$watch('a','handler')`|
+|`$watch	`|	`data: String` 属性名, 支持`'a.b.c'`格式，不支持数组索引 <br>`handler: String` 事件句柄函数名,函数的第一个参数为新的属性值，第二个参数为旧的属性值|	动态添加属性/事件绑定，属性必须在`data`中定义，`handler`函数必须在`<script>`定义；当属性值发生变化时事件才被触发用法：`this.$watch('a','handler')`|
 
 ####  2.7.3.4 应用方法
 
