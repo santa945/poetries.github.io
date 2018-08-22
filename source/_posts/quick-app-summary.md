@@ -5,6 +5,8 @@ tags: 快应用
 categories: Front-End
 ---
 
+> MD原文件 https://github.com/poetries/poetries.github.io/blob/dev/source/_posts/quick-app-summary.md
+
 
 > 注册账号通过 https://www.quickapp.cn/docCenter/post/74
 
@@ -521,7 +523,7 @@ import system from "@system"
 |属性|	类型|	描述|
 |---|---|---|
 |`type`| 	-	|检查属性值的类型。支持单一类型和多种可能类型，可在原生和自定义构造函数中任意选择，单独或组合使用。原生构造函数：`String`  `Number`  `Boolean`  `Function`  `Object`  `Array`  `Symbol`
-`default`|-|	设置属性的默认值 |
+|`default`|-|	设置属性的默认值 |
 |`required` |`Boolean`|	设置属性是否必填|
 `validator `|	`Function`|	设置自定义验证函数。若函数的返回值为真，则通过验证；否则验证失败|
 
