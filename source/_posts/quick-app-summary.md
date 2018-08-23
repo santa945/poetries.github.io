@@ -199,63 +199,87 @@ npm run server
 
 ```javascript
 {
-  "package": "com.application.demo",//应用包名
-  "name": "quick-app-test",//应用名称，6个汉字以内，与应用商店保存的名称一致；框架提供保存到桌面的功能，桌面上显示的应用名即为此属性
-  "versionName": "1.0.0",
-  "versionCode": "1",
-  "minPlatformVersion": "101",
-  "icon": "/Common/logo.png",//应用图标（icon）规则为正方形（不能是圆角），且务必无白边 请使用绝对路径，其中/对应于路径<ProjectName>/src/
-  // 配置接口列表 在使用接口时，需要先在manifest中声明接口。在每个接口文档的顶部，都附有声明接口的配置代码
-  "features": [
-    { "name": "system.prompt" },
-    { "name": "system.router" },
-    { "name": "system.shortcut" },
-    { "name": "system.fetch" }
-  ],
-  "permissions": [
-    { "origin": "*" }
-  ],
-  // 打印日志等级，分为off,error,warn,info,log,debug
-  "config": {
-    "logLevel": "debug"
-  },
-  // 配置页面路由 一个目录下最多只能存在一个主页面文件
-  "router": {
-    "entry": "Demo",// 首页名称 应用平台启动时默认打开的页面
-    "pages": {
-      "Demo": {
-        // path：页面路径，不填则默认为页面名称
-        "component": "index"
-      },
-      "DemoDetail": {
-        "component": "index"
-      },
-      "About": {
-        "component": "index"
-      }
+    # 包名，区分不同应用的唯一id，因为名称其实是可以一样的
+    "package": "com.application.demo",
+
+    # 应用名称
+    "name": "hi",
+
+    # 版本管理的话，每次更新将versionCode自增1即可
+    "versionName": "1.0.0",
+    "versionCode": "1",
+    "minPlatformVersion": "101",
+
+    # 程序的入口icon，所有关于文件的引用统一使用根目录
+    # 根目录对应src文件夹
+    "icon": "/Common/logo.png",
+
+    # 
+    "features": [
+        { "name": "system.prompt" },
+        { "name": "system.router" },
+        { "name": "system.shortcut" }
+    ],
+
+    "permissions": [
+        { "origin": "*" }
+    ],
+
+    # 配置相关
+    "config": {
+        # 这里的设置是log输出的最低等级
+        # 如果是warn的话，info类型将不会输出
+        # 等级请参考js中的console日志
+        "logLevel": "off"
+    },
+
+    # 路由
+    # 这里会配置应用入口的页面
+    # 所有的页面都需要在这里配置
+    # 会把页面与对应的页面文件对应起来
+    # 经过配置之后可以通过/Demo访问到Demo目录下的index.ux页面
+    "router": {
+        "entry": "Demo",
+        "pages": {
+            "Demo": {
+                # 这里对应的Demo文件夹里的index.ux
+                "component": "index"
+            },
+            "DemoDetail": {
+                "component": "index"
+            },
+            "About": {
+                "component": "index"
+            }
+        }
+    },
+    
+    # 配置页面UI显示
+    # 主要分为两种，页面公有与页面私有
+    "display": {
+        # 这三个都是所有页面公有的，顶部titleBar内容
+        "titleBarText": "public title"
+        "titleBarBackgroundColor": "#f2f2f2",
+        "titleBarTextColor": "#414141",
+
+        # 会增加一个导航栏
+        "menu": true,
+
+        # 页面私有内容
+        "pages": {
+            "Demo": {
+                # 这里面的内容就是每个页面私有的了
+                "titleBarText": "示例页",
+                "menu": false
+            },
+            "DemoDetail": {
+                "titleBarText": "详情页"
+            },
+            "About": {
+                "menu": false
+            }
+        }
     }
-  },
-  // 配置页面UI显示
-  // 支持定义：页面公用的默认UI显示、页面私有的UI显示
-  // 页面公用的默认UI显示，即被所有页面共享
-  "display": {
-    "titleBarBackgroundColor": "#f2f2f2",
-    "titleBarTextColor": "#414141",
-    "menu": true,
-    // 页面私有的UI显示，在display.pages对象下配置：key为页面名称
-    "pages": {
-      "Demo": {
-        "titleBarText": "poetries",
-        "menu": false
-      },
-      "DemoDetail": {
-        "titleBarText": "poetry详情"
-      },
-      "About": {
-        "menu": false
-      }
-    }
-  }
 }
 ```
 
