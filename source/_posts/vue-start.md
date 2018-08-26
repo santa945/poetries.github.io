@@ -8,6 +8,7 @@ categories: Front-End
 
 ## 一、初识
 
+
 - `Vue`框架是一个`MVVM`框架，
 `Module`和`view`是双向绑定的。`vue`没有控制器的概念，它的核心思想是数据驱动，状态管理，以及组件化。
 - 因此在我们js编程中，不会去操作`DOM`、`class`，更多的关注我们的数据层面。去改变一个变量，通过变量来控制我们的视图，通过事件绑定、状态管理来进一步渲染视图。
@@ -53,7 +54,7 @@ $("#userName").on("keyup",function(){
 
 ### 1.4 模板语法
 
-- `Mustache`语法：`{{ msg }}`
+- `Mustache`语法：`{{msg}}`
 - `Html`语法：`v-html=""`
 - 绑定属性：`v-bind:id=""`
 - 使用表达式：`{{ ok?'yes':"no"}}`
@@ -63,7 +64,7 @@ $("#userName").on("keyup",function(){
 
 ### 1.5 Class和Style绑定
 
-- 对象语法：`v-bind:class="{ active:isActive, 'text-danger':hasError }"`
+- 对象语法：`v-bind:class="{ active:isActive,'text-danger':hasError }"`
 - 数组语法： 
 
 
