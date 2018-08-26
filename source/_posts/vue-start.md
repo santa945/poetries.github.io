@@ -109,7 +109,7 @@ $("#userName").on("keyup",function(){
 ## 二、环境搭建
 
 
-```javascript
+```shell
 npm install -g vue-cli
 
 vue init webpack-simple demo
