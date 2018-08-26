@@ -9,9 +9,11 @@ categories: Front-End
 
 > 有三种方法 1、直接绑定 2、数据属性绑定 3、计算属性绑定
 
+
 ### 1.1 对象语法
 
 > 如果数据属性 发生改变，`class` 列表将相应地更新
+
 
 ```html
 <div id="app">
@@ -53,6 +55,7 @@ var app = new Vue({
 
 **可以直接绑定数据里的一个对象**
 
+
 ```html
 .active1{
     width: 100px;
@@ -77,9 +80,12 @@ var app = new Vue({
 </script>
 ```
 
+
 **可以在这里绑定返回对象的计算属性。这是一个常用且强大的模式**
 
+
 ```html
+<style>
 .aaa{
     background: green;
     width: 100px;
@@ -87,6 +93,7 @@ var app = new Vue({
     margin-top: 10px;
 }
 
+</style>
 <div id="app">
     <div v-bind:class="Obj"></div>
 </div>
