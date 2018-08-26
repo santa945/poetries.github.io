@@ -5,6 +5,7 @@ tags: Vue
 categories: Front-End
 ---
 
+
 ## 一、初识
 
 - `Vue`框架是一个`MVVM`框架，
@@ -16,6 +17,7 @@ categories: Front-End
 
 - `Vue`本身不是一个框架
 - `Vue`结合周边的生态构成一个灵活的、渐进式的框架
+
 
 ### 1.2 核心思想
 
@@ -63,6 +65,7 @@ $("#userName").on("keyup",function(){
 
 - 对象语法：`v-bind:class="{ active:isActive, 'text-danger':hasError }"`
 - 数组语法： 
+
 
 ```html
 <div v-bind:class="[activeClass, errorClass]">
