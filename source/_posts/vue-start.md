@@ -71,10 +71,12 @@ $("#userName").on("keyup",function(){
 <div v-bind:class="[activeClass, errorClass]">
 
 <script>
-    data:{
-        activeClass: "active",
-        errorClass: 'text-danger'
-    }    
+    new Vue({
+        data:{
+            activeClass: "active",
+            errorClass: 'text-danger'
+        }   
+    }) 
 </script>
 ```
 
