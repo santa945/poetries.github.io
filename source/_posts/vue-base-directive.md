@@ -13,7 +13,7 @@ categories: Front-End
 
 > 更新元素的 textContent
 
-```
+```html
 <h1 v-text="msg"></h1>
 ```
 
@@ -115,7 +115,7 @@ categories: Front-End
 
 - 推荐：使用 `v-for `的时候提供 `key` 属性，以获得性能提升。
 - 说明：使用 `key`，`VUE`会基于 `key` 的变化重新排列元素顺序，并且会移除 key 不存在的元素。
-- 官方解释：当 `Vue.js`用 `v-for` 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。这个类似 Vue 1.x 的 track-by="$index"
+- 官方解释：当 `Vue.js`用 `v-for` 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。这个类似 Vue 1.x 的 `track-by="$index"`
 
 ```html
 <div v-for="item in items" :key="item.id">
@@ -173,7 +173,7 @@ categories: Front-End
 ## 四、提升用户体验：v-cloak
 
 - 这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 `[v-cloak] { display: none }` 一起用时，这个指令可以隐藏未编译的 `Mustache` 标签直到实例准备完毕。
-- 防止刷新页面，网速慢的情况下出现`{{ message }}`等数据格式
+- 防止刷新页面，网速慢的情况下出现`{ message }`等数据格式
 
 ```html
 <div v-cloak>
