@@ -52,7 +52,7 @@ $("#userName").on("keyup",function(){
 
 ### 1.4模板语法
 
-- `数据绑定：`{{msg}}`
+- 数据绑定：`{{msg}}`
 - `Html`语法：`v-html`
 - 绑定属性：`v-bind:id=`
 - 使用表达式：`{{ok?'yes':"no"}}`
