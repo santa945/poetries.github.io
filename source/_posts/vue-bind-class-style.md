@@ -30,7 +30,9 @@ var app = new Vue({
 </script>
 ```
 
+
 > `v-bind:class` 指令也可以与普通的 `class` 属性共存
+
 
 ```html
 .active{
