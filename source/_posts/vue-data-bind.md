@@ -11,13 +11,15 @@ categories: Front-End
 
 ## 一、数据渲染
 
+
 ```html
-  <div>{{ message }} </div><!--数据绑定-->
+  <div>{message} </div><!--数据绑定-->
   <div v-html="htmlMess"></div> <!--html绑定-->   
   <div v-text="message"></div>  <!--数据绑定-->  
 ```
 
 ## 二、属性绑定
+
 
 ```html
 <h1 v-bind:title="message">aaa</h1>  <!--属性绑定-->
@@ -85,6 +87,7 @@ categories: Front-End
 
 ## 六、事件绑定
 
+
 ```html
 <!--事件对应fun1方法-->
 <a v-on:click="fun1">点击</a>    
@@ -120,6 +123,7 @@ categories: Front-End
 
 > 相应按键按下时触发
 
+
 ```html
 <input v-on:keyup.enter="submit">
 <input @keyup.enter="submit">   
@@ -144,11 +148,10 @@ categories: Front-End
 ## 八、双向绑定
 
 ```html
-<p>{{message}}</p>   
+<p>{message}</p>   
 
 <!--input输入值将传入Vue中的message-->
 <input type="text" v-model="message"/> 
-
 
 <select v-model="message" id="aa">     
     <option>百度</option>
