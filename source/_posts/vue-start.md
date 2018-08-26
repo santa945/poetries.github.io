@@ -70,10 +70,12 @@ $("#userName").on("keyup",function(){
 ```html
 <div v-bind:class="[activeClass, errorClass]">
 
-data:{
-    activeClass: "active",
-    errorClass: 'text-danger'
-}
+<script>
+    data:{
+        activeClass: "active",
+        errorClass: 'text-danger'
+    }    
+</script>
 ```
 
 - `style`绑定-对象语法 `v-bind:style="{color:activeColor,fontSize:fontSize+"px"}"`
