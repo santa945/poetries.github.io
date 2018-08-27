@@ -144,10 +144,10 @@ categories: Front-End
 </script>
 ```
 
-## 三、下拉框
+## 四、下拉框
 
 
-### 3.1 普通下拉框
+### 4.1 普通下拉框
 
 ```html
 <div id="app-1">
@@ -168,7 +168,7 @@ categories: Front-End
 </script>
 ```
 
-### 3.2 动态绑定下拉框
+### 4.2 动态绑定下拉框
 
 ```html
 <div id="app-1">
@@ -194,7 +194,7 @@ categories: Front-End
 </script>
 ```
 
-### 3.3 多选列表
+### 4.3 多选列表
 
 ```html
 <div id="app-1">
