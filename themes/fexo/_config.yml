@@ -31,6 +31,9 @@ home_nav:
   - name: Notes
     url: http://blog.poetries.top/js-knowledge-note
     target_blank: true
+  - name: Interview
+    url: http://blog.poetries.top/FE-Interview-Questions
+    target_blank: true
   - name: Life
     url: http://life.poetries.top
     target_blank: true
