@@ -635,7 +635,7 @@ export default  [
 ]
 ```
 
-> 完整代码例子 
+> 完整代码例子 https://github.com/poetries/redux-saga-template
 
 
 ## 七、总结
