@@ -1,5 +1,5 @@
 ---
-title: redux-thunk与redux-saga中间件详解
+title: 浅析redux-saga中间件及用法
 date: 2018-08-29 19:20:20
 tags: 
  - Redux
@@ -7,7 +7,7 @@ tags:
 categories: Front-End
 ---
 
-## 一、redux-thunk处理副作用的缺点
+## 一、redux-thunk
 
 ### 1.1 redux的副作用处理
 
@@ -34,7 +34,7 @@ UI——>action(side function)—>middleware—>action(plain)—>reducer—>stat
 
 - 转换异步操作，**生成原始的action**，这样，`reducer`函数就能处理相应的`action`，从而改变`state`，更新`UI`
 
-### 1.2 redux-thunk
+### 1.2 redux-thunk源码
 
 > 在redux中，thunk是redux作者给出的中间件，实现极为简单，10多行代码
 
