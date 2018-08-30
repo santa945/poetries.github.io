@@ -7,8 +7,7 @@ tags:
 categories: Front-End
 ---
 
-
-## 一、redux-thunk
+## 一、redux-thunk处理副作用的缺点
 
 ### 1.1 redux的副作用处理
 
@@ -35,7 +34,7 @@ UI——>action(side function)—>middleware—>action(plain)—>reducer—>stat
 
 - 转换异步操作，**生成原始的action**，这样，`reducer`函数就能处理相应的`action`，从而改变`state`，更新`UI`
 
-### 1.2 redux-thunk源码
+### 1.2 redux-thunk
 
 > 在redux中，thunk是redux作者给出的中间件，实现极为简单，10多行代码
 
@@ -270,7 +269,7 @@ takeLatest('login',loginFunc)
 
 > 与`takeLatest`不同的是，`takeLatest`是会监听执行最近的那个被触发的`action`
 
-## 五、结合案例分析
+## 五、案例分析一
 
 > 接着我们来实现一个`redux-saga`样例，存在一个登陆页，登陆成功后，显示列表页，并且，在列表页，可以点击登出，返回到登陆页。例子的最终展示效果如下
 
@@ -457,7 +456,189 @@ yield fork(getList)
 
 > 通过fork方法不会阻塞主线程，在白屏时点击登出，可以立刻响应登出功能，从而返回登陆页面
 
-## 六、总结
+## 六、案例分析二
+
+### 6.1 配置saga信息 
+
+> `src/store/configureStore.js`
+
+```javascript
+import { createStore, applyMiddleware, compose } from 'redux'
+// import {createLogger } from 'redux-logger'
+import createHistory from 'history/createBrowserHistory'
+import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux'
+import rootSaga from '../sagas'
+import rootReducer from '../reducers/'
+
+export const history = createHistory()
+
+const middleware = routerMiddleware(history)
+
+//创建saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+
+const configureStore = preloadedState => {
+	// 安装 Redux-DevTools Chrome 插件后可用 composeEnhancers()
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+	const store = createStore(
+		rootReducer,
+		preloadedState,
+		composeEnhancers(
+			applyMiddleware(sagaMiddleware,middleware)
+		)
+	)
+	sagaMiddleware.run(rootSaga);
+	if (module.hot) {
+		// Enable Webpack hot module replacement for reducers
+		module.hot.accept('../reducers', () => {
+			const nextRootReducer = require('../reducers').default
+			store.replaceReducer(nextRootReducer)
+		})
+	}
+
+	return store
+}
+
+
+export default configureStore
+
+```
+
+### 6.2 配置reduce
+
+```javascript
+// src/reducers/index.js
+import {combineReducers} from 'redux'
+import {routerReducer as routing} from 'react-router-redux'
+
+const rootReducer = combineReducers({
+      routing,
+      poetry 				: require('./poetry').default
+})
+
+export default rootReducer
+```
+
+```javascript
+// src/reducers/poetry.js
+
+import * as ActionTypes from '../actions'
+
+export default (state = {
+	fetching:false,
+	error:false,
+	errMsg:'',
+	data:[]
+},action) => {
+	if(action.type === ActionTypes.FETCH_POETRY_REQUEST){
+		return Object.assign({...state,fetching:true,errMsg:''})
+	}else if(action.type === ActionTypes.FETCH_POETRY_SUCCESS){
+		const data = action.payload.data
+		return Object.assign({...state,fetching:false,data,errMsg:''})
+	}else if(action.type === ActionTypes.FETCH_POETRY_FAILURE){
+		return Object.assign({...state,fetching:false,error:true,errMsg:action.payload.errMsg})
+	}
+	return state
+}
+```
+
+### 6.3 处理action
+
+```javascript
+// src/action/index.js
+
+import { createAction } from 'redux-actions';
+
+export const COMMON_FETCHING = 'COMMON_FETCHING'
+export const COMMON_OVER = 'COMMON_OVER'
+export const MSG_SHOW = 'MSG_SHOW'
+export const MSG_INIT = 'MSG_INIT'
+export const POP_LOGIN = 'POP_LOGIN'
+export const initMsg = () => ({type : MSG_INIT})
+
+
+// 相比用thunk多了一步 多了个action 来触发saga woker
+export const FETCH_POETRY_REQUEST = 'FETCH_POETRY_REQUEST'
+export const FETCH_POETRY_SUCCESS = 'FETCH_POETRY_SUCCESS'
+export const FETCH_POETRY_FAILURE = 'FETCH_POETRY_FAILURE'
+export const fetchPoetryRequest = createAction(FETCH_POETRY_REQUEST)
+export const fetchPoetrySuccess = createAction(FETCH_POETRY_SUCCESS)
+export const fetchPoetryFauilure= createAction(FETCH_POETRY_FAILURE)
+
+```
+
+### 6.4 处理sagas
+
+```javascript
+
+// src/sagas/index.js
+
+import { all } from 'redux-saga/effects'
+
+export default function* rootSaga() {
+    yield all([
+        ...require('./fetchPoetry').default
+    ])
+  }
+```
+
+```javascript
+
+// src/fetchPoetry.js
+
+import {put,take,call,fork,takeEvery,select} from 'redux-saga/effects'
+import {delay} from 'redux-saga'
+import  * as api  from '../api'
+import * as actionTypes from '../actions/'
+
+// saga worker 监听FETCH_POETRY_REQUEST动作触发执行相应操作
+function* fetchPoetrySaga(){
+    // yield delay(100)
+    // ======== 写法一 ========= 
+    // yield takeEvery(actionTypes.FETCH_POETRY_REQUEST,function*(action){
+    //     // 调用this.props.fetchPoetryRequest({user:'poetries',age:23}) 传参进来这里
+    //     // 也可以通过这样获取state中的参数 const state = yield select()
+    //     const {user,age} = action
+    //     try{
+    //         const data =  yield call(api.get({
+    //             url:'/mock/5b7fd63f719c7b7241f4e2fa/tangshi/tang-shi'
+    //         }))
+    //         yield put(actionTypes.fetchPoetrySuccess({data:data.data.data}))
+    //     }catch(error){
+    //         yield put(actionTypes.fetchPoetryFauilure({errMsg:error.message}))
+    //     }
+     
+    // })
+    // === 写法二====
+  while(true){
+      // 当dispatch({type:FETCH_POETRY_REQUEST})的时候被这里监听 执行对应的请求
+    const {user,age} =  yield take(actionTypes.FETCH_POETRY_REQUEST)
+    try{
+         const data =  yield call(api.get({
+             url:'/mock/5b7fd63f719c7b7241f4e2fa/tangshi/tang-shi'
+         }))
+          yield put(actionTypes.fetchPoetrySuccess({data:data.data.data}))
+     }catch(error){
+         yield put(actionTypes.fetchPoetryFauilure({errMsg:error.message}))
+     }
+  }
+
+} 
+
+
+// 导出所有的saga
+export default  [
+    fork(fetchPoetrySaga)
+]
+```
+
+> 完整代码例子 
+
+
+## 七、总结
 
 > `redux-saga`做为`redux`中间件的全部优点
 
@@ -465,4 +646,6 @@ yield fork(getList)
 - 集中处理异步等存在副作用的逻辑
 - 通过转化`effects`函数，可以方便进行单元测试
 - 完善和严谨的流程控制，可以较为清晰的控制复杂的逻辑
+
+
 
