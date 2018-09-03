@@ -134,22 +134,22 @@ class App extends Component {
 |生命周期方法|	作用|	说明|
 |---|---|---|
 |`componentWillMount`|	程序被载入|	对应微信小程序`onLaunch`|
-`componentDidMount`|	程序被载入|	对应微信小程序`onLaunch`，在`componentWillMount`之后执行
-`componentDidShow`	|程序展示出来|	对应微信小程序`onShow`|
-`componentDidHide`|	程序被隐藏|	对应微信小程序onHide|
+|`componentDidMount`|	程序被载入|	对应微信小程序`onLaunch`，在`componentWillMount`之后执行|
+|`componentDidShow`	|程序展示出来|	对应微信小程序`onShow`|
+|`componentDidHide`|	程序被隐藏|	对应微信小程序onHide|
 
 > 不过当然也包含`componentWillUnmout`和`componentWillReceiveProps`等`react`原始生命周期函数，用来编写自定义组件
 
 
 **页面生命周期**
 
-|生命周期方法|	作用|	说明|
+|生命周期方法|作用|	说明|
 |---|---|---|
 |`componentWillMount	`|页面被载入|	在微信小程序中这一生命周期方法对应 `onLoad`|
 |`componentDidMount`|	页面渲染完成|	在微信小程序中这一生命周期方法对应 `onReady`|
-|`shouldComponentUpdate`|	页面是否需要更新	|
-|`componentWillUpdate`|	页面即将更新|	
-|`componentDidUpdate	`|页面更新完毕|	
+|`shouldComponentUpdate`|	页面是否需要更新	| ||
+|`componentWillUpdate`|	页面即将更新|	||
+|`componentDidUpdate	`|页面更新完毕|	||
 |`componentWillUnmount`|	页面退出|	在微信小程序中这一生命周期方法对应 `onUnload`|
 |`componentDidShow`|	页面展示出来|	在微信小程序中这一生命周期方法对应| `onShow`，在`H5`中同样实现|
 |`componentDidHide`|	页面被隐藏|	在微信小程序中这一生命周期方法对应 `onHide`，在`H5`中同样实现|
@@ -204,10 +204,10 @@ class C extends Taro.Component {
 |方法|	作用|
 |---|---|
 |`onPullDownRefresh`|	页面相关事件处理函数--监听用户下拉动作|
-`onReachBottom`|	页面上拉触底事件的处理函数|
-`onShareAppMessage`|	用户点击右上角转发|
-`onPageScroll`|	页面滚动触发事件的处理函数|
-`onTabItemTap`|	当前是 tab 页时，点击 `tab` 时触发|
+|`onReachBottom`|	页面上拉触底事件的处理函数|
+|`onShareAppMessage`|	用户点击右上角转发|
+|`onPageScroll`|	页面滚动触发事件的处理函数|
+|`onTabItemTap`|	当前是 tab 页时，点击 `tab` 时触发|
 
 > 以上成员方案在 Taro 的页面中同样可以使用，书写同名方法即可，不过需要注意的，目前暂时只有微信小程序端支持这些方法，编译到H5端后这些方法均会失效
 
