@@ -209,8 +209,11 @@ class C extends Taro.Component {
 |`onPageScroll`|	页面滚动触发事件的处理函数|
 |`onTabItemTap`|	当前是 tab 页时，点击 `tab` 时触发|
 
-> 以上成员方案在 Taro 的页面中同样可以使用，书写同名方法即可，不过需要注意的，目前暂时只有微信小程序端支持这些方法，编译到H5端后这些方法均会失效
+> 以上成员方案在 `Taro` 的页面中同样可以使用，书写同名方法即可，不过需要注意的，目前暂时只有微信小程序端支持这些方法，编译到H5端后这些方法均会失效
 
-## 五、参考
+## 五、更多参考
 
-> taro文档 https://nervjs.github.io/taro/
+- [Taro文档](https://nervjs.github.io/taro/)
+- [Taro-UI](https://taro-ui.aotu.io/#/)
+- [一文看懂，支撑京东核心业务小程序的统一开发框架「Taro」](https://baijiahao.baidu.com/s?id=1603297934363840853&wfr=spider&for=pc)
+
