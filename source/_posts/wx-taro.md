@@ -147,11 +147,11 @@ class App extends Component {
 |---|---|---|
 |`componentWillMount	`|页面被载入|	在微信小程序中这一生命周期方法对应 `onLoad`|
 |`componentDidMount`|	页面渲染完成|	在微信小程序中这一生命周期方法对应 `onReady`|
-|`shouldComponentUpdate`|	页面是否需要更新	| ||
-|`componentWillUpdate`|	页面即将更新|	||
-|`componentDidUpdate	`|页面更新完毕|	||
+|`shouldComponentUpdate`|	页面是否需要更新	| |
+|`componentWillUpdate`|	页面即将更新|	|
+|`componentDidUpdate	`|页面更新完毕|	|
 |`componentWillUnmount`|	页面退出|	在微信小程序中这一生命周期方法对应 `onUnload`|
-|`componentDidShow`|	页面展示出来|	在微信小程序中这一生命周期方法对应| `onShow`，在`H5`中同样实现|
+|`componentDidShow`|	页面展示出来|	在微信小程序中这一生命周期方法对应`onShow`，在`H5`中同样实现|
 |`componentDidHide`|	页面被隐藏|	在微信小程序中这一生命周期方法对应 `onHide`，在`H5`中同样实现|
 
 > 微信小程序中 `onLoad` 通常带有一个参数 `options`，在 `Taro` 中你可以在所有生命周期方法中通过 `this.$router.params `访问到，在其他端也适用
