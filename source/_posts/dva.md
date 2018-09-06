@@ -1846,3 +1846,5 @@ const codeMessage = {
 - [dva-loading 实践用法](https://www.jianshu.com/p/61fe7a57fad4)
 - [dva 升级2.0版本遇到的问题小结](https://www.jianshu.com/p/649e97ff4354)
 - [dva 中进行页面复用实践总结](https://www.jianshu.com/p/e0a220906301)
+- [Dva知识地图](https://dvajs.com/knowledgemap/#javascript-%E8%AF%AD%E8%A8%80)
+- [dva-API文档](https://dvajs.com/api/)
