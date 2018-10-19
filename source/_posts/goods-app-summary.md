@@ -566,6 +566,9 @@ export function loadSearch() {
 }
 ```
 
+![search-history](https://upload-images.jianshu.io/upload_images/1480597-34867938a0263a19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 ## 五、骨架屏的应用
 
 > 封装一个骨架屏组件
