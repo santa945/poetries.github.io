@@ -7,7 +7,7 @@ tags:
 categories: Front-End
 ---
 
-### 一、deepLink跳转
+## 一、deepLink跳转
 
 ### 1.1 快应用中呼起deepLink
 
@@ -318,7 +318,7 @@ if(deepLink){
 ```
 
 
-### 二、剪贴板分享 
+## 二、剪贴板分享 
 
 > 主要是使用到`clipboard`简化
 
@@ -353,7 +353,7 @@ class Test extends Component {
 > 更多使用方式详情：https://github.com/zenorocha/clipboard.js
 
 
-### 三、加载更多  
+## 三、加载更多  
 
 > `h5`页面需要分页加载优化，`react`中为例
 
@@ -502,7 +502,7 @@ class Home extends Component {
 ```
 
 
-### 四、搜索历史
+## 四、搜索历史
 
 **封装cache**
 
