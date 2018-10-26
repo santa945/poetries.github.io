@@ -670,6 +670,108 @@ Skeleton.propTypes = {
 ![Skeleton](https://upload-images.jianshu.io/upload_images/1480597-497efe18e83ceac7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
+## 六、游客点赞
+
+> 由于服务器不能及时返回点赞次数、点赞状态信息（点赞、举报信息服务器都是cache延迟返回的），因此把每次操作产生的记录存储在客户端
+
+```javascript
+// 检测是否举报、点赞数据
+
+import storage from 'good-storage'
+
+export const isOverReportOrLike = ({goodsId,action})=>{
+  const arr = storage.get(GOODS_DATA,[])
+  let goodsItem = arr.find(v=>v.goodsId==goodsId) || {}
+
+  if(goodsItem && goodsItem.report && action ==='report' || goodsItem && goodsItem.like && action ==='like'){
+    return true
+  }
+
+  if(goodsItem.goodsId == goodsId){
+    if(action=='like'){
+      goodsItem.like = true
+    }else{
+      goodsItem.report = true
+    }
+  }else{
+    if(action=='like'){
+      goodsItem.like = true
+    }else{
+      goodsItem.report = true
+    }
+
+    goodsItem.goodsId = goodsId
+    arr.unshift(goodsItem)
+  }
+
+  storage.set(GOODS_DATA,arr)
+}
+```
+
+```javascript
+hanldeLike(data,obj={}){
+	const {goodsId} = data
+	const {goodsList,detailInfo} = this.props
+
+	let goods = goodsList.find(v=>v.goodsId==goodsId)
+
+	if(isOverReportOrLike({goodsId,action:'like'})){
+		return Toast.success('您已喜欢过~',1);
+	}else{
+		// 处理详情页点赞
+		if(obj && obj.page=='detail'){
+			detailInfo.likeCount = (parseInt(goods.likeCount) || 0) +1
+			this.setState({detailData:detailInfo})
+		}
+
+		goods.like = true
+		goods.likeCount = (parseInt(goods.likeCount) || 0) +1
+		this.setState({goodsData:goodsList})
+	}
+
+	storage.set('__curr_like_time__',Date.now()) // 记录当前点赞时间
+	this.props.dataReport({goodsId,dataType:DataReportType.DataReportType_LIKE})
+}
+handleOverReport(data){
+	const {goodsId} = data
+
+	if(isOverReportOrLike({goodsId,action:'report'})){
+		return Toast.success('您已举报过~',1);
+	}
+
+	this.props.dataReport({goodsId,dataType:DataReportType.DataReportType_REPORT})
+}
+
+```
+
+刷新页面，还原数据
+
+```javascript
+//上次点赞时间和当前时间差值 >=10分钟 更新服务器cache的likeCount
+const updateCacheTime = moment(Date.now()).diff(moment(storage.get('__curr_like_time__')), 'minute') 
+
+const goodsCache = storage.get(GOODS_DATA,[])
+
+const list = goodsList.map(v=>{
+    // 从缓存中找出标志like的商品合并到列表
+    goodsCache.forEach(vv=>{
+    	if(v.goodsId == vv.goodsId){
+    		v.like = true
+    		
+    		// 时间差小于10分钟，从本地读取，否则直接拉取服务器点赞数据
+    		if(parseInt(updateCacheTime) < 10){
+    			v.likeCount = (parseInt(v.likeCount) || 0) +1 	// 前台缓存
+    		}
+    	}
+    })
+    return {
+    	...v
+    }
+})
+```
+
+
+
 - `H5`端在线体验 http://goods.yesdat.com
 - 快应用端在`OPPO`应用商店搜“好物”（标有快应用的那个）
 
