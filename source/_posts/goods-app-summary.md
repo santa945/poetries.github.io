@@ -770,7 +770,12 @@ const list = goodsList.map(v=>{
 })
 ```
 
+## 七、优化
 
+- `webpack tree shaking` 去除多余代码
+- 服务端开发`gzip`压缩静态资源
+- 图片`CDN`存储
+- 骨架屏加载细节
 
 - `H5`端在线体验 http://goods.yesdat.com
 - 快应用端在`OPPO`应用商店搜“好物”（标有快应用的那个）
