@@ -770,11 +770,53 @@ const list = goodsList.map(v=>{
 })
 ```
 
+**红心点赞动画**
+
+> 一张20帧长图片，点击的时候按帧率进行播放
+
+![](https://upload-images.jianshu.io/upload_images/3230869-797b8806204eafdf.png)
+
+```html
+<section class="fave"></section>
+<script type="text/javascript" src="./jquery.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+    $('.fave').on('click', function() {
+      $(this).toggleClass("active");
+    })
+  })
+</script>
+```
+
+```css
+.fave {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #EA6F5A;
+  background: url(./like_animation_steps.png) no-repeat;
+  background-position: left;
+  background-size: auto 100%;
+}
+
+.fave.active {
+  background-color: #EA6F5A;
+  background-position: right;
+  /* 主要在这一步 */
+  transition: background .6s steps(19);
+}
+```
+
+> `transition`属性的`steps`方法把过渡切分成很多步，像动画的帧数一样
+
+![](https://upload-images.jianshu.io/upload_images/3230869-a5760a54cfca635d.gif)
+
 ## 七、优化
 
 - `webpack tree shaking` 去除多余代码
 - 服务端开发`gzip`压缩静态资源
 - 图片`CDN`存储
+- next服务端渲染
 - 骨架屏加载细节
 
 - `H5`端在线体验 http://goods.yesdat.com
