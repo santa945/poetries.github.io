@@ -794,7 +794,7 @@ const list = goodsList.map(v=>{
   height: 50px;
   border-radius: 50%;
   border: 1px solid #EA6F5A;
-  background: url(./like_animation_steps.png) no-repeat;
+  background: url(https://upload-images.jianshu.io/upload_images/3230869-797b8806204eafdf.png) no-repeat;
   background-position: left;
   background-size: auto 100%;
 }
