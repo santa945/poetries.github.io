@@ -82,7 +82,12 @@ mode:'development/production'
 
 - 控制是否生成，以及如何生成 `source map`文件，开发环境下更有利于定位问题，默认 `false`
 - 当然它的开启，也会影响编译的速度，所以生产环境一定一定记得关闭
-- 常用的值：`cheap-eval-source-map`、`eval-source-map`、`cheap-module-eval-source-map`、`inline-cheap-module-source-map`等等，更详细的可以去[官方查看](https://webpack.js.org/concepts/)
+- 常用的值
+  - `cheap-eval-source-map`
+  - `eval-source-map`
+  - `cheap-module-eval-source-map`
+  - `inline-cheap-module-source-map`等等，
+  - 更详细的可以去[官方查看](https://webpack.js.org/concepts/)
 - 一般使用：`eval-source-map`较多，每个都有它不一样的特性
 
 ![](https://user-gold-cdn.xitu.io/2018/11/10/166fb92aa53f846f)
