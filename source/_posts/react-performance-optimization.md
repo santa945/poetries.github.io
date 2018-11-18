@@ -13,19 +13,20 @@ categories: Front-End
 
 - 在初始化渲染的时候会调用根组件下的所有组件的`render`方法进行渲染，如下图（绿色表示已渲染，这一层是没有问题的）
 
-![](http://img1.tuicool.com/E36rYz3.jpg)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-4e5f48026fa614e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 但是当我们要更新某个子组件的时候，如下图的绿色组件（从根组件传递下来应用在绿色组件上的数据发生改变）
 
-![](http://img2.tuicool.com/vuIziiQ.jpg)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-45420a0ffcf40571.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们的理想状态是只调用关键路径上组件的render
 
-![](http://img1.tuicool.com/ria6ZrU.jpg)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-ebe9c0d2a929600f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 但是`react`的默认做法是调用所有组件的`render`，再对生成的虚拟`DOM`进行对比，如不变则不进行更新。这样的`render`和虚拟`DOM`的 对比 明显是在浪费，如下图（黄色表示浪费的`render`和虚拟`DOM`对比）
 
-![](http://img1.tuicool.com/ZVv2qqB.jpg)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-5bc0acef05010da5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **Tips**
 
@@ -80,22 +81,25 @@ if (__DEV__) {
 - 打开`console`面板，先输入 `Perf.start()` 执行一些组件操作，引起数据变动，组件更新，然后输入 `Perf.stop()` 。（建议一次只执行一个操作，好进行分析）
 - 再输入 `Perf.printInclusive` 查看所有涉及到的组件`render`，如下图（官方图片）
 
-![](http://img2.tuicool.com/vUNZnyU.png)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d922b251e7fee2e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 > 或者输入`Perf.printWasted()`查看下不需要的的浪费组件`render`
 
-![](http://img0.tuicool.com/IB32EjE.png)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-c3e18e5d32c9cf13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 优化前
 
-![](http://img2.tuicool.com/Ffmu2qf.png)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-4adbca1f43f43ae1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 优化后
 
-![](http://img2.tuicool.com/uQ7nae2.png!web)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-bcd5da4271d03439.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 ## 五、参考文章
 
 - [react官方的性能优化optimizing-performance](https://reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-chrome-performance-tab)
+
 
