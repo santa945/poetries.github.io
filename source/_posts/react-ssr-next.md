@@ -697,4 +697,58 @@ const connectedPage = connect(
 export default withRedux(initializeStore)(connectedPage);
 ```
 
+### 3.6 处理styled-components样式
+
+> 在`pages/_document.js`中处理
+
+```jsx
+import Document, { Head, Main, NextScript } from 'next/document'
+import { ServerStyleSheet } from 'styled-components'
+
+const pro = process.env.NODE_ENV === 'production'
+const path = pro ? 'https://cdn.yesdat.com' : ''
+
+export default class MyDocument extends Document {
+  static getInitialProps({ renderPage }) {
+    // 新建一个样式表
+    const sheet = new ServerStyleSheet() 
+    
+    // 收集样式
+    const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const styleTags = sheet.getStyleElement()
+
+    const {
+      html, head, errorHtml, chunks,
+    } = renderPage()
+
+    return {
+      html, head, errorHtml, chunks,...page, styleTags
+    }
+  }
+  render() {
+    return (
+      <html lang="en">
+        <Head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+          <meta name="theme-color" content="#000000" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-touch-fullscreen" content="yes" />
+          <link rel="stylesheet" href={`${path}/static/styles/antd_mobile_min.css`} />
+          <link rel="stylesheet" href={`${path}/static/styles/app_min.css?8`} />
+          <link rel="stylesheet" href={`${path}/static/styles/nprogress.css`} />
+          <link rel="stylesheet" href={`${path}/static/styles/index.css`} />
+          {/* styled-components样式*/}
+          <style>{this.props.styleTags}</style>
+        </Head>
+        <body>
+          {this.props.customValue}
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    )
+  }
+}
+```
 
