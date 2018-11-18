@@ -467,3 +467,234 @@ $ npm run start
 ### 2.10 完整代码示例
 
 > https://github.com/poetries/react-next
+
+## 三、更多须知
+
+### 3.1 创建 `/static` 文件夹，存放静态资源
+
+> 静态资源文件夹文件会映射到 `/static/` 路由下，直接通过 `http://localhost:3000/static/test.png` 访问
+
+### 3.2 使用内置组件 `<head>` 定制每个页面的 `head` 部分
+
+```jsx
+import Head from 'next/head'; // 引入内置组件
+
+export default () => (
+   <div>
+      <Head>
+         <title>index page</title>
+         <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+      </Head>
+      <div>this is index page</div>
+   </div>
+);
+```
+
+### 3.3 使用内置组件 `<Link>` 进行路由跳转
+
+```jsx
+import Link from 'next/link';
+
+export default () => (
+   <div>
+      <p>this is home index page</p>
+      <Link href="/about">
+         <a> to about page</a>
+      </Link>
+   </div>
+);
+```
+
+**更多 Link 使用方式**
+
+```jsx
+import React, {Component} from 'react';
+import Link from 'next/link';
+
+export default class About extends Component {
+   constructor(props) {
+      super(props);
+   }
+   render() {
+      // href 值可以是一个对象
+      const href = {
+         pathname: '/home',
+         query: {name: 'test'}
+      };
+
+      return (
+        <div>
+           <p>this is about page </p>
+           <img src="/static/test.png" alt="test"/>
+           {/* replace 覆盖历史跳转 */}
+           <Link href={href} replace>
+            <a>click to home index page</a>
+           </Link>
+        </div> 
+      );
+   }
+}
+```
+
+### 3.4 使用内置 `router` 方法，手动触发路由跳转
+
+> `next/router` 提供一套方法和属性，帮助确认当前页面路由参数，和手动触发路由跳转
+
+```js
+import router from 'next/router';
+/*
+    router.pathname  ==> /home
+    router.query ==> {}
+    router.route - 当前路由
+    asPath - 显示在浏览器地址栏的实际的路由
+    push(url, as=url) - 跳转页面的方法
+    replace(url, as=url) - 跳转页面
+*/
+```
+
+> 更好的方式使用路由 – `router` 的 `withRouter` 方法
+
+```jsx
+import Link from 'next/link';
+import {withRouter} from 'next/router';
+
+const Home = (props) => {
+    // 这里的 props 会得到 {router, url} 两个属性
+    // router: {push: ƒ, replace: ƒ, reload: ƒ, back: ƒ, prefetch: ƒ, …}
+    // url: {query: {…}, pathname: "/home", asPath: "/home?name=test", back: ƒ, push: ƒ, …}
+   console.log(props);
+   return (
+      <div>
+         <p>this is home index page </p>
+         {/* <Link href="/about">
+            <a> to about page</a>
+         </Link> */}
+      </div>
+   );
+}
+
+export default withRouter(Home);
+```
+
+### 3.5 使用 `next-redux-wrapper` 插件辅助实现 `redux`
+
+**1. 安装依赖**
+
+```
+sudo yarn add next-redux-wrapper redux react-redux redux-devtools-extension redux-thunk
+```
+
+**2. 创建 initializeStore.js 一个可以返回 store 实例的函数**
+
+> 在这个文件中会完成装载中间件、绑定`reducer`、链接浏览器的`redux`调试工具等操作
+
+```jsx
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension'; 
+import thunk from 'redux-thunk';
+import reducer from '../modules/reducers';
+
+const middleware = [thunk];
+const initializeStore = initialState => {
+   return createStore(
+         reducer, 
+         initialState, 
+         composeWithDevTools(applyMiddleware(...middleware))
+      );
+};
+
+export default initializeStore;
+```
+
+**3. 创建 reducer , action**
+
+> 与普通 `react-redux` 项目创建 `reducer`, `action` 的方法一致，我把这部分代码都提取到一个名为 `modules`的文件夹中
+
+
+```js
+// /modules/reducers.js
+import { combineReducers } from 'redux';
+import about from './about/reducer';
+
+// 合并到主reducer
+const reducers = {
+   about
+};
+
+// combineReducers() 函数用于将分离的 reducer 合并为一个 reducer 
+export default combineReducers(reducers);
+```
+
+```js
+// /modules/about/reudcer.js 
+// /about 页面的 reducer
+import {
+   CHANGE_COUNT
+} from '../types-constant';
+
+const initialState = {
+   count: 0
+};
+
+const typesCommands = {
+   [CHANGE_COUNT](state, action) {
+      return Object.assign({}, state, { count: action.msg });
+   },
+}
+
+export default function home(state = initialState, action) {
+   const actionResponse = typesCommands[action.type];
+
+   return actionResponse ? actionResponse(state, action) : state;
+}
+```
+
+```js
+// /modules/about/actions.js
+// /about 页面的 action
+import {
+   CHANGE_COUNT
+} from '../types-constant';
+
+export function changeCount(newCount) {
+   return {
+      type: CHANGE_COUNT,
+      msg: newCount
+   };
+}
+```
+
+**4. 页面中使用**
+
+> 需要用到 `next-redux-wrapper` 提供的 `withRedux` 高阶函数，以及 `react-redux` 提供的 `connect` 高阶函数
+
+```jsx
+import React, { Component } from 'react';
+import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import AboutCom from '../components/About/index';
+import initializeStore from '../store/initializeStore';
+import { changeCount } from '../modules/about/actions';
+
+class About extends Component {
+   constructor(props) {
+      super(props);
+   }
+   render() {
+      const { about: { count }, changeCount } = this.props;
+      return <AboutCom count={count} changeCount={changeCount} />;
+   }
+}
+
+const connectedPage = connect(
+   state => ({ about: state.about }),
+   dispatch => ({
+      changeCount: bindActionCreators(changeCount, dispatch)
+   })
+)(About);
+
+export default withRedux(initializeStore)(connectedPage);
+```
+
+
