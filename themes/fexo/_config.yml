@@ -202,3 +202,7 @@ gitalk:
   ClientSecret: b9039ec056cf5c2346b3cdb63308a28c163f91e5
   adminUser: poetries #指定可初始化评论账户
   distractionFreeMode: true
+  
+# Online contact 
+daovoice: true
+daovoice_app_id: 9d241ea0  #这里输入获取的app_id
