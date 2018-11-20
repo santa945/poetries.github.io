@@ -200,5 +200,5 @@ gitalk:
   owner: poetries
   ClientID: 5567a2c4abb858009d96
   ClientSecret: b9039ec056cf5c2346b3cdb63308a28c163f91e5
-  adminUser: poetries #指定可初始化评论账户
+  adminUser: '' #指定可初始化评论账户
   distractionFreeMode: true
