@@ -1,5 +1,5 @@
 ---
-title: webpack之BundleAnalyzer分析
+title: webpack打包结果依赖分析
 date: 2018-11-20 23:12:08
 tags: 
    - webpack
