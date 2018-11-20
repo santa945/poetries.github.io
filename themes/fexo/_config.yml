@@ -191,6 +191,8 @@ project:
     url: http://blog.poetries.top/music-player
     intro: 一个H5音频播放器
  
+backtop:
+  archive: true
 
 # 评论配置
 gitalk:
