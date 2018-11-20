@@ -27,6 +27,8 @@
 
 
     </div>
+    <i class="iconfont" id="toc-eye" style="display:inline-block;color:#b36619;position:absolute;top:72px;right:233px;cursor:pointer;
+    font-size: 24px;">&#xe61c;</i>
   </header>
 
   <div class="article-content">
@@ -55,6 +57,7 @@
 	
 
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>	
+  
 <script type="text/javascript">
 
 
@@ -130,6 +133,12 @@
 
           
 
+	$("#toc-eye").click(function(){
+	$("#toc.toc-article").toggle(1000);
+	$(this).css({
+		"right":"265px"
+	});
 
+});
 
 </script>
