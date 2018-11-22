@@ -1245,7 +1245,11 @@ server {
 }
 ```
 
-## 十三、精品文章参考
+## 十三、Nginx思维导图
+
+![nginx](https://upload-images.jianshu.io/upload_images/1480597-f6a3fd62b01d77f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 十四、精品文章参考
 
 - [负载均衡原理的解析](https://my.oschina.net/u/3341316/blog/877206)
 - [Nginx泛域名解析，实现多个二级域名 ](http://blog.githuber.cn/posts/73)
