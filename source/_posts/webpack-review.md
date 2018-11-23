@@ -1399,7 +1399,7 @@ module.exports = {
 npm i jquery
 ```
 
-```
+```js
 module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
@@ -1412,7 +1412,7 @@ module.exports = {
 
 引入本地`libs`中的`jQuery`
 
-```
+```js
 module.exports = {
     resolve: {
         alias: {
@@ -1599,8 +1599,1411 @@ module.exports = {
 
 ## 五、Webpack 环境配置
 
+### 5.1 Webpack Watch Mode
+
+```js
+webpack --watch
+
+// 简写
+webpack -w
+```
+
+```js
+//webpack.config.js
+
+var webpack = require('wepback')
+var PurifyWebpack = require('pruifycss-webpack')
+var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var CleanWebpack = require('clean-webpacl-plugin')
+
+var path = require('path')
+var glob = rquire('glob-all')//处理多个路径
+
+var extractLess = new ExtractTextWebpackPlugin({
+    filename: 'css/[name]-bundle-[hash:5].css'
+})
+
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name]-bundle-[hash:5].js'
+    },
+    module:{
+        rules: [
+            {
+                test: /\.(css|less)$/,
+                use:
+                extractLess.extract({
+                    // 提取css并不会自动加入到文档中，需要在HTML手动加入css文件
+                    fallback: {
+                        loader: 'style-loader',
+                        options: { 
+                           //合并多个style为一个
+                            singleton:true
+                        }
+                    },
+                    // 处理css
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                               minimize:true,
+                               modules: true,
+                               // css模块化
+                               localIdentName: '[path][name]_[local]_[hash:base64:5]'
+                        }
+                        },
+                        {
+                            loader: 'less-loader'
+                        },
+                        {
+                            loader: 'sass-loader'
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                ident: 'postcss',
+                                plugins: [
+                                    // 合并雪碧图
+                                    require('postcss-sprites')({
+                                        // 指定雪碧图输出路径
+                                        spritePath: 'dist/assets/imgs/sprites',
+                                        retina: true // 处理苹果高清retina 图片命名需要 xx@2x.png,对应的图片的css大小设置也要减小一半 
+                                    })
+                                ]
+                            }
+                        }
+                    ]
+                })
+            }
+        ]
+    }
+    plugin: [
+        new CleanWebpack()
+    ]
+}
+```
 
 
+### 5.2 Webpack Dev Server
+
+#### 5.2.1 Dev Server
+
+> 不能用来直接打包文件，`Dev Server`搭建本地开发，文件存在内存中
+
+**特性**
+
+- `live reloading`
+- 路径重定向
+- 支持`HTTPS`
+- 浏览器中显示编译错误
+- 接口代理
+- 模块热更新
+
+
+**dev server**
+
+- `inline`
+- `contentBase`
+- `port`
+- `histApiFllback`
+- `https`
+- `proxy`
+- `hot`
+- `openpage`
+- `lazy`
+- `overlay` 开启错误遮罩
+
+**使用**
+
+```
+"script"{
+    // 启动
+    "server": "webpack-dev-server --open" 
+}
+```
+
+```js
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash:5].js'
+    },
+    
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+       // historyApiFallback: true
+        historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            rewrites: [
+                {
+                    from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+                    to: function(context){
+                        return '/' + context.match[1] + context.match[2] + '.html'
+                    }
+                }
+            ]
+            ]
+        }
+    }
+}
+```
+
+
+#### 5.2.2 proxy代理远程接口
+
+- 代理远程接口请求
+- `http-proxy-middleware`
+- `devServer.proxy`
+
+```js
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash:5].js'
+    },
+    
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+       // historyApiFallback: true
+        historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            rewrites: [
+                {
+                    from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+                    to: function(context){
+                        return '/' + context.match[1] + context.match[2] + '.html'
+                    }
+                }
+            ]
+            ]
+        },
+        proxy: {
+            '/api': {
+                target: 'https://blog.poetries.top',//代理到服务器
+                changeOrigin:true,
+                logLevel: 'debug',
+                // pathRewite: { },
+                headers:{}// 请求头
+            }
+        }
+    }
+}
+```
+
+#### 5.2.3 模块热更新
+
+- 保持应用的数据状态
+- 节省调试时间
+- 不需要刷新
+
+- `devServer.hot`
+- `webpack.HotModleReplacementPlugin`
+- `webpack.NamedModulesPlugin` 看到模块更新的路径
+
+
+**Module Hot Reloading**
+
+- `module.hot`
+- `module.hot.accept`
+
+
+```js
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash:5].js'
+    },
+    
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+       // historyApiFallback: true
+        historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            rewrites: [
+                {
+                    from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+                    to: function(context){
+                        return '/' + context.match[1] + context.match[2] + '.html'
+                    }
+                }
+            ]
+            ]
+        },
+        hot:true,//开启模块热更新
+        hotOnly:true,
+        proxy: {
+            '/api': {
+                target: 'https://blog.poetries.top',//代理到服务器
+                changeOrigin:true,
+                logLevel: 'debug',
+                // pathRewite: { },
+                headers:{}// 请求头
+            }
+        }
+    },
+    plugin:[
+        // 模块热更新插件
+        new webpack.HotModuleReplacementPlugin()
+        
+        // 输出热更新路径
+        new webpack.NamedModulesPlugin()
+    ]
+}
+```
+
+**模块热更新配置**
+
+> 需要通过module.hot
+
+```js
+f (module.hot) {
+  module.hot.accept('./library.js', function() {
+    // Do something with the updated library module...
+  })
+}
+```
+
+
+
+#### 5.2.4 开启调试SourceMap
+
+**Source Map调试**
+
+把生成以后代码和之前的做一个映射
+
+> 开启Source Map方式
+
+**`JS Source Map`设置**
+
+develpoment
+
+- `eval`
+- `eval-source-map`
+- `cheap-eval-source-map`
+- `cheap-module-eval-source-map`
+
+> 推荐使用`cheap-module-source-map`
+
+production
+
+- `source-map`
+- `hidden-source-map`
+- `nosource-source-map`
+
+> 推荐使用`source-map`
+
+**`CSS Source Map`设置**
+
+> 改变`loader`的`options`选项
+
+- `css-loader.options.soucemap`
+- `less-loader.options.soucemap`
+- `sass-loader.options.soucemap`
+
+
+```js
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash:5].js'
+    },
+    module: {
+        // 处理css的每个loader加上sourceMap: true 观察css样式 可以看到对应的行号
+        rules: [
+            test: /\.less/,
+            use: [
+                {
+                    loader: 'style-loader',
+                    options: {
+                        // singleton: true,会导致css的sourceMap不生效
+                        //singleton: true,
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        importLoaders: 2,
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'less-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }
+            ]
+        ]
+    },
+    devtool: 'cheap-module-eval-source-map',//开启sourcemap
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+       // historyApiFallback: true
+        historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            rewrites: [
+                {
+                    from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+                    to: function(context){
+                        return '/' + context.match[1] + context.match[2] + '.html'
+                    }
+                }
+            ]
+            ]
+        },
+        hot:true,//开启模块热更新
+        hotOnly:true,
+        overlay:true,//错误提示
+        proxy: {
+            '/api': {
+                target: 'https://blog.poetries.top',//代理到服务器
+                changeOrigin:true,
+                logLevel: 'debug',
+                // pathRewite: { },
+                headers:{}// 请求头
+            }
+        }
+    },
+    plugin:[
+        // 模块热更新插件
+        new webpack.HotModuleReplacementPlugin()
+        
+        // 输出热更新路径
+        new webpack.NamedModulesPlugin()
+    ]
+}
+```
+
+#### 5.2.5 设置 ESLint 检查代码格式
+
+- `eslint`
+- `eslint-loader`
+- `esling-plugin-html`
+- `eslint-frindly-formatter` 友好提示错误
+
+**配置eslint**
+
+- `wepback config` 新增`loader`
+- `.eslintrc`或者在`package.json`的`eslintConfig`中写
+
+> 配置eslint的规范，推荐使用JavaScript standard style(https://standardjs.com)
+
+需要安装以下插件
+
+- `eslint-config-standard`
+- `eslint-plugin-promise`
+- `eslint-plugin-standard`
+- `eslint-plugin-import`
+- `eslint-plugin-node`
+
+
+**eslint-loader**
+
+- `options.failOnWarning` 出现警告
+- `options.failOnError`
+- `options.formatter`
+- `options.outputReport`
+
+> 设置 `devServer.overlay`在浏览器中看提示的错误
+
+```js
+// .eslintrc
+
+module.exports = {
+    root: true,
+    extends: 'standard',
+    plugins: [],
+    env: {
+        browsers: true,
+        node: true // node环境
+    },
+    rules: {
+        // 缩进
+        indent: ['error', 4],
+        
+        //换行
+        "eol-last": ['error', 'never']
+    }
+}
+```
+
+```js
+module.exports = {
+    entry: {
+        app: './src/app.js'
+    },
+    
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash:5].js'
+    },
+    module: {
+        // 处理css的每个loader加上sourceMap: true 观察css样式 可以看到对应的行号
+        rules: [
+            {
+                test: /\.js$/,
+                include: [path.resolve(__dirname,'src/')],
+                exclude: [path.resolve(__dirname,'src/libs')],
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['env']
+                        }
+                    },
+                    //eslint-loader需要在babel-loader之后处理
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            formatter: require('eslint-frindly-formatter')
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.less/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            // singleton: true,会导致css的sourceMap不生效
+                            //singleton: true,
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 2,
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    devtool: 'cheap-module-eval-source-map',//开启sourcemap
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+       // historyApiFallback: true
+        historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            rewrites: [
+                {
+                    from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+                    to: function(context){
+                        return '/' + context.match[1] + context.match[2] + '.html'
+                    }
+                }
+            ]
+            ]
+        },
+        hot:true,//开启模块热更新
+        hotOnly:true,
+        overlay:true,//错误提示
+        proxy: {
+            '/api': {
+                target: 'http://blog.poetries.top',//代理到服务器
+                changeOrigin:true,
+                logLevel: 'debug',
+                // pathRewite: { },
+                headers:{}// 请求头
+            }
+        }
+    },
+    plugin:[
+        // 模块热更新插件
+        new webpack.HotModuleReplacementPlugin()
+        
+        // 输出热更新路径
+        new webpack.NamedModulesPlugin()
+    ]
+}
+```
+
+#### 5.2.6 区分开发环境 和 生产环境
+
+**开发环境**
+
+- 模块热更新
+- `sourceMap`
+- 接口代理
+- 代码规范检查
+
+**生产环境**
+
+- 提取公共代码
+- 压缩
+- 文件压缩或`base64`编码
+- 去除无用的代码
+
+**共同点**
+
+- 入口一致
+- loader处理
+- 解析配置一致
+
+> 使用`webpack-merge`合并公共配置
+
+- `webpack.dev.conf.js`
+- `wepback.prod.conf.js`
+- `webpack.common.conf.js`
+
+```json
+"scripts":{
+    "server": "wepback-dev-server --env development --open --config build/webpack.common.config.js",
+    "build": "wepback --env production --open --config build/webpack.common.config.js"
+}
+```
+
+> 公共配置 `build/webpack.common.conf.js`
+
+```js
+const merge = require('webpack-merge')
+const webpack = require('webpack')
+const path = require('path')
+
+const chalk = require('chalk')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+
+const developmentConfig = require('./webpack.dev.conf')
+const productionConfig = require('./webpack.prod.conf')
+
+
+// 根据环境变量生成配置
+const generateConfig = env =>{
+    const extractLess = new ExtractTextWebpackPlugin({
+        filename: 'css/[name]-bundle-[hash:5].css'
+    })
+    const scriptLoader = [
+      'babel-loader'
+    ].concat(env === 'production'
+      ? []
+      : [{
+          loader: 'eslint-loader',
+          options: {
+              formatter: require('eslint-friendly-formatter')
+          }
+      }]
+    )
+    const cssLoaders = [
+      {
+          loader: 'css-loader',
+          options: {
+              importLoaders: 2,
+              sourceMap: env==='development'
+          }
+      },
+      {
+        loader: "postcss-loader",
+        options: {
+          ident: "postcss",
+          sourceMap: env==='development',
+          plugins: [
+
+          ].concat(env==='production'
+            ? require('postcss-sprites')({
+              spritePath: 'build/assets/imgs/sprites',
+              retina: true
+            })
+            :[]
+          )
+        }
+      },
+      {
+          loader: 'less-loader',
+          options: {
+              sourceMap: env==='development'
+          }
+      }
+    ]
+    const styleLoader = env === 'production'
+          // 线上需要提取css成文件
+          ? extractLess.extract({
+            fallback:'style-loader',
+            use: cssLoaders
+          })
+          : ['style-loader'].concat(cssLoaders)
+
+    const fileLoader = env === 'development'
+        ? [{
+            loader: 'file-loader',
+            options: {
+              name: '[name]-[hash:5].[ext]',
+              outputPath: 'assets/imgs/'
+            }
+          }]
+        : [{
+          loader: 'url-loader',
+          options: {
+            name: '[name]-[hash:5].[ext]',
+            limit: 1000,//1k
+            outputPath: 'assets/imgs/'
+          }
+        }]
+
+    return {
+      entry: {
+          app: './src/index.js'
+      },
+      output: {
+          path: path.resolve(__dirname, '../build'),
+          publicPath: '/',
+          filename: '[name]-bundle-[hash:5].js'
+      },
+      // 路径解析
+      resolve: {
+          alias: {
+              // jquery$: path.resolve(__dirname, '../src/libs/jquery.min.js')
+          }
+      },
+      module: {
+          rules: [
+              {
+                  test: /\.(js|jsx)$/,
+                  include: [path.resolve(__dirname,'../src/')],
+                  exclude : /node_modules/,
+                  use: scriptLoader
+              },
+              {
+                  test: /\.(less|css|scss)/,
+                  use: styleLoader
+              },
+              {
+                test: /\.(png|jpg|jpeg|gif)$/,
+                use: fileLoader.concat(env==='production'
+                  ? [
+                    {
+                      loader: 'img-loader',
+                      options: {
+                        pngquant: {
+                          quality: 80
+                        }
+                      }
+                    }
+                  ]
+                  : []
+                )
+              },
+              {
+                test: /\.(eot|woff2?|ttf|svg)$/,
+                use: fileLoader
+              }
+          ]
+      },
+      plugins: [
+        extractLess,
+
+        new ProgressBarPlugin({
+          format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+          clear: false
+        }),
+        new HtmlWebpackPlugin({
+    			inject: true,
+    			template: path.resolve(__dirname,'../public/index.html'),
+          minify: {
+            collapseWhitespace: true
+          }
+    		}),
+        new webpack.ProvidePlugin({
+          $: 'jquery'
+        })
+      ]
+    }
+}
+
+
+module.exports = env =>{
+  const config = env==='development' ? developmentConfig : productionConfig
+  return merge(generateConfig(env),config)
+}
+```
+
+
+> 开发环境配置 `build/webpack.dev.conf.js`
+
+```js
+const webpack = require('webpack')
+const path = require('path')
+
+module.exports = {
+    devtool: 'cheap-module-eval-source-map',//开启sourcemap
+    devServer: {
+        port: 9001,
+        // 输入任意路径都不会出现404 都会重定向
+        historyApiFallback: true,
+        // historyApiFallback: {
+            //从一个确定的url指向对应的文件
+            //rewrites: [
+            //    {
+            //        from: '/pages/a',// 可以写正则
+           //         to: '/pages/a.html'
+            //    }
+            // rewrites: [
+            //     {
+            //         from: /^\/([a-zA-Z0-9]+\/?)([a-zA-Z0-9]+)/
+            //         to: function(context){
+            //             return '/' + context.match[1] + context.match[2] + '.html'
+            //         }
+            //     }
+            // ]
+        // },
+        hot:true,//开启模块热更新
+        hotOnly:true,
+        overlay:true,//错误提示
+        proxy: {
+            '/api': {
+                // target: 'http://blog.poetries.top',//代理到服务器
+                changeOrigin:true,
+                logLevel: 'debug',
+                // pathRewite: { },
+                headers:{}// 请求头
+            }
+        }
+    },
+    plugins: [
+      // 模块热更新插件
+       new webpack.HotModuleReplacementPlugin(),
+
+       // 输出热更新路径
+       new webpack.NamedModulesPlugin()
+    ]
+}
+
+
+```
+
+
+> 生产环境配置 `build/webpack.prod.conf.js`
+
+```js
+const webpack = require('webpack')
+const PurifyCssWebpack = require('purifycss-webpack')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+
+const path = require('path')
+const glob = require('glob-all')//处理多个路径
+
+module.exports = {
+  plugins: [
+    new PurifyCssWebpack({
+      paths: glob.sync([
+        './*html',
+        './src/*js'
+      ])
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
+    }),
+    new HtmlWebpackPlugin({
+      inlineChunks: ['manifest']
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new CleanWebpackPlugin(['../build'])
+  ]
+}
+```
+
+
+### 5.3 使用 middleware 来搭建开发环境
+
+> 可以更灵活配置,需要以下插件搭建
+
+- `Express or koa`
+- `webpack-dev-middleware`
+- `webpack-hot-middleware` 热更新
+- `http-proxy-middleware` 代理
+- `connect-history-api-fallback` 地址rewrite
+- `opn` 命令工具打开浏览器页面
+
+```js
+// build/server.js
+
+/**
+ * 使用middleware搭建服务:更灵活配置,不在使用webpack-dev-server
+ * @type {[type]}
+ */
+
+const express = require('express')
+const webpack = require('webpack')
+const opn = require('opn')
+
+const app = express()
+const port = 3000
+
+//把express和配置联合起来 需要用到middleware
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
+const proxyMiddleware = require('http-proxy-middleware')
+const historyApiFallback = require('connect-history-api-fallback')
+
+const config = require('./webpack.common.conf')({env:'development'})
+const compiler = webpack(config) //给express使用
+
+const proxyTable = require('./proxy')
+
+for(let context in proxyTable){
+  app.use(proxyMiddleware(context, proxyTable[context]))
+}
+
+app.use(historyApiFallback(require('./historyfallback')))
+
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}))
+
+app.use(webpackHotMiddleware(compiler))
+
+
+app.listen(port, function(){
+  console.log('> Ready on:' + port)
+  opn('http://localhost:' + port)
+})
+```
 
 
 ## 六、webpack实战场景
+
+### 6.1 分析打包结果
+
+> http://blog.poetries.top/2018/11/20/webpack-bundleAnalyzer/
+
+
+### 6.2 优化打包速度
+
+
+#### 6.2.1 方法一：分开vendor和app
+
+> 分开第三方代码和业务代码，借助`DllPlugin`和`DllReferencePlugin`
+
+**之前的打包时间**
+
+> 现在我们来优化这个时间
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-016eedc71c63fdb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**第一步：新建`webpack.dll.conf.js`**
+
+```js
+// build/webpack.dll.conf.js
+
+const path = require('path')
+const webpack = require('webpack')
+
+module.exports = {
+  entry: {
+    // 把这些资源打包成dll，提高编译速度
+    react: ['react','react-router-dom','redux','redux-immutable','immutable','react-redux','react-router','redux-logger','redux-thunk','styled-components'],
+    ui: ['antd-mobile','antd'],
+    others: ['react-icons','axios','clipboard','humps','lodash','md5','moment','normalizr']
+  },
+  output: {
+    path: path.resolve(__dirname, "../dll/"),
+    filename: '[name].dll.js',
+    library: '[name]'
+  },
+  plugins: [
+    new webpack.DllPlugin({
+      path: path.join(__dirname,'../dll/','[name]-manifest.json'),
+      name: '[name]'
+    }),
+    new webpack.optimize.UglifyJsPlugin()
+  ]
+}
+
+```
+**第二步：加一个命令**
+
+```js
+// package.json
+"scripts": {
+  "dll": "webpack --config config/webpack.dll.conf.js"
+}
+```
+
+> 执行`npm run dll`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-bed6305c04fb2197.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**第三步： 在plugins中增加配置**
+
+```js
+// build/webpack.prod.conf.js
+module.exports = {
+   plugins: [
+        new webpack.DllReferencePlugin({
+          manifest: require('../dll/react-manifest.json')
+        }),
+        new webpack.DllReferencePlugin({
+          manifest: require('../dll/ui-manifest.json')
+        }),
+        new webpack.DllReferencePlugin({
+          manifest: require('../dll/others-manifest.json')
+        })
+   ]
+}
+```
+
+> 再次执行`npm run build`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-bd2b95bbac325e1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+编译时间大大减少了
+
+
+#### 6.2.2 方法二：UglifyJsPlugin并行处理
+
+**UglifyJsPlugin**
+
+- `parallel`
+- `cache`
+
+```js
+// build/webpack.prod.conf.js
+module.exports = {
+   plugins: [
+        new UglifyJsPlugin({
+          parallel:true, //并行处理
+          cache: true
+        })
+   ]
+}
+```
+
+
+#### 6.2.3 方法三：happyPack
+
+> `happyPack`把所有串行的东西并行处理,使得`loader`并行处理，较少文件处理时间
+
+https://www.npmjs.com/package/happypack
+
+```js
+// build/webpack.prod.conf.js
+
+// @file: webpack.config.js
+const HappyPack = require('happypack');
+ 
+exports.module = {
+  rules: [
+    {
+      test: /.js$/,
+      // 1) replace your original list of loaders with "happypack/loader":
+      // loaders: [ 'babel-loader?presets[]=es2015' ],
+      use: 'happypack/loader',
+      include: [ /* ... */ ],
+      exclude: [ /* ... */ ]
+    }
+  ],
+  plugins: [
+     // 2) create the plugin:
+    new HappyPack({
+        // 3) re-add the loaders you replaced above in #1:
+        loaders: [ 'babel-loader?presets[]=es2015' ]
+    })
+  ]
+}
+```
+
+这时的编译时间也减小了一些
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-1cee221ca808dce0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+
+#### 6.2.4 方法四：较少babel-loader编译时间
+
+**babel-loader**
+
+> 开启缓存，指定编译范围
+
+- `options.cache`
+- `include`
+- `exclude`
+
+#### 6.2.5 其他
+
+- 减少`resolve`
+- `Devtool`去除`sourcemap`
+- `cache-loader`
+- 升级`node`
+- 升级`webpack`
+
+
+### 6.3 长缓存优化
+
+**场景**
+
+> 改变`app`代码，`vendor`变化
+
+**解决**
+
+- 提取`vendor`
+- `hash`--> `chunkhash`(把`hash`变为代码块的`hash`，而不是文件的`hash`)
+- 提取`webpack runtime`
+
+```js
+output: {
+    path: path.resolve(__dirname, '../build/'),
+    filename: 'static/js/[name].[chunkhash:5].js',
+    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    publicPath: '/' //浏览器中访问资源的路径
+}
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-ba288a15ef308d53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 每次打包`vendor`都不会变化，这样就达到了缓存的目的（服务端开启`cache-ctrol`）
+
+**场景：引入新模块，模块顺序变化，vendor hash变化**
+
+> 解决： `NamedChunksPlugin` `NamedModulesPlugin`
+
+对于动态模块引入需要给名称
+
+### 6.4 多页面应用
+
+#### 6.4.1 多页面特点
+
+- 多入口
+- 多页面`HTML`
+- 每个页面不同的`chunk`
+- 每个页面不同的参数
+
+#### 6.4.2 多页面多配置
+
+> `wepback从3.1.0`开始支持
+
+ **优点**：
+ - 可以使用`parallel-webpack`(并行处理多份配置)提高打包速度
+- 配置更独立、灵活
+
+**缺点**
+
+- 不能多页面之间共享代码
+
+```js
+//package.json
+
+{
+  "name": "多页面配置",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "clean-webpack-plugin": "^1.0.0",
+    "css-loader": "^1.0.1",
+    "ejs-loader": "^0.3.1",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.3.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.26.0",
+    "webpack-merge": "^4.1.4"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^4.0.0-beta.0"
+  }
+}
+
+```
+
+
+```js
+/**
+ * 多页面多配置
+ * @type {[type]}
+ */
+
+const merge = require('webpack-merge')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpack = require('clean-webpack-plugin')
+const ExtractTextwebpack = require('extract-text-webpack-plugin')
+
+const path = require('path')
+
+const baseConfig = {
+    mode: 'development',
+    entry: {
+        react: 'react'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: ExtractTextwebpack.extract({
+            fallback: 'style-loader',
+            use: 'css-loader'
+          })
+        }
+      ]
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'js/[name].[chunkhash].js'
+    },
+    plugins: [
+        new ExtractTextwebpack({
+          filename: 'css/[name].[hash].css'
+        }),
+        new CleanWebpack(['./dist'])
+    ],
+    optimization: {
+      splitChunks: {
+          cacheGroups: {
+              commons: {
+                  // commons里面的name就是生成的共享模块bundle的名字
+                  name: "react",
+                  // chunks 有三个可选值，”initial”, “async” 和 “all”. 分别对应优化时只选择初始的chunks，所需要的chunks 还是所有chunks
+                  chunks: "initial",
+                  minChunks: Infinity
+              }
+          }
+      }
+    }
+}
+
+//生成每个页面配置
+const generatePage = function({
+    title = '',
+    entry = '',
+    template = './src/index.html',
+    name = '',
+    chunks = []
+} = {}){
+    return {
+        entry,
+        plugins: [
+            new HtmlWebpackPlugin({
+                chunks,
+                template:`!!html-loader!${template}`,
+                filename: name + '.html'
+            })
+        ]
+    }
+}
+
+const pages = [
+  generatePage({
+      title: 'page A',
+      entry: {
+        a: './src/pages/a'
+      },
+      name: 'a',
+      chunks: ['react','a']
+  }),
+  generatePage({
+      title: 'page B',
+      entry: {
+        b: './src/pages/b'
+      },
+      name: 'b',
+      chunks: ['react','b']
+  }),
+  generatePage({
+      title: 'page C',
+      entry: {
+        c: './src/pages/c'
+      },
+      name: 'c',
+      chunks: ['react','c']
+  })
+]
+
+module.exports = pages.map(page=>merge(baseConfig, page))
+
+```
+
+
+
+
+
+#### 6.4.3 多页面单配置
+
+> 多个页面共享一个配置
+
+- 优点：可以共享各个`entry`之间公用代码
+- 缺点：打包速度比较慢，输出的内容比较复杂
+
+
+
+```js
+/**
+ * 多页面单配置
+ */
+
+ const merge = require('webpack-merge')
+ const webpack = require('webpack')
+ const HtmlWbpackPlugin = require('html-webpack-plugin')
+ const CleanWebpack = require('clean-webpack-plugin')
+ const ExtractTextwebpack = require("extract-text-webpack-plugin")
+
+ const path = require('path')
+
+ const baseConfig = {
+     mode: 'development',
+     entry: {
+         react: 'react'
+     },
+     module: {
+       rules: [
+         {
+           test: /\.css$/,
+           use: ExtractTextwebpack.extract({
+             fallback: 'style-loader',
+             use: 'css-loader'
+           })
+         }
+       ]
+     },
+     output: {
+         path: path.resolve(__dirname, 'dist'),
+         filename: 'js/[name].[chunkhash].js'
+     },
+     plugins: [
+         new ExtractTextwebpack({
+           filename: 'css/[name].[hash].css'
+         }),
+         new CleanWebpack(path.resolve(__dirname, 'dist'))
+     ],
+     optimization: {
+       splitChunks: {
+           cacheGroups: {
+               commons: {
+                   // commons里面的name就是生成的共享模块bundle的名字
+                   name: "react",
+                   // chunks 有三个可选值，”initial”, “async” 和 “all”. 分别对应优化时只选择初始的chunks，所需要的chunks 还是所有chunks
+                   chunks: "initial",
+                   minChunks: Infinity
+               }
+           }
+       }
+     }
+ }
+
+ //生成每个页面配置
+ const generatePage = function({
+     title = '',
+     entry = '',
+     template = './src/index.html',
+     name = '',
+     chunks = []
+ } = {}){
+     return {
+         entry,
+         plugins: [
+             new HtmlWbpackPlugin({
+                 chunks,
+                 template:`!!html-loader!${template}`,
+                 title,
+                 filename: name + '.html'
+             })
+         ]
+     }
+ }
+
+ const pages = [
+   generatePage({
+       title: 'page A',
+       entry: {
+         a: './src/pages/a'
+       },
+       name: 'a',
+       chunks: ['react','a']
+   }),
+   generatePage({
+       title: 'page B',
+       entry: {
+         b: './src/pages/b'
+       },
+       name: 'b',
+       chunks: ['react','b']
+   }),
+   generatePage({
+       title: 'page C',
+       entry: {
+         c: './src/pages/c'
+       },
+       name: 'c',
+       chunks: ['react','c']
+   })
+ ]
+
+ module.exports = merge([baseConfig].concat(pages))
+
+```
+
+> 完整例子 https://github.com/poetries/webpack-config-demo
+
+
