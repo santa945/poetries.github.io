@@ -350,6 +350,7 @@ module.exports = {
 
 ## 三、更多参考
 
+- [一些优化wepback的库](https://github.com/GoogleChromeLabs/webpack-libs-optimizations)
 - [webpack4配置详解](http://blog.poetries.top/2018/11/18/webpack4-config/)
 - [webpack4.x配置指南](https://segmentfault.com/a/1190000015592264)
 - [webpack4 化繁为简（二)](https://segmentfault.com/a/1190000015970277)
