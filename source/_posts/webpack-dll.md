@@ -7,11 +7,18 @@ tags:
 categories: Front-End
 ---
 
+> 博客链接 http://blog.poetries.top/2018/11/23/webpack-dll
+
 ## 一、webpack的dll功能
+
+> 基于`webpack3`构建
 
 ### 1.1 dll介绍
 
 > 我们构建前端项目的时候，往往希望第三方库（`vendors`）和自己写的代码可以分开打包，因为第三方库往往不需要经常打包更新。对此`Webpack`的文档建议用`CommonsChunkPlugin`来单独打包第三方库
+
+- 我们这里的`dll.js` 是提前打包好了的，而不是在每次`build`的时候去打包输出的；这样才能做到依赖包一次构建，无限次使用
+- `webpack`输出的文件名都带有`hash`值； 而用`dll`构建后输出的文件名是固定的
 
 ```js
 entry: {
@@ -32,7 +39,7 @@ new CommonsChunkPlugin({
 
 > 通常为了对抗缓存，我们会给售出文件的文件名中加入`hash`的后缀——但是——我们编辑了`app`部分的代码后，重新打包，发现`vendor`的`hash`也变化了
 
-![](https://image-static.segmentfault.com/102/099/1020993023-5787b267aa0cb_articlex)
+![image](http://upload-images.jianshu.io/upload_images/1480597-9c58ec3982be0665?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 这么一来，意味着每次发布版本的时候，vendor代码都要刷新，即使我并没有修改其中的代码。这样并不符合我们分开打包的初衷
 
@@ -68,14 +75,16 @@ module.exports = {
     others: ['react-icons','axios','clipboard','humps','lodash','md5','moment','normalizr']
   },
   output: {
-    path: path.resolve(__dirname, "../dll/"),
-    filename: '[name].dll.js',
-    library: '[name]'
+    path: path.resolve(__dirname, "../dist/static/js"),
+    filename: `[name].dll.js`,
+    library: '[name]_library'
   },
   plugins: [
-    new webpack.DllPlugin({
-      path: path.join(__dirname,'../dll/','[name]-manifest.json'),
-      name: '[name]'
+ ...Object.keys(['react','ui','others']).map(name => {
+      return new webpack.DllReferencePlugin({
+        context: '.',
+        manifest: require(`../static/${name}.manifest.json`),
+      })
     }),
     new webpack.optimize.UglifyJsPlugin()
   ]
@@ -191,6 +200,8 @@ exports.module = {
 
 ## 三、更多参考
 
+-  [Webpack 打包优化之体积篇](https://www.jeffjade.com/2017/08/06/124-webpack-packge-optimization-for-volume/)
+- [Webpack 打包优化之速度篇](https://www.jeffjade.com/2017/08/12/125-webpack-package-optimization-for-speed/)
 - [预打包Dll，实现webpack音速编译](https://segmentfault.com/a/1190000007104372)
 - [利用DllPlugin分割你的第三方库](https://juejin.im/post/5a4f031b518825733e6040c0)
 - [提高webpack的打包速度：happypack和dll打包](https://github.com/p2227/p2227.github.io/issues/21)
