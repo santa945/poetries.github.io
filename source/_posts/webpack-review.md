@@ -3007,3 +3007,6 @@ module.exports = pages.map(page=>merge(baseConfig, page))
 > 完整例子 https://github.com/poetries/webpack-config-demo
 
 
+## 七、更多学习
+
+- [webpack4.0 入门篇 - 构建前端开发的基本环境](https://juejin.im/post/5bb089e86fb9a05cd84935d0)
