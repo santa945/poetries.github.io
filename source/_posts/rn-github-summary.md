@@ -1,5 +1,5 @@
 ---
-title: React Native开发GitHub客户端(适配Ios、Android)总结
+title: RN之开发GitHub适配IOS、Android总结篇
 date: 2018-12-02 16:50:12
 tags: 
  - RN
