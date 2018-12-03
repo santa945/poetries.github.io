@@ -198,10 +198,19 @@ copyFile()
 }
 ```
 
+> 或者简单`scp`上传到服务器
+
+```
+scp -P36000  -r deployBuildFiles/.next user_00@192.168.1.201:/home/data/services/goods-prev.yesdat.com/
+```
 
 ### 3.2 部署Nginx配置规则
 
 > 在`nginx`安装目录下的`vhost`中新建一个`xx-3000.conf`的配置文件
+
+- 在Nginx目录`/etc/nginx`下执行 `sudo /usr/sbin/nginx -t` 检测配置文件是否成功
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-b20774768f5457db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ```nginx
 upstream goodsapp { // website项目的目录名称
