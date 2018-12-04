@@ -319,7 +319,7 @@ sudo /usr/local/nginx/sbin/nginx -t
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-c50950aa2d0fa38b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-> 然后在浏览器访问`http://39.108.74.36:3001`（http://公网ip:端口）即可看到，到此部署结束
+> 然后在浏览器访问`http://39.108.74.36:8080`（http://公网ip:端口）即可看到，到此部署结束
 
 
 ### 3.5 部署更多参考
