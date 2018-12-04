@@ -204,13 +204,19 @@ copyFile()
 scp -P36000  -r deployBuildFiles/.next user_00@192.168.1.201:/home/data/services/goods-prev.yesdat.com/
 ```
 
+> 更多详情 http://blog.poetries.top/2018/12/03/linux-scp
+
 ### 3.2 部署Nginx配置规则
+
+- [nginx之location的匹配规则](http://blog.poetries.top/2018/02/28/nginx-location-match-rules/)
+- [Nginx学习篇](http://blog.poetries.top/2018/02/25/nginx-study/)
 
 > 在`nginx`安装目录下的`vhost`中新建一个`xx-3000.conf`的配置文件
 
 - 在Nginx目录`/etc/nginx`下执行 `sudo /usr/sbin/nginx -t` 检测配置文件是否成功
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-b20774768f5457db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ```nginx
 upstream goodsapp { // website项目的目录名称
@@ -239,14 +245,18 @@ server {
 }
 ```
 
+> 更多配置参考 https://github.com/poetries/poetry-configure/blob/master/nginx.conf
+
 ### 3.3 本地项目根执行的命令
 
 - `pm2 deploy ecosystem.json goodsapp setup` 初始化
 - `pm2 deploy ecosystem.json goodsapp` 部署
 
 
-### 3.4 部署更多参考
+### 3.5 部署更多参考
 
 - [next.js、nuxt.js等服务端渲染框架构建的项目部署到服务器，并用PM2守护程序](https://segmentfault.com/a/1190000012774650)
 - [学习 Next.js: 部署](https://segmentfault.com/a/1190000010992618)
 - [Deployment on Nginx's reverse proxy](https://github.com/zeit/next.js/wiki/Deployment-on-Nginx's-reverse-proxy)
+- [将nodejs代码部署到阿里云服务器](https://www.cnblogs.com/neromaycry/p/7072872.html)
+- [Nginx从听说到学会](https://www.jianshu.com/p/630e2e1ca57f)
