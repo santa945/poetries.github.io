@@ -76,6 +76,8 @@ categories: Back-end
 
 ## 三、配置pm2启动文件
 
+> 部署参考 http://blog.poetries.top/2018/11/18/react-ssr-next-deploy/
+
 > 在项目根目录添加一个processes.json： 内容如下
 
 ```js
