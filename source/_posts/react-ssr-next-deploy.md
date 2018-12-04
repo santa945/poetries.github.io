@@ -165,7 +165,9 @@ copyFile()
 
 > 在项目根目录添加`pm2`的部署脚本文件 `ecosystem.json`
 
-```nginx
+> 部署文档详情：http://pm2.keymetrics.io/docs/usage/deployment/
+
+```js
 {
   "apps": [
       {
@@ -181,8 +183,8 @@ copyFile()
       }
   ],
   "deploy": {
-      // 应用名称，可以自定义，最后这样使用 pm2 deploy ecosystem.json goodsapp
-      "goodsapp": {
+      // 最后这样使用 pm2 deploy ecosystem.json production
+      "production": {
           "user": "user_00",// 服务器用户名
           "host": ['192.68.1.201'],//服务器ip地址 可写多个
           "ref": "origin/master",//从指定分支拉取代码
@@ -197,6 +199,7 @@ copyFile()
   }
 }
 ```
+
 
 > 或者简单`scp`上传到服务器
 
@@ -312,11 +315,79 @@ sudo /usr/local/nginx/sbin/nginx -t
 
 **第二步：pm2部署到服务器**
 
-> 请看以上`pm2`配置文件方式部署到服务器启动项目
+>  首先在服务端全局安装`pm2`、`npm` `node`并且建立软链
+
+```bash
+npm i pm2 -g
+```
+
+**重要：请注意：**
+
+> 一定要做建立软链这步，否则出现如下问题
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-b7ab06fbb2b468da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-c31ca4fcf895cd74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+> 建立`npm` 软链
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e7a00bce1d6464ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 建立`node` 软链
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-8f398f843d5909cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 建立`pm2` 软链
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d59e7a8766509b40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**正式部署**
+
+
+- 根目录执行`pm2 deploy deploy-app.json production setup` 初始化服务端环境
+- 根目录执行`pm2 deploy deploy-app.json production --force` 输入服务端用户root密码，部署即可
+
+> 来到`/home/production`目录查看上传的文件
+
+```js
+{
+    "apps": [
+        {
+          "name": "goodsapp-prev",
+          "script": "server.js",# 根目录server.js文件
+          "env":{
+              "COMON_VARIABLE": "true"
+          },
+          "env_production": {
+              "NODE_ENV": "production"
+          }
+        }
+    ],
+    "deploy": {
+        "production": {
+            "user": "root",//用户名
+            "host": ["39.108.74.36"], //公网ip
+            "ref": "origin/master",
+            "repo": "https://gitee.com/Poetries1/goods-prev.yesdat.com.git",
+            "path": "/home/production",
+            "ssh_options": ["StrictHostKeyChecking=no", "PasswordAuthentication=no"],
+            "post-deploy": "npm install && pm2 startOrRestart deploy-app.json --env production",
+            "pre-deploy-local": "echo 'Deploy Done!'",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+  }
+```
+
+> 更多配置信息 http://pm2.keymetrics.io/docs/usage/deployment/
+
 
 - `pm2 list`查看启动的项目
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fe5f161195b811a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-6e9e0da78cdb1121.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - `pm2 logs`查看启动日志
 
