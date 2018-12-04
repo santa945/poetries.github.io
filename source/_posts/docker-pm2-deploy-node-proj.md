@@ -121,6 +121,9 @@ curl -i localhost:8880
 
 ## 四、结合pm2部署
 
+> 部署参考 http://blog.poetries.top/2018/11/18/react-ssr-next-deploy/
+
+
 > 使用命令` pm2 start app.js` 之后, `pm2` 默认在后台运行, 如果使用了`Docker`后,容器运行并立即退出,需要手动给“`pm2`”指定参数 `--no-daemon`
 
 ```bash
