@@ -17,6 +17,8 @@ categories: Back-end
 
 ## 二、配置部署脚本文件
 
+> 部署参考 http://blog.poetries.top/2018/11/18/react-ssr-next-deploy/
+
 > 在项目根目录添加`pm2`的部署脚本文件 `ecosystem.json`
 
 ```javascript
