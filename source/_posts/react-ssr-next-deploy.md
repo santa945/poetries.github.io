@@ -281,6 +281,9 @@ server {
     }
 }
 
+# 在/usr/local/nginx/sbin/nginx/conf/nginx.conf下include创建的vhost文件
+include /etc/nginx/vhost/*.conf; # 在文件最后include配置文件
+
 # 在/usr/local/nginx/sbin/nginx/conf/nginx.conf下执行检测配置文件
 sudo /usr/local/nginx/sbin/nginx -t
 
