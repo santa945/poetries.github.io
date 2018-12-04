@@ -252,6 +252,75 @@ server {
 - `pm2 deploy ecosystem.json goodsapp setup` 初始化
 - `pm2 deploy ecosystem.json goodsapp` 部署
 
+### 3.4 部署到阿里云
+
+**第一步：配置Nginx**
+
+> 查看`Nginx`安装路径 `which nginx` 注意`/etc/nginx`和`/usr/local/nginx/`下的`nginx`区别
+
+```bash
+# 切换到Nginx当前目录下
+/usr/local/nginx/conf/
+
+# 创建vhost
+mkdir vhost
+
+# 创建goodsapp-3001.conf，内容如下
+
+server {
+    listen 8080; 
+    server_name 39.108.74.36;# 在ifconfig的拿到的ip地址或者是公网ip，这里填公网ip，如果是域名阿里云需要备案才可以正常访问
+
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_pass http://127.0.0.1:3001;# 把172.16.0.223：8080的请求转发代理到本机的3001端口
+    }
+}
+
+# 在/usr/local/nginx/sbin/nginx/conf/nginx.conf下执行检测配置文件
+sudo /usr/local/nginx/sbin/nginx -t
+
+# 重新加载Nginx配置
+/usr/local/nginx/sbin/nginx -s reload
+```
+
+> 一些注意事项
+
+- `server_name`可以是域名，也可以是`ip`。`ip`可以是本地，也可以是公网`ip`
+
+本机`ip`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-b4c23bbb8b6ef4a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+公网`ip`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-0025cb4374eaf72b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+- 阿里云防火墙规则设置
+
+> 这里访问了 `8080`需要在阿里云后台配置一下
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-474e713c0e391592.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**第二步：pm2部署到服务器**
+
+> 请看以上`pm2`配置文件方式部署到服务器启动项目
+
+- `pm2 list`查看启动的项目
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-fe5f161195b811a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+- `pm2 logs`查看启动日志
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-c50950aa2d0fa38b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 然后在浏览器访问`http://39.108.74.36:3001`（http://公网ip:端口）即可看到，到此部署结束
+
 
 ### 3.5 部署更多参考
 
