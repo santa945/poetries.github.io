@@ -21,6 +21,9 @@ categories: Back-end
 
 ## 二、pm2
 
+> 部署参考 http://blog.poetries.top/2018/11/18/react-ssr-next-deploy/
+
+
 - 安装pm2 `npm install -g pm2`
 - 运行` pm2 start app.js`
 - 查看运行状态 `pm2 list`
