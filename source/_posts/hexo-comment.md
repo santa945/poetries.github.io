@@ -63,7 +63,7 @@ categories: Front-End
 <%- partial('gitalk') %>
 ```
 
-> `/static/css/style.css`中加入
+> `/theme/fexo/source/css/style.css`中加入
 
 ```css
 /**gitalk css**/
