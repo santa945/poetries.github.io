@@ -3010,3 +3010,4 @@ module.exports = pages.map(page=>merge(baseConfig, page))
 ## 七、更多学习
 
 - [webpack4.0 入门篇 - 构建前端开发的基本环境](https://juejin.im/post/5bb089e86fb9a05cd84935d0)
+- [用于前端开发的webpack4配置[带注释]](https://juejin.im/post/5be45723e51d45305c2ceaf0?utm_source=gold_browser_extension#heading-2)
