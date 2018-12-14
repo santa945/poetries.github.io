@@ -11,6 +11,17 @@ categories: Front-End
 
 ### 1.1 React Native环境搭建
 
+#### 1.1.1 IOS环境搭建
+
+> 环境：`MacOS`
+
+```bash
+# 如果你已经安装了 Node，请检查其版本是否在 v8.3 以上
+brew install node 
+
+# Watchman则是由 Facebook 提供的监视文件系统变更的工具。安装此工具可以提高开发时的性能
+brew install watchman
+```
 
 - **注意**：不要使用 `cnpm`！`cnpm` 安装的模块路径比较奇怪，`packager` 不能正常识别！
 
@@ -52,6 +63,116 @@ react-native run-ios
 > 在浏览器中打开 http://localhost:8081/debugger-ui
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-4e63e2074634f9fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+#### 1.1.2 安卓环境搭建
+
+**安装依赖**
+
+> 必须安装的依赖有：`Node`、`Watchman` 和 `React Native` 命令行工具以及 JDK 和 `Android Studio`
+
+```
+brew install node
+brew install watchman
+```
+
+```
+npm install -g yarn react-native-cli
+```
+
+**Java Development Kit**
+
+> `React Native` 需要 `Java Development Kit [JDK] 1.8`（暂不支持 `1.9` 及更高版本）。你可以在命令行中输入
+
+- `javac -version`来查看你当前安装的 `JDK `版本。如果版本不合要求，则可以到 [官网](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)上下载
+
+
+**1. 安装 Android Studio**
+
+> 首先下载和安装 [`Android Studio`](https://developer.android.com/studio/index.html)，国内用户可能无法打开官方链接，请自行使用搜索引擎搜索可用的下载链接。安装界面中选择"Custom"选项，确保选中了以下几项
+
+- `Android SDK`
+- `Android SDK Platform`
+- `Performance (Intel ® HAXM)`
+- `Android Virtual Device`
+
+> 然后点击"`Next`"来安装选中的组件。安装完成后，看到欢迎界面时，就可以进行下面的操作了
+
+**2. 安装 Android SDK**
+
+> `Android Studio` 默认会安装最新版本的 `Android SDK`。目前编译 `React Native` 应用需要的是`Android 8.1 (Oreo)`版本的 `SDK`。你可以在 `Android Studio` 的 `SDK Manager` 中选择安装各版本的 `SDK`
+
+你可以在 `Android Studio` 的欢迎界面中找到 `SDK Manager`。点击"`Configure`"，然后就能看到"`SDK Manager`"。
+
+![](https://reactnative.cn/docs/assets/GettingStartedAndroidStudioWelcomeMacOS.png)
+
+> 在 `SDK Manager `中选择"`SDK Platforms`"选项卡，然后在右下角勾选"`Show Package Details`"。展开`Android 8.1 (Oreo)`选项，确保勾选了下面这些组件（重申你必须使用稳定的翻墙工具，否则可能都看不到这个界面）：
+
+- `Android SDK Platform 27`
+- `Intel x86 Atom_64 System Image`（官方模拟器镜像文件，使用非官方模拟器不需要安装此组件）
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d3c831577e08d84e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> `SDK Manager` 还可以在` Android Studio` 的"Preferences"菜单中找到。具体路径是`Appearance & Behavior → System Settings → Android SDK`
+
+
+- 然后点击"`SDK Tools`"选项卡，同样勾中右下角的"`Show Package Details`"。展开"`Android SDK Build-Tools`"选项，确保选中了 `React Native` 所必须的`27.0.3`版本。你可以同时安装多个其他版本
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-816d17250231e6b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 最后点击"`Apply`"来下载和安装这些组件。
+
+**3. 配置 ANDROID_HOME 环境变量**
+
+> `React Native` 需要通过环境变量来了解你的 `Android SDK` 装在什么路径，从而正常进行编译
+
+- 具体的做法是把下面的命令加入到`~/.bash_profile`文件中
+
+```bash
+# 如果你不是通过Android Studio安装的sdk，则其路径可能不同，请自行确定清楚。
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+```
+
+> 如果你的命令行不是 `bash`，而是例如 `zsh` 等其他，请使用对应的配置文件
+
+> 使用`source $HOME/.bash_profile`命令来使环境变量设置立即生效（否则重启后才生效）。可以使用`echo $ANDROID_HOME`检查此变量是否已正确设置
+
+**4. 编译并运行 React Native 应用**
+
+> 确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行`react-native run-android`
+
+
+**使用genymotion模拟器**
+
+> 去官网需要注册并下载https://www.genymotion.com/，需要注册登录再下载的。注意下载`with virtualBox`版本，然后安装完成后需要登录，就是刚才注册的账号。登录后进入这个页面做两个操作
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e341c3a50a4056a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 点击`settings`，选择`adb`设置`sdk`就是刚才一直用的`sdk`安装路径,如下
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-787d620503af2470.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 启动项目，点击`genymotion`里的`start`启动我们刚才安装好的的虚拟设备，是这个样子的，此时我们刚才初始化的项目还没连上虚拟设备
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-ae4ac4b845282faa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+> 然后在我们的工程项目里执行`adb devices`会列出当前启动的虚拟设备，能检测到说明没问题，如下图里最后一行显示的就是刚才我们开启的`genymotion`那台虚拟设备
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-50f511a2d9f349b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+最后项目目录里执行
+
+```
+react-native run-android
+```
+
+> 打开`genymotion`，欢迎页面出来了，成功，修改一下文字，重新加载一遍，成功
+
+- 第一次默认不是热加载形式，就是改变文件内容需要手动刷新的，这里设置一下热加载，以后内容这里就会自动刷新，`mac`是执行`command+r`，选择第四个`hot reloading`如下
 
 ### 1.2 移除vscode装饰器报错
 
@@ -654,7 +775,7 @@ backAndroidHandler={onBackPress}
 
 |Property| Type|	Default|	Description|
 |---|---|---|---|
-|`drawerImage`|	`Image`		||替换抽屉'hamburger'图标，你必须把它与`drawer`一起设置|
+|`drawerImage`|	`Image`		||替换抽屉`hamburger`图标，你必须把它与`drawer`一起设置|
 |`drawerIcon`|	`React.Component`|	|用于抽屉`hamburger`图标的任意组件，您必须将其与`drawer`道具一起设置|
 |`hideDrawerButton`|`boolean`|	`false`	|是否显示`drawerImage`或者`drawerIcon`|
 |`drawerPosition`|	`string`	||	抽屉是在右边还是左边。可选属性r`ight`或`left`|
@@ -666,6 +787,7 @@ backAndroidHandler={onBackPress}
 > 想要实现模态，您必须将其`<Modal>`作为您`Router`的根场景。在`Modal`将正常呈现第一个场景（应该是你真正的根场景），它将渲染第一个元素作为正常场景，其他所有元素作为弹出窗口（当它们 被`push`）
 
 示例：在下面的示例中，`root`场景嵌套在`<Modal>`中，因为它是第一个嵌套`Scene`，所以它将正常呈现。如果要`push`到`statusModal`，`errorModal`或者`loginModal`，他们将呈现为`Modal`，默认情况下会从屏幕底部向上弹出。重要的是要注意，目前`Modal`不允许透明的背景。
+
 
 ```jsx
 //... import components
@@ -760,15 +882,562 @@ backAndroidHandler={onBackPress}
 > 如果用户点击`http://thesocialnetwork.com/profile/1234/`在他们的设备,他们会打开`<Router/ >`,然后调用操作`Actions.profile({ id:1234 })`
 
 
+## 三、React Native基础知识
+
+### 3.1 常见组件
+
+- `<Image source={}>` 图片
+- `Text` 文本
+- `View` 包裹最外层
 
 
-## 四、实战开发GitHub客户端
+### 3.2 样式
 
-> 进行中，待总结
+- 给组件添加样式可以这样写 `<Text style={{}} />`
 
-## 五、参考
+> 实际开发中组件的样式会越来越复杂，我们建议使用`StyleSheet.create`来集中定义组件的样式
 
-- [react-native-elements组件库](https://react-native-training.github.io/react-native-elements/docs/0.19.1/icon.html)
-- [redux在react-native上使用(一)--加入redux](https://segmentfault.com/a/1190000008741380)
-- [在react-native中使用redux](https://www.jianshu.com/p/2c43860b0532)
+```javascript
+import React, { Component } from 'react';
+import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
+export default class LotsOfStyles extends Component {
+  render() {
+    return (
+      <View>
+        <Text style={styles.red}>just red</Text>
+        <Text style={styles.bigblue}>just bigblue</Text>
+        <Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
+        <Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  bigblue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+AppRegistry.registerComponent('LotsOfStyles', () => LotsOfStyles);
+```
+
+> 常见的做法是按顺序声明和使用`style`属性，以借鉴`CSS`中的“层叠”做法（即后声明的属性会覆盖先声明的同名属性）
+
+### 3.3 高度与宽度
+
+> 最简单的给组件设定尺寸的方式就是在样式中指定固定的`widt`h和`height`。`React Native`中的尺寸都是无单位的，表示的是与设备像素密度无关的逻辑像素点
+
+```javascript
+import React, { Component } from 'react';
+import { AppRegistry, View } from 'react-native';
+
+class FixedDimensionsBasics extends Component {
+  render() {
+    return (
+      <View>
+        <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+        <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
+        <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
+      </View>
+    );
+  }
+};
+// 注册应用(registerComponent)后才能正确渲染
+// 注意：只把应用作为一个整体注册一次，而不是每个组件/模块都注册
+AppRegistry.registerComponent('AwesomeProject', () => FixedDimensionsBasics);
+```
+
+- 在组件样式中使用`flex`可以使其在可利用的空间中动态地扩张或收缩。一般而言我们会使用`flex:1`来指定某个组件扩张以撑满所有剩余的空间。如果有多个并列的子组件使用了`flex:1`，则这些子组件会平分父容器中剩余的空间。如果这些并列的子组件的`flex`值不一样，则谁的值更大，谁占据剩余空间的比例就更大（即占据剩余空间的比等于并列组件间`flex`值的比）
+- 组件能够撑满剩余空间的前提是其父容器的尺寸不为零。如果父容器既没有固定的`width`和`height`，也没有设定`flex`，则父容器的尺寸为零。其子组件如果使用了`flex`，也是无法显示的。
+
+```javascript
+import React, { Component } from 'react';
+import { AppRegistry, View } from 'react-native';
+
+class FlexDimensionsBasics extends Component {
+  render() {
+    return (
+      // 试试去掉父View中的`flex: 1`。
+      // 则父View不再具有尺寸，因此子组件也无法再撑开。
+      // 然后再用`height: 300`来代替父View的`flex: 1`试试看？
+      <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'powderblue'}} />
+        <View style={{flex: 2, backgroundColor: 'skyblue'}} />
+        <View style={{flex: 3, backgroundColor: 'steelblue'}} />
+      </View>
+    );
+  }
+};
+
+AppRegistry.registerComponent('AwesomeProject', () => FlexDimensionsBasics);
+```
+
+### 3.4 处理文本输入
+
+> `TextInput`是一个允许用户输入文本的基础组件。它有一个名为`onChangeText`的属性，此属性接受一个函数，而此函数会在文本变化时被调用。另外还有一个名为`onSubmitEditing`的属性，会在文本被提交后（用户按下软键盘上的提交键）调用
+
+```javascript
+import React, { Component } from 'react';
+import { AppRegistry, Text, TextInput, View } from 'react-native';
+
+export default class PizzaTranslator extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: ''};
+  }
+
+  render() {
+    return (
+      <View style={{padding: 10}}>
+        <TextInput
+          style={{height: 40}}
+          placeholder="Type here to translate!"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <Text style={{padding: 10, fontSize: 42}}>
+          {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+        </Text>
+      </View>
+    );
+  }
+}
+```
+
+### 3.5 如何使用滚动视图
+
+
+> `ScrollView`是一个通用的可滚动的容器，你可以在其中放入多个组件和视图，而且这些组件并不需要是同类型的。`ScrollView`不仅可以垂直滚动，还能水平滚动（通过`horizontal`属性来设置）
+
+- `ScrollView`适合用来显示数量不多的滚动元素。放置在`ScollView`中的所有组件都会被渲染，哪怕有些组件因为内容太长被挤出了屏幕外。如果你需要显示较长的滚动列表，那么应该使用功能差不多但性能更好的`ListView`组件
+
+```javascript
+import React, { Component } from 'react';
+import{ ScrollView, Image, Text, View } from 'react-native'
+
+export default class IScrolledDownAndWhatHappenedNextShockedMe extends Component {
+  render() {
+      return(
+        <ScrollView>
+          <Text style={{fontSize:96}}>Scroll me plz</Text>
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Text style={{fontSize:96}}>If you like</Text>
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Text style={{fontSize:96}}>Scrolling down</Text>
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Text style={{fontSize:96}}>What's the best</Text>
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Text style={{fontSize:96}}>Framework around?</Text>
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Image source={require('./img/favicon.png')} />
+          <Text style={{fontSize:80}}>React Native</Text>
+        </ScrollView>
+    );
+  }
+}
+```
+
+### 3.6 如何使用长列表
+
+- `FlatList`组件用于显示一个垂直的滚动列表，其中的元素之间结构近似而仅数据不同
+- `FlatList`更适于长列表数据，且元素个数可以增删。和`ScrollView`不同的是，`FlatList`并不立即渲染所有元素，而是优先渲染屏幕上可见的元素
+- `FlatList`组件必须的两个属性是`data`和`renderItem`。`data`是列表的数据源，而`renderItem`则从数据源中逐个解析数据，然后返回一个设定好格式的组件来渲染
+
+```javascript
+import React, { Component } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+
+export default class FlatListBasics extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={[
+            {key: 'Devin'},
+            {key: 'Jackson'},
+            {key: 'James'},
+            {key: 'Joel'},
+            {key: 'John'},
+            {key: 'Jillian'},
+            {key: 'Jimmy'},
+            {key: 'Julie'},
+          ]}
+          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
+```
+
+### 3.7 网络
+
+> 默认情况下，`iOS`会阻止所有非`https`的请求。如果你请求的接口是`http`协议，那么首先需要添加一个`App Transport Security`的例外
+
+
+## 四、React Native布局
+
+### 4.1 宽和高
+
+- 一个组件的高度和宽度决定了它在屏幕上的尺寸，也就是大小
+- 在`React Native`中尺寸是没有单位的，它代表了设备独立像素
+
+```html
+<View style={ {width:100,height:100,margin:40,backgroundColor:'gray'}}>
+ <Text style={ {fontSize:16,margin:20}}>尺寸</Text>
+</View>
+```
+
+### 4.2 和web中的差异
+
+> `React Native`中的`FlexBox` 和`Web CSSS`上`FlexBox`的不同之处
+
+- `flexDirection`:  `React Native`中默认为`flexDirection:'column'`，在`Web CSS`中默认为`flex-direction:'row'`
+- `alignItems`:  `React Native`中默认为`alignItems:'stretch'`，在`Web CSS`中默认`align-items:'flex-start'`
+- `flex`: 相比`Web CSS`的`flex`接受多参数，如:`flex: 2 2 10%`;，但在 `React Native`中`flex`只接受一个参数
+- 不支持属性：`align-content`，`flex-basis`，`order`，`flex-basis`，`flex-flow`，`flex-grow`，`flex-shrink`
+
+### 4.3 Layout 
+
+> 以下属性是`React Native`所支持的`Flex`属性
+
+#### 4.3.1 容器属性
+
+- `flexDirection`: `row` `column` `row-reverse` `column-reverse`
+- `flexWrap`: `wrap` `nowrap` 
+- `justifyContent`: `flex-start` `flex-end` `center` `space-between` `space-around`
+- `alignItems`: `flex-start` `flex-end` `center` `stretch`
+
+#### 4.3.2 横轴和竖轴
+
+> 主轴即水平方向的轴线，可以理解成横轴，侧轴垂直于主轴，可以理解为竖轴
+
+![](https://mdn.mozillademos.org/files/12998/flexbox.png)
+
+#### 4.3.3 flexDirection
+
+> - `flexDirection`: `row` `column` `row-reverse` `column-reverse`
+> - `flexDirection`属性定义了父视图中的子元素沿横轴或侧轴方片的排列方式
+
+- `row`: 从左向右依次排列
+- `row-reverse`: 从右向左依次排列
+- `column(default)`: 默认的排列方式，从上向下排列
+- `column-reverse`: 从下向上排列
+
+```html
+<View style={ {flexDirection:'row-reverse',backgroundColor:"darkgray",marginTop:20}}>
+  <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>1</Text>
+  </View>
+  <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>2</Text>
+  </View>
+  <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>3</Text>
+  </View>
+  <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>4</Text>
+  </View>
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/flexDirection.jpg)
+
+
+#### 4.3.4 flexWrap
+
+> `flexWrap`属性定义了子元素在父视图内是否允许多行排列，默认为`nowrap`
+
+- `nowrap flex`的元素只排列在一行上，可能导致溢出
+- `wrap flex`的元素在一行排列不下时，就进行多行排列
+
+```html
+<View  style={ {flexWrap:'wrap',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
+···
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/flexWrap.jpg)
+
+#### 4.3.5 justifyContent
+
+> `justifyContent`属性定义了浏览器如何分配顺着父容器主轴的弹性（`flex`）元素之间及其周围的空间，默认为`flex-start`
+
+> - `justifyContent`: `flex-start` `flex-end` `center` `space-between` `space-around`
+
+
+- `flex-start(default)` 从行首开始排列。每行第一个弹性元素与行首对齐，同时所有后续的弹性元素与前一个对齐
+- `flex-end` 从行尾开始排列。每行最后一个弹性元素与行尾对齐，其他元素将与后一个对齐。
+- `center` 伸缩元素向每行中点排列。每行第一个元素到行首的距离将与每行最后一个元素到行尾的距离相同。
+- `space-between` 在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素与行首对齐，每行最后一个元素与行尾对齐。
+- `space-around` 在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素到行首的距离和每行最后一个元素到行尾的距离将会是相邻元素之间距离的一半。
+
+
+```html
+<View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
+···
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/justifyContent.jpg)
+
+#### 4.3.6 alignItems
+
+> `alignItems`属性以与`justify-content`相同的方式在侧轴方向上将当前行上的弹性元素对齐，默认为`stretch`。
+
+- `flex-start` 元素向侧轴起点对齐。
+- `flex-end` 元素向侧轴终点对齐。
+- `center` 元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同。
+- `stretch` 弹性元素被在侧轴方向被拉伸到与容器相同的高度或宽度
+
+```html
+<View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
+···
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/alignItems.jpg)
+
+
+#### 4.3.7 alignSelf
+
+> `alignSelf`属性以属性定义了`flex`容器内被选中项目的对齐方式。注意：`alignSelf` 属性可重写灵活容器的 `alignItems` 属性
+
+- `stretch` 元素被拉伸以适应容器。
+- `center` 元素位于容器的中心。
+- `flex-start` 元素位于容器的开头。
+- `flex-end` 元素位于容器的结尾
+
+```html
+<View style={ {alignSelf:'baseline',width:60,height:    20,backgroundColor:"darkcyan",margin:5}}>
+   <Text style={ {fontSize:16}}>1</Text>
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/alignSelf.jpg)
+
+#### 4.3.8 flex
+
+> `flex` 属性定义了一个可伸缩元素的能力，默认为`0`
+
+```html
+<View style={ {flexDirection:'row',height:40, backgroundColor:"darkgray",marginTop:20}}>
+  <View style={ {flex:1,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>flex:1</Text>
+  </View>
+  <View style={ {flex:2,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>flex:2</Text>
+  </View>
+  <View style={ {flex:3,backgroundColor:"darkcyan",margin:5}}>
+    <Text style={ {fontSize:16}}>flex:3</Text>
+  </View>          
+</View>
+```
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/flex.jpg)
+
+### 4.4 视图边框
+
+- `borderBottomWidth number`  底部边框宽度
+- `borderLeftWidth number` 左边框宽度
+- `borderRightWidth number`  右边框宽度
+- `borderTopWidth number` 顶部边框宽度
+- `borderWidth number` 边框宽度
+- `border<Bottom|Left|Right|Top>Color` 个方向边框的颜色
+- `borderColor` 边框颜色
+
+### 4.5 尺寸
+
+- `width number`
+- `height number`
+
+### 4.6 外边距
+
+- `margin number` 外边距
+- `marginBottom number` 下外边距
+- `marginHorizontal number`  左右外边距
+- `marginLeft number` 左外边距
+- `marginRight number` 右外边距
+- `marginTop number` 上外边距
+- `marginVertical number` 上下外边距
+
+### 4.7 内边距
+
+
+- `padding number` 内边距
+- `paddingBottom number `下内边距
+- `paddingHorizontal number` 左右内边距
+- `paddingLeft number` 做内边距
+- `paddingRight number`  右内边距
+- `paddingTop number`  上内边距
+- `paddingVertical number`  上下内边距
+
+### 4.8 边缘
+
+
+- `left number` 属性规定元素的左边缘。该属性定义了定位元素左外边距边界与其包含块左边界之间的偏移。
+- `right number` 属性规定元素的右边缘。该属性定义了定位元素右外边距边界与其包含块右边界之间的偏移
+- `top number`  属性规定元素的顶部边缘。该属性定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。
+- `bottom number` 属性规定元素的底部边缘。该属性定义了一个定位元素的下外边距边界与其包含块下边界之间的偏移。
+
+### 4.9 定位(position)
+
+
+> `position:absolute|relative`属性设置元素的定位方式，为将要定位的元素定义定位规则。
+
+- `absolute`：生成绝对定位的元素，元素的位置通过 "`left`", "`top`", "`right`" 以及 "`bottom`" 属性进行规定。
+- `relative`：生成相对定位的元素，相对于其正常位置进行定位。因此，"`left:20`" 会向元素的 `LEFT` 位置添加 `20` 像素。
+
+
+## 五、React Native适配
+
+### 5.1 Platform.OS
+
+> 为了提高代码的兼容性，我们有时需要判断当前系统的平台，然后做一些适配。比如，我们在使用`StatusBar`做导航栏的时候，在`iOS`平台下根视图的位置默认情况下是占据状态栏的位置的，我们通常希望状态栏下面能显示一个导航栏，所以我们需要为`StatusBar`的外部容器设置一个高度
+
+
+```html
+<View style={{height: Platform.OS === 'ios' ? 20:0}}>
+    <StatusBar {...this.props.statusBar} />
+</View>;
+```
+
+### 5.2 留意api doc的android或ios标识
+
+> 并不是所有`React Native`的一些`api`或组件的一些属性和方法都兼容`Android`和`iOS`，在`React Native`的`api doc`中通常会在一些属性或方法的前面加上`android`或`ios`的字样来标识该属性或方法所支持的平台，如
+
+```
+android renderToHardwareTextureAndroid bool
+ios shouldRasterizeIOS bool
+```
+
+> 在上述代码中，`renderToHardwareTextureAndroid bool`只支持`Android`平台，`ios shouldRasterizeIOS bool`只支持`iOS`平台，所有我们在使用这些带有标记的属性或方法的时候就需要考虑对于它们不兼容的平台我们是否需要做相应的适配了
+
+### 5.3 组件选择
+
+> 比如，我们要开发一款应用需要用到导航组件，`在React Native`组件中有`NavigatorIOS`与`Navigator`两个导航组件来供我们选择，从`api doc`中我们可以看出`NavigatorIOS`只支持`iOS`平台，`Navigator`则两个平台都支持。
+所以如果我们要开发的应用需要适配`Android`和`iOS`，那么`Navigator`才是最佳的选择。
+
+为了提高代码的复用性与兼容性建议大家在选择`React Native`组件的时候要多留意该组件是不是兼容`Android`和`iOS`，尽量选择`Android`和`iOS`平台都兼容的组件。
+
+### 5.4 图片适配
+
+
+> 开发一款应用少不了的需要用到图标。无论是`Android`还是`iOS`，现在不同分辨率的设备越来越多，我们希望这些图标能够适配不同分辨率的设备。为此我们需要为每个图标提供`1x`、`2x`、`3x`三种大小的尺寸`，React Native`会根据屏幕的分辨率来动态的选择显示不同尺寸的图片。比如：在`img`目录下有如下三种尺寸的`check.png`
+
+```
+└── img
+    ├── check.png
+    ├── check@2x.png
+    └── check@3x.png
+```
+
+那么我们就可以通过下面的方式来使用`check.png`
+
+
+```
+<Image source={require('./img/check.png')} />
+```
+
+> 提示：我们在使用具有不同分辨率的图标时，一定要引用标准分辨率的图片如`require('./img/check.png')`，如果我们这样写`require('./img/check@2x.png')`，那么应用在不同分辨率的设备上都只会显示`check@2x.png`图片，也就无法达到图片自适配的效果。
+
+
+## 六、实战开发GitHub客户端
+
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-0d321a91ef7a8b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**效果图**
+
+**环境**
+
+- `nodejs 8`
+- `react native 0.44.3`
+
+**所用技术**
+
+- `ES5/ES6`
+- `React`
+- `Flexbox`
+- `AsyncStorage`
+- `fetch api`
+- `Redux`
+
+**第三方工具**
+
+- `react-native-splash-screen`
+- `react-native-htmlview`
+- `react-native-parallax-scroll-view`
+- `react-native-scrollable-tab-view`
+- `react-native-sortable-listview`
+
+### 6.1 初始化项目
+
+### 6.2 项目结构组织
+
+### 6.3 Icon图标
+
+### 6.4 flux路由
+
+### 6.5 tabs配置
+
+### 6.6 redux数据管理
+
+### 6.7 应用部署/热更新 CodePush最新集成
+
+### 6.8 打包应用
+
+#### 6.8.1 Android打包APK
+
+#### 6.8.2 IOS打包
+
+
+## 七、更多参考
+
+- [常用的react-native组件整理](https://github.com/poetries/react-native-components)
+- [React Native 研究与实践](https://github.com/crazycodeboy/RNStudyNotes/)
+- [从navigator到react-navigation进阶教程](http://www.devio.org/2018/05/15/navigator-to-react-navigation/)
+- [React Native0.50+开发指导](http://www.devio.org/2017/12/12/React-Native0.50-Development-Guide-Chinese-update-instructions/)
+- [React Native 集成分享第三方登录功能分享第三方登录模块开发(iOS)](http://www.devio.org/2017/09/30/React-Native-integration-share-third-party-login-function-ios/)
+- [React Native 集成分享第三方登录功能分享第三方登录模块开发(Android)](http://www.devio.org/2017/09/10/React-Native-integration-share-third-party-login-function/)
+- [教你轻松在React Native中集成统计的功能](http://www.devio.org/2017/09/03/React-Native-Integrated-analysis-function/)
+- [教你轻松修改React Native端口](http://www.devio.org/2017/08/18/Modify-the-React-Native-listening-port/)
+- [React Native Android iOS 教程快速创建React Native App](http://www.devio.org/2017/07/12/quickly-create-react-native-app/)
+- [Mac(OSX)平台搭建React Native开发环境](http://www.devio.org/2016/05/20/React-Native-development-environment-build-mac-platform/)
