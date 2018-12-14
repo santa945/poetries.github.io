@@ -942,11 +942,16 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('LotsOfStyles', () => LotsOfStyles);
 ```
 
+
+
 > 常见的做法是按顺序声明和使用`style`属性，以借鉴`CSS`中的“层叠”做法（即后声明的属性会覆盖先声明的同名属性）
+
 
 ### 3.3 高度与宽度
 
+
 > 最简单的给组件设定尺寸的方式就是在样式中指定固定的`widt`h和`height`。`React Native`中的尺寸都是无单位的，表示的是与设备像素密度无关的逻辑像素点
+
 
 ```javascript
 import React, { Component } from 'react';
@@ -970,6 +975,7 @@ AppRegistry.registerComponent('AwesomeProject', () => FixedDimensionsBasics);
 
 - 在组件样式中使用`flex`可以使其在可利用的空间中动态地扩张或收缩。一般而言我们会使用`flex:1`来指定某个组件扩张以撑满所有剩余的空间。如果有多个并列的子组件使用了`flex:1`，则这些子组件会平分父容器中剩余的空间。如果这些并列的子组件的`flex`值不一样，则谁的值更大，谁占据剩余空间的比例就更大（即占据剩余空间的比等于并列组件间`flex`值的比）
 - 组件能够撑满剩余空间的前提是其父容器的尺寸不为零。如果父容器既没有固定的`width`和`height`，也没有设定`flex`，则父容器的尺寸为零。其子组件如果使用了`flex`，也是无法显示的。
+
 
 ```javascript
 import React, { Component } from 'react';
@@ -1024,6 +1030,7 @@ export default class PizzaTranslator extends Component {
 }
 ```
 
+
 ### 3.5 如何使用滚动视图
 
 
@@ -1043,33 +1050,6 @@ export default class IScrolledDownAndWhatHappenedNextShockedMe extends Component
           <Image source={require('./img/favicon.png')} />
           <Image source={require('./img/favicon.png')} />
           <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Text style={{fontSize:96}}>If you like</Text>
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Text style={{fontSize:96}}>Scrolling down</Text>
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Text style={{fontSize:96}}>What's the best</Text>
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Text style={{fontSize:96}}>Framework around?</Text>
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Image source={require('./img/favicon.png')} />
-          <Text style={{fontSize:80}}>React Native</Text>
         </ScrollView>
     );
   }
