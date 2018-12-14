@@ -60,9 +60,23 @@ react-native run-ios
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-f7ed3063bc1956c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+**Enable Live Reload**
+
+> 当你的js代码发生变化后，`React Native`会自动生成bundle然后传输到模拟器或手机上
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/master/React%20Native%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%BF%83%E5%BE%97/images/Enable%20Live%20Reload.gif)
+
+
+
 > 在浏览器中打开 http://localhost:8081/debugger-ui
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-4e63e2074634f9fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**巧用Sources面板**
+
+![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/master/React%20Native%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%BF%83%E5%BE%97/images/Sourcesmianban.jpg)
+
+
 
 #### 1.1.2 安卓环境搭建
 
@@ -1093,6 +1107,7 @@ export default class FlatListBasics extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
    flex: 1,
@@ -1118,7 +1133,7 @@ const styles = StyleSheet.create({
 - 一个组件的高度和宽度决定了它在屏幕上的尺寸，也就是大小
 - 在`React Native`中尺寸是没有单位的，它代表了设备独立像素
 
-```html
+```
 <View style={ {width:100,height:100,margin:40,backgroundColor:'gray'}}>
  <Text style={ {fontSize:16,margin:20}}>尺寸</Text>
 </View>
@@ -1160,7 +1175,7 @@ const styles = StyleSheet.create({
 - `column(default)`: 默认的排列方式，从上向下排列
 - `column-reverse`: 从下向上排列
 
-```html
+```
 <View style={ {flexDirection:'row-reverse',backgroundColor:"darkgray",marginTop:20}}>
   <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
     <Text style={ {fontSize:16}}>1</Text>
@@ -1187,7 +1202,7 @@ const styles = StyleSheet.create({
 - `nowrap flex`的元素只排列在一行上，可能导致溢出
 - `wrap flex`的元素在一行排列不下时，就进行多行排列
 
-```html
+```
 <View  style={ {flexWrap:'wrap',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
 ···
 </View>
@@ -1209,7 +1224,7 @@ const styles = StyleSheet.create({
 - `space-around` 在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素到行首的距离和每行最后一个元素到行尾的距离将会是相邻元素之间距离的一半。
 
 
-```html
+```
 <View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
 ···
 </View>
@@ -1226,7 +1241,7 @@ const styles = StyleSheet.create({
 - `center` 元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同。
 - `stretch` 弹性元素被在侧轴方向被拉伸到与容器相同的高度或宽度
 
-```html
+```
 <View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
 ···
 </View>
@@ -1244,7 +1259,7 @@ const styles = StyleSheet.create({
 - `flex-start` 元素位于容器的开头。
 - `flex-end` 元素位于容器的结尾
 
-```html
+```
 <View style={ {alignSelf:'baseline',width:60,height:    20,backgroundColor:"darkcyan",margin:5}}>
    <Text style={ {fontSize:16}}>1</Text>
 </View>
@@ -1256,7 +1271,7 @@ const styles = StyleSheet.create({
 
 > `flex` 属性定义了一个可伸缩元素的能力，默认为`0`
 
-```html
+```
 <View style={ {flexDirection:'row',height:40, backgroundColor:"darkgray",marginTop:20}}>
   <View style={ {flex:1,backgroundColor:"darkcyan",margin:5}}>
     <Text style={ {fontSize:16}}>flex:1</Text>
@@ -1332,7 +1347,7 @@ const styles = StyleSheet.create({
 > 为了提高代码的兼容性，我们有时需要判断当前系统的平台，然后做一些适配。比如，我们在使用`StatusBar`做导航栏的时候，在`iOS`平台下根视图的位置默认情况下是占据状态栏的位置的，我们通常希望状态栏下面能显示一个导航栏，所以我们需要为`StatusBar`的外部容器设置一个高度
 
 
-```html
+```
 <View style={{height: Platform.OS === 'ios' ? 20:0}}>
     <StatusBar {...this.props.statusBar} />
 </View>;
