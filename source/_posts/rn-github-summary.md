@@ -999,9 +999,12 @@ class FlexDimensionsBasics extends Component {
 AppRegistry.registerComponent('AwesomeProject', () => FlexDimensionsBasics);
 ```
 
+
 ### 3.4 处理文本输入
 
+
 > `TextInput`是一个允许用户输入文本的基础组件。它有一个名为`onChangeText`的属性，此属性接受一个函数，而此函数会在文本变化时被调用。另外还有一个名为`onSubmitEditing`的属性，会在文本被提交后（用户按下软键盘上的提交键）调用
+
 
 ```javascript
 import React, { Component } from 'react';
@@ -1038,6 +1041,7 @@ export default class PizzaTranslator extends Component {
 
 - `ScrollView`适合用来显示数量不多的滚动元素。放置在`ScollView`中的所有组件都会被渲染，哪怕有些组件因为内容太长被挤出了屏幕外。如果你需要显示较长的滚动列表，那么应该使用功能差不多但性能更好的`ListView`组件
 
+
 ```javascript
 import React, { Component } from 'react';
 import{ ScrollView, Image, Text, View } from 'react-native'
@@ -1056,11 +1060,14 @@ export default class IScrolledDownAndWhatHappenedNextShockedMe extends Component
 }
 ```
 
+
 ### 3.6 如何使用长列表
+
 
 - `FlatList`组件用于显示一个垂直的滚动列表，其中的元素之间结构近似而仅数据不同
 - `FlatList`更适于长列表数据，且元素个数可以增删。和`ScrollView`不同的是，`FlatList`并不立即渲染所有元素，而是优先渲染屏幕上可见的元素
 - `FlatList`组件必须的两个属性是`data`和`renderItem`。`data`是列表的数据源，而`renderItem`则从数据源中逐个解析数据，然后返回一个设定好格式的组件来渲染
+
 
 ```javascript
 import React, { Component } from 'react';
@@ -1101,6 +1108,7 @@ const styles = StyleSheet.create({
 })
 ```
 
+
 ### 3.7 网络
 
 > 默认情况下，`iOS`会阻止所有非`https`的请求。如果你请求的接口是`http`协议，那么首先需要添加一个`App Transport Security`的例外
@@ -1121,7 +1129,9 @@ const styles = StyleSheet.create({
 
 ### 4.2 和web中的差异
 
+
 > `React Native`中的`FlexBox` 和`Web CSSS`上`FlexBox`的不同之处
+
 
 - `flexDirection`:  `React Native`中默认为`flexDirection:'column'`，在`Web CSS`中默认为`flex-direction:'row'`
 - `alignItems`:  `React Native`中默认为`alignItems:'stretch'`，在`Web CSS`中默认`align-items:'flex-start'`
