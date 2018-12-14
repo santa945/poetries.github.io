@@ -906,7 +906,6 @@ backAndroidHandler={onBackPress}
 
 ### 3.2 样式
 
-- 给组件添加样式可以这样写 `style={{}}`
 
 > 实际开发中组件的样式会越来越复杂，我们建议使用`StyleSheet.create`来集中定义组件的样式
 
