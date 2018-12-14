@@ -900,14 +900,13 @@ backAndroidHandler={onBackPress}
 
 ### 3.1 常见组件
 
-- `<Image source={}>` 图片
+- `Image` 图片
 - `Text` 文本
 - `View` 包裹最外层
 
-
 ### 3.2 样式
 
-- 给组件添加样式可以这样写 `<Text style={{}} />`
+- 给组件添加样式可以这样写 `style={{}}`
 
 > 实际开发中组件的样式会越来越复杂，我们建议使用`StyleSheet.create`来集中定义组件的样式
 
@@ -941,7 +940,6 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent('LotsOfStyles', () => LotsOfStyles);
 ```
-
 
 
 > 常见的做法是按顺序声明和使用`style`属性，以借鉴`CSS`中的“层叠”做法（即后声明的属性会覆盖先声明的同名属性）
@@ -1060,7 +1058,6 @@ export default class IScrolledDownAndWhatHappenedNextShockedMe extends Component
 }
 ```
 
-
 ### 3.6 如何使用长列表
 
 
@@ -1121,7 +1118,7 @@ const styles = StyleSheet.create({
 - 一个组件的高度和宽度决定了它在屏幕上的尺寸，也就是大小
 - 在`React Native`中尺寸是没有单位的，它代表了设备独立像素
 
-```
+```html
 <View style={ {width:100,height:100,margin:40,backgroundColor:'gray'}}>
  <Text style={ {fontSize:16,margin:20}}>尺寸</Text>
 </View>
@@ -1165,7 +1162,7 @@ const styles = StyleSheet.create({
 - `column(default)`: 默认的排列方式，从上向下排列
 - `column-reverse`: 从下向上排列
 
-```
+```html
 <View style={ {flexDirection:'row-reverse',backgroundColor:"darkgray",marginTop:20}}>
   <View style={ {width:40,height:40,backgroundColor:"darkcyan",margin:5}}>
     <Text style={ {fontSize:16}}>1</Text>
@@ -1192,9 +1189,9 @@ const styles = StyleSheet.create({
 - `nowrap flex`的元素只排列在一行上，可能导致溢出
 - `wrap flex`的元素在一行排列不下时，就进行多行排列
 
-```
+```html
 <View  style={ {flexWrap:'wrap',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
-···
+
 </View>
 ```
 
@@ -1202,38 +1199,38 @@ const styles = StyleSheet.create({
 
 #### 4.3.5 justifyContent
 
-> `justifyContent`属性定义了浏览器如何分配顺着父容器主轴的弹性（`flex`）元素之间及其周围的空间，默认为`flex-start`
-
+> - `justifyContent`属性定义了浏览器如何分配顺着父容器主轴的弹性（`flex`）元素之间及其周围的空间，默认为`flex-start`
 > - `justifyContent`: `flex-start` `flex-end` `center` `space-between` `space-around`
 
 
-- `flex-start(default)` 从行首开始排列。每行第一个弹性元素与行首对齐，同时所有后续的弹性元素与前一个对齐
+- `flex-start(default)`从行首开始排列。每行第一个弹性元素与行首对齐，同时所有后续的弹性元素与前一个对齐
 - `flex-end` 从行尾开始排列。每行最后一个弹性元素与行尾对齐，其他元素将与后一个对齐。
 - `center` 伸缩元素向每行中点排列。每行第一个元素到行首的距离将与每行最后一个元素到行尾的距离相同。
 - `space-between` 在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素与行首对齐，每行最后一个元素与行尾对齐。
 - `space-around` 在每行上均匀分配弹性元素。相邻元素间距离相同。每行第一个元素到行首的距离和每行最后一个元素到行尾的距离将会是相邻元素之间距离的一半。
 
 
-```
+```html
 <View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
-···
+
 </View>
 ```
+
 
 ![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/justifyContent.jpg)
 
 #### 4.3.6 alignItems
 
-> `alignItems`属性以与`justify-content`相同的方式在侧轴方向上将当前行上的弹性元素对齐，默认为`stretch`。
+> `alignItems` 属性以与`justify-content`相同的方式在侧轴方向上将当前行上的弹性元素对齐，默认为`stretch`。
 
 - `flex-start` 元素向侧轴起点对齐。
 - `flex-end` 元素向侧轴终点对齐。
 - `center` 元素在侧轴居中。如果元素在侧轴上的高度高于其容器，那么在两个方向上溢出距离相同。
 - `stretch` 弹性元素被在侧轴方向被拉伸到与容器相同的高度或宽度
 
-```
+```html
 <View  style={ {justifyContent:'center',flexDirection:'row',backgroundColor:"darkgray",marginTop:20}}>
-···
+
 </View>
 ```
 
@@ -1249,7 +1246,7 @@ const styles = StyleSheet.create({
 - `flex-start` 元素位于容器的开头。
 - `flex-end` 元素位于容器的结尾
 
-```
+```html
 <View style={ {alignSelf:'baseline',width:60,height:    20,backgroundColor:"darkcyan",margin:5}}>
    <Text style={ {fontSize:16}}>1</Text>
 </View>
@@ -1261,7 +1258,7 @@ const styles = StyleSheet.create({
 
 > `flex` 属性定义了一个可伸缩元素的能力，默认为`0`
 
-```
+```html
 <View style={ {flexDirection:'row',height:40, backgroundColor:"darkgray",marginTop:20}}>
   <View style={ {flex:1,backgroundColor:"darkcyan",margin:5}}>
     <Text style={ {fontSize:16}}>flex:1</Text>
@@ -1275,7 +1272,9 @@ const styles = StyleSheet.create({
 </View>
 ```
 
+
 ![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/develop/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/images/flex.jpg)
+
 
 ### 4.4 视图边框
 
@@ -1306,7 +1305,7 @@ const styles = StyleSheet.create({
 
 
 - `padding number` 内边距
-- `paddingBottom number `下内边距
+- `paddingBottom number` 下内边距
 - `paddingHorizontal number` 左右内边距
 - `paddingLeft number` 做内边距
 - `paddingRight number`  右内边距
@@ -1320,6 +1319,7 @@ const styles = StyleSheet.create({
 - `right number` 属性规定元素的右边缘。该属性定义了定位元素右外边距边界与其包含块右边界之间的偏移
 - `top number`  属性规定元素的顶部边缘。该属性定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移。
 - `bottom number` 属性规定元素的底部边缘。该属性定义了一个定位元素的下外边距边界与其包含块下边界之间的偏移。
+
 
 ### 4.9 定位(position)
 
@@ -1337,7 +1337,7 @@ const styles = StyleSheet.create({
 > 为了提高代码的兼容性，我们有时需要判断当前系统的平台，然后做一些适配。比如，我们在使用`StatusBar`做导航栏的时候，在`iOS`平台下根视图的位置默认情况下是占据状态栏的位置的，我们通常希望状态栏下面能显示一个导航栏，所以我们需要为`StatusBar`的外部容器设置一个高度
 
 
-```
+```html
 <View style={{height: Platform.OS === 'ios' ? 20:0}}>
     <StatusBar {...this.props.statusBar} />
 </View>;
@@ -1376,7 +1376,7 @@ ios shouldRasterizeIOS bool
 那么我们就可以通过下面的方式来使用`check.png`
 
 
-```
+```html
 <Image source={require('./img/check.png')} />
 ```
 
@@ -1384,7 +1384,6 @@ ios shouldRasterizeIOS bool
 
 
 ## 六、实战开发GitHub客户端
-
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-0d321a91ef7a8b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
