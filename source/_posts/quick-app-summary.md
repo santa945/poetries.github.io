@@ -5,10 +5,34 @@ tags: 快应用
 categories: Front-End
 ---
 
-> MD原文件 https://github.com/poetries/poetries.github.io/blob/dev/source/_posts/quick-app-summary.md
+> - MD原文件 https://github.com/poetries/poetries.github.io/blob/dev/source/_posts/quick-app-summary.md
+> - 博客链接 http://blog.poetries.top/2018/08/21/quick-app-summary/
 
+# 前言
 
-> 注册账号通过 https://www.quickapp.cn/docCenter/post/74
+## 与微信小程序的比较
+
+- 二者都采用前端技术栈，快应用是`native` 渲染，性能体验会比较好，而小程序目前是`webview`渲染
+- 二者开发框架和规范不同，所以代码写法上有差异，快应用的`css`支持能力较弱
+- 快应用基于`native`，可以调起丰富的系统api，小程序在此方面会有些无力
+
+## 快应用入口
+
+- 应用商店
+- 桌面图标
+- 全局搜索
+- 浏览器搜索
+- 网页跳转
+- 负一屏
+- 智能推送
+- 智慧识屏
+- 场景化入口（短信按钮、应用卸载替换、二维码、传送门）
+
+## 快应用优点
+
+- 轻松调起更多系统api
+- 各厂商的流量扶持
+- `native`渲染，`deeplink`入口，原生桌面入口，`push`能力
 
 # 一、环境搭建
 
@@ -123,19 +147,26 @@ npm run server
 > 一个应用包含：描述项目配置信息的`manifest`文件，放置项目公共资源脚本的`app.ux`文件，多个描述页面/自定义组件的ux文件
 
 ```
-├── manifest.json
-├── app.ux
-├── Page1
-│   ├── page1.ux
-├── Page2
-│   ├── page2.ux
-└── Common
-    ├── ComponentA.ux
-    ├── ComponentB.ux
-    └── xxx.png
+├── sign                            rpk包签名模块
+    └── debug                       调试环境
+            └── certificate.pem     证书文件
+            └── private.pem         私钥文件
+├── src
+   ├── Common                       公用的资源和组件文件
+            └──logo.png             应用图标
+   ├── Demo                         页面目录
+            └── index.ux            页面文件，可自定义页面名称
+   ├── app.ux               APP文件，可引入公共脚本，暴露公共数据和方法等
+   └── manifest.json                项目配置文件，配置应用图标、页面路由等
+└── package.json                    定义项目需要的各种模块及配置信息
 ```
 
-> 其中`Common`目录下为公用的资源文件和组件文件，每个页面目录下存放各自页面私有的资源文件和组件文件，如：图片，`CSS`，`JS`等
+**目录的简要说明如下**
+
+- `src`：项目源文件夹
+- `sign`：签名模块（当前仅有`debug`签名，如果内测上线，请添加`release`文件夹，增加线上签名）
+
+
 
 ## 2.2 源码文件
 
@@ -1482,18 +1513,154 @@ export default {
 </script>
 ```
 
+# 十三、打包及发布
 
-# 十三、一些问题
+## 13.1 编译工具
 
+**1）编译打包工程**
+
+- 在工程的根目录下运行
+
+```
+npm run build
+```
+
+- 编译后的工程目录在`/build`
+- 生成的应用路径为`/dist/.rpk`
+
+**2）增加 release 签名**
+
+> 通过 `openssl` 命令等工具生成签名文件`private.pem`、`certificate.pem`，例如：
+
+> https://doc.quickapp.cn/tools/compiling-tools.html
+
+```
+opensslreq -newkey rsa:2048 -nodes -keyout private.pem -x509 -days 3650 -outcertificate.pem
+```
+
+> 在工程的 `sign` 目录下创建 `release` 目录，将私钥文件 `private.pem` 和证书文件 `certificate.pem` 拷贝进去
+
+**3）发布程序包**
+
+> 发布程序包前需要增加`release`签名，然后在工程的根目录下运行
+
+```
+npm run release
+```
+
+- 生成的应用路径为`/dist/.release.rpk`
+- 如果需要临时使用 `debug` 签名，可以使用
+
+```
+npm run release -- --debug
+```
+
+## 13.2 IDE发布
+
+- 1）生成证书。点击快应用面板的【生成证书】按钮, 按提示输入相关信息
+- 2）生成发布用 `RPK`。点击【发布 `rpk`包】按钮, 生成成功的话会弹出对应的文件夹
+
+![](https://bbs.quickapp.cn/data/attachment/forum/201812/15/182933kudoghhmnj8vc4ms.png)
+
+
+# 十四、快应用分享专题
+
+![](https://bbs.quickapp.cn/data/attachment/forum/201812/12/143505moccppi1ofo6b16a.png)
+
+
+# 十五、上传到快应用中心审核
+
+> 快应用注册账号 https://www.quickapp.cn/docCenter/post/74
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-a34a5b0d94b25e17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+# 十六、一些问题
+
+- 资源文件、代码文件的命名均不能含有中文，命名不能连续使用下划线，否则打包发布时会包解析失败，导致无法上传
 - 自定义属性名不能采用驼峰命名，否则值永远是 `undefined`
 - `show` 属性并不好用，没起什么作用
 - 类似 `onInit` 等等函数是页面生命周期，不是组件生命周期，不会因为组件状态变化而执行
 - `display `类型只有 `flex` 和 `none`
 - 子盒子不能将父盒子撑高
 - 不遵循盒子模型，类似但不完全等同于 `border-box`
+- 不能全局引用样式，只能在每个`page`中使用`@import`引入
+- `<block>`逻辑控制块，仅支持`for`和`if/elif/else`，不支持`show`条件渲染
+- `justify-content`属性，在快应用官方开发环境中，目前不支持`space-around`
+- 针对于目前`vscode`插件`hap-extension`不支持`sass`语法，可以把`.scss`单独存储，通过`style.src`引入到`.ux`中，同时方便管理
+- 当前自定义组件不支持传入的`props`为`function`
+- 快应用中很多 `html `都不能用，比如没有 `p`,`h1~h2` 等，因为它只是模拟了部分 `html `标签,最终会转化成原生组件
+- 只能使用 `a`、`span`、`text`、`label` 放置文本内容
+- `position` 只能是 `fixed` 或 `none`
+- 长度单位只有 `px `和` %`
 
 
-# 十四、快应用开发资源
+# 十七、快应用开发资源
 
+## 官方资讯
+
+* [十大手机厂商共推快应用标准，发布会完美落幕](http://bbs.quickapp.cn/posts/detail?id=308)
+* [教你尝鲜「快应用」！体验秒开，如丝般顺滑！](https://mp.weixin.qq.com/s/7zPwdXRAl7SIoFw4eKhXyA)
+* [快应用+小程序，99%的Android程序员即将失业！](http://bbs.quickapp.cn/posts/detail?id=446)
+
+## 官方文档
+
+* [入门教程](https://doc.quickapp.cn/)
+* [接口文档](https://doc.quickapp.cn/features/)
+* [框架文档](https://doc.quickapp.cn/framework/)
+* [官方网站](https://www.quickapp.cn/)
+* [官方论坛](http://bbs.quickapp.cn/)
+* [toolkit](https://doc.quickapp.cn/tools/toolkit-tools.html)
+* [编译工具](https://doc.quickapp.cn/tools/compiling-tools.html)
+* [调试工具](https://doc.quickapp.cn/tools/debugging-tools.html)
+
+## 工具
+
+* [Quix - UI for Quick App](https://github.com/wuxinzhe/Quix)
+* [基于weui开发的quickapp](https://github.com/xiaomak/quickapp-weui)
+* [快应用转换工具 - 小程序转快应用](http://quickapp.dcloud.io/#wxconvert)
+* [flyio - 支持快应用的http网络库](https://segmentfault.com/a/1190000013984402?utm_source=tag-newest)
+
+## 示例
+
+* [Gank客户端](https://github.com/ColorfulCat/quickapp_gank)
+* [内涵车站APP](https://github.com/Licoy/quickapp-neihanchezhan)
+* [wanandroid快应用](https://github.com/CB-ysx/wanandroid-quickapp)
+* [quickapp-douban](https://github.com/hjl19911127/quickapp-douban)
+* [快应用版Wechat](https://github.com/yale8848/quickapp-wechat)
+
+## 插件
+
+* [Vscode Hap Extension--轻应用语法高亮插件](https://marketplace.visualstudio.com/items?itemName=yupeng528.hap)
+* [Vscode 一个基于vscode应用于‘快应用’语法高亮](https://github.com/hatedMe/QuickApp-For-Highlighter)
+* [Vscode Quick App美化代码](https://github.com/hatedMe/beautify-quick-app)
+
+## 教程
+
+* [对标小程序 ? "快应用"开发入门指南 By鸿洋](https://juejin.im/post/5ab26a1e6fb9a028b547c675)
+* [快应用快速入门教程 by大大花猫](https://juejin.im/post/5ab27d8e518825557e78485e)
+* [快应用 QuickApp--入门指北](https://zhuanlan.zhihu.com/p/34774751)
+* [快应用简明使用指引](https://github.com/williamfzc/QuickAppLearner)
+* [快应用QuickApp--HelloWorld体验](https://www.cnblogs.com/simleSmith/p/8618256.html)
+* [快应用快速入门教程 by五个半柠檬(SF)](https://segmentfault.com/a/1190000014012762?utm_source=tag-newest)
+
+## 讨论
+
+* [「快应用」项目？会对微信小程序以及 App 生态有何影响？(知乎)](https://www.zhihu.com/question/268663484/answer/343010272)
+* [如何看待国内几家硬件厂商联合鼎力打造的快应用?(知乎)](https://www.zhihu.com/question/268675437/answer/343249351)
+* [九大厂商联合推出「快应用」，围攻微信？(知乎)](https://zhuanlan.zhihu.com/p/34796337)
+* [腾讯“小程序”与手机“快应用”之战(知乎)](https://zhuanlan.zhihu.com/p/34877700)
+
+## 分享
+
+* [饿了么快应用初体验](https://juejin.im/post/5ab119ef51882555712c3372)
+* [是前端还是Android？快应用 快速入门与初步分析](https://segmentfault.com/a/1190000013915359)
+* [快应用初体验](https://juejin.im/post/5ab378235188255574599cc4)
+* [[前端工坊]快应用-技术调研](https://mp.weixin.qq.com/s/44SX9k1tbAtqhaxP-OwosQ)
+* [快应用发起进攻第一枪！小米直达服务正式更名快应用](https://zhuanlan.zhihu.com/p/34985022)
+* [手机厂商和开发者为何看好快应用新生态](https://zhuanlan.zhihu.com/p/34984080)
+* [魅族体验快应用：免安装，快速触达你要的服务](https://zhuanlan.zhihu.com/p/35007620)
+- [资源汇总 快应用开发常见问题和技术帖子汇总（持续更新）](https://bbs.quickapp.cn/forum.php?mod=viewthread&tid=838)
 - [快应用API Demo 集合 QuickAPP](https://github.com/l455202325/APIDemo)
-- [awesome-quick-app](https://github.com/yesvods/awesome-quick-app)
+
+> 更多详情 https://github.com/yesvods/awesome-quick-app
+
