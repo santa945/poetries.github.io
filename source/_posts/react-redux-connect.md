@@ -1,5 +1,5 @@
 ---
-title: React-redux之connect组件
+title: React之connect组件
 date: 2018-12-20 17:50:24
 tags: 
   - React
