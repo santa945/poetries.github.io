@@ -11,16 +11,26 @@ categories: Front-End
 
 **概述：浏览器渲染一共有五步**
 
-- 处理 `HTML` 并构建 `DOM` 树。
-- 处理 `CSS `构建 `CSSOM` 树。
-- 将 `DOM` 与 `CSSOM` 合并成一个渲染树。
-- 根据渲染树来布局，计算每个节点的位置。
-- 调用 `GPU` 绘制，合成图层，显示在屏幕上
+1. 处理 `HTML` 并构建 `DOM` 树。
+2. 处理 `CSS `构建 `CSSOM` 树。
+3. 将 `DOM` 与 `CSSOM` 合并成一个渲染树。
+4. 根据渲染树来布局，计算每个节点的位置。
+5. 调用 `GPU` 绘制，合成图层，显示在屏幕上
 
-> 具体如下图过程如下图所示
+> 第四步和第五步是最耗时的部分，这两步合起来，就是我们通常所说的渲染
+
+具体如下图过程如下图所示
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-08e6f204c42595ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-365009d6fa2d4b77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**渲染**
+
+- 网页生成的时候，至少会渲染一次
+- 在用户访问的过程中，还会不断重新渲染
+
+> 重新渲染需要重复之前的第四步(重新生成布局)+第五步(重新绘制)或者只有第五个步(重新绘制)
 
 - 在构建 `CSSOM` 树时，会阻塞渲染，直至 `CSSOM `树构建完成。并且构建 `CSSOM` 树是一个十分消耗性能的过程，所以应该尽量保证层级扁平，减少过度层叠，越是具体的 `CSS` 选择器，执行速度越慢
 - 当 `HTML` 解析到 `script` 标签时，会暂停构建 `DOM`，完成后才会从暂停的地方重新开始。也就是说，如果你想首屏渲染的越快，就越不应该在首屏就加载 `JS` 文件。并且` CSS `也会影响 `JS` 的执行，只有当解析完样式表才会执行 `JS`，所以也可以认为这种情况下，`CSS` 也会暂停构建 `DOM`
@@ -124,7 +134,69 @@ categories: Front-End
 - 更新界面
 - 以上就是一帧中可能会做的事情。如果在一帧中有空闲时间，就会去执行 `requestIdleCallback` 回调
 
-### 3.4 减少重绘和回流
+**常见的引起重绘的属性**
+
+- `color	`
+- `border-style`	
+- `visibility`	
+- `background`
+- `text-decoration`	
+- `background-image`	
+- `background-position`	
+- `background-repeat`
+- `outline-color`	
+- `outline`	
+- `outline-style`	
+- `border-radius`
+- `outline-width`	
+- `box-shadow`	
+- `background-size`	
+
+
+### 3.4 常见引起回流属性和方法
+
+> 任何会改变元素几何信息(元素的位置和尺寸大小)的操作，都会触发重排，下面列一些栗子
+
+- 添加或者删除可见的`DOM`元素；
+- 元素尺寸改变——边距、填充、边框、宽度和高度
+- 内容变化，比如用户在`input`框中输入文字
+- 浏览器窗口尺寸改变——`resize`事件发生时
+- 计算 `offsetWidth` 和 `offsetHeight` 属性
+- 设置 `style` 属性的值
+
+
+**回流影响的范围**
+
+> 由于浏览器渲染界面是基于流失布局模型的，所以触发重排时会对周围DOM重新排列，影响的范围有两种
+
+- 全局范围：从根节点`html`开始对整个渲染树进行重新布局。
+- 局部范围：对渲染树的某部分或某一个渲染对象进行重新布局
+
+**全局范围回流**
+
+```html
+<body>
+  <div class="hello">
+    <h4>hello</h4>
+    <p><strong>Name:</strong>BDing</p>
+    <h5>male</h5>
+    <ol>
+      <li>coding</li>
+      <li>loving</li>
+    </ol>
+  </div>
+</body>
+```
+
+> 当`p`节点上发生`reflow`时，`hello`和`body`也会重新渲染，甚至`h5`和`ol`都会收到影响
+
+**局部范围回流**
+
+> 用局部布局来解释这种现象：把一个`dom`的宽高之类的几何信息定死，然后在`dom`内部触发重排，就只会重新渲染该`dom`内部的元素，而不会影响到外界
+
+
+
+### 3.5 减少重绘和回流
 
 > 使用 `translate` 替代 `top`
 
@@ -165,8 +237,4 @@ for(let i = 0; i < 1000; i++) {
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-7820ddaab0b9710e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-> [重绘与回流更多详情](http://blog.poetries.top/2018/01/12/fed-performance-optimization/#%E5%85%AD%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81)
-
-## 四、更多参考
-
-- [轻松掌握浏览器重绘重排原理](http://obkoro1.com/2018/12/18/%E8%BD%BB%E6%9D%BE%E6%8E%8C%E6%8F%A1%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8D%E7%BB%98%E9%87%8D%E6%8E%92%E5%8E%9F%E7%90%86/#more)
+> 重绘与回流 http://blog.poetries.top/2018/01/12/fed-performance-optimization/#%E5%85%AD%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81
