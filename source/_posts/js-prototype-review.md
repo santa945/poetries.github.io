@@ -1,5 +1,5 @@
 ---
-title: JavaScript中的原型链回顾
+title: JavaScript原型链回顾
 date: 2018-12-22 12:13:53
 tags: 
   - JavaScript
