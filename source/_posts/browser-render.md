@@ -166,3 +166,7 @@ for(let i = 0; i < 1000; i++) {
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-7820ddaab0b9710e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > [重绘与回流更多详情](http://blog.poetries.top/2018/01/12/fed-performance-optimization/#%E5%85%AD%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81)
+
+## 四、更多参考
+
+- [轻松掌握浏览器重绘重排原理](http://obkoro1.com/2018/12/18/%E8%BD%BB%E6%9D%BE%E6%8E%8C%E6%8F%A1%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8D%E7%BB%98%E9%87%8D%E6%8E%92%E5%8E%9F%E7%90%86/#more)
