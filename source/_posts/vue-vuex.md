@@ -8,6 +8,7 @@ categories: Front-End
 
 > 了解vuex核心概念请移步 https://vuex.vuejs.org/zh/
 
+![](https://vuex.vuejs.org/vuex.png)
 
 ## 一、初始vuex
 
