@@ -111,3 +111,4 @@ npx babel-upgrade --write --install
 - [babel7使用手册](https://mp.weixin.qq.com/s/AURDiWwspdfRExopNf4YLQ)
 - [webpack - babel 篇](https://juejin.im/post/5bfe541bf265da6179748834?utm_source=gold_browser_extension)
 - [babel 升级到7.X采坑总结](https://segmentfault.com/a/1190000016458913)
+- [一口气了解 babel](https://juejin.im/post/5c19c5e0e51d4502a232c1c6?utm_source=gold_browser_extension)
