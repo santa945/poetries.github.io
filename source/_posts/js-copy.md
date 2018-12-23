@@ -1,5 +1,5 @@
 ---
-title: javascript中的复制粘贴功能
+title: Javascript中的复制粘贴功能
 date: 2018-12-23 09:10:43
 tags: 
   - JavaScript
