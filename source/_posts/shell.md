@@ -1037,7 +1037,7 @@ fi
 有一个文件存在!
 ```
 
-## 九、流程控制if/while/switch
+## 九、流程控制if/while/case
 
 ### 9.1 if
 
