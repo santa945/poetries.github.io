@@ -20,5 +20,16 @@
 
   <!-- 页面点击小红心 -->
   <script type="text/javascript" src="/js/clicklove.js"></script>
+ 
+  <% if(theme.home_bg && theme.home_bg.lizi) { %>
+    <script type="text/javascript" src="/js/bg/lizi.js"></script>
+  <% } else if (theme.home_bg && theme.home_bg.yu) { %>
+    <script type="text/javascript" src="/js/bg/yu.js"></script>
+  <% } else if (theme.home_bg && theme.home_bg.star) { %>
+    <script type="text/javascript" src="/js/bg/star.js"></script>
+  <% } else if (theme.home_bg && theme.home_bg.sky) { %>
+    <script type="text/javascript" src="/js/bg/sky.js"></script>
+  <% } %>
+
 </body>
 </html>
