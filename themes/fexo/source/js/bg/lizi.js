@@ -346,11 +346,5 @@ onresize = function() {
 };
 
 var oNetwork;
-init = function() {
-
-    oNetwork = new Network();
-    oNetwork.start();
-
-}
-
-window.onload = init;
+oNetwork = new Network();
+oNetwork.start();
