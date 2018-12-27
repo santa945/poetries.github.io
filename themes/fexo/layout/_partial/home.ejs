@@ -30,3 +30,13 @@
 
 <!-- 统计 -->
 <p style="text-align:center;position:absolute;bottom:0px;left:50%;"><script type="text/javascript" src="http://tajs.qq.com/stats?sId=59154049" charset="UTF-8"></script></p>
+
+<% if(theme.home_bg && theme.home_bg.lizi) { %>
+  <script type="text/javascript" src="/js/bg/lizi.js"></script>
+<% } else if (theme.home_bg && theme.home_bg.yu) { %>
+  <script type="text/javascript" src="/js/bg/yu.js"></script>
+<% } else if (theme.home_bg && theme.home_bg.star) { %>
+  <script type="text/javascript" src="/js/bg/star.js"></script>
+<% } else if (theme.home_bg && theme.home_bg.sky) { %>
+  <script type="text/javascript" src="/js/bg/sky.js"></script>
+<% } %>
