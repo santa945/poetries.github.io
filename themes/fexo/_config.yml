@@ -286,7 +286,7 @@ canvas_nest:
 
 # 首页动画
 home_bg:
-  lizi: false
+  lizi: true
   yu: false
   star: false
-  sky: true
+  sky: false
