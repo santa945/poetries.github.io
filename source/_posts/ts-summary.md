@@ -1198,33 +1198,1087 @@ npm install @types/node --save-dev
 
 # 三、进阶
 
-## 3.1 进阶
+## 3.1 类型别名
 
-## 3.2 类型别名
+> 类型别名用来给一个类型起个新名字
 
-## 3.3 字符串字面量类型
+```js
+type Name = string;
 
-## 3.4 元组
+type NameResolver = () => string;
 
-## 3.5 枚举
+type NameOrResolver = Name | NameResolver; // 联合类型
 
-## 3.6 类
+function getName(n: NameOrResolver): Name {
+    if (typeof n === 'string') {
+        return n;
+    } else {
+        return n();
+    }
+}
+```
 
-## 3.7 类与接口
+上例中，我们使用 `type` 创建类型别名。
 
-## 3.8 泛型
+> 类型别名常用于联合类型
 
-## 3.9 声明合并
 
-## 3.10 扩展阅读
+## 3.2 字符串字面量类型
+
+> 字符串字面量类型用来约束取值只能是某几个字符串中的一个
+
+```js
+type EventNames = 'click' | 'scroll' | 'mousemove';
+function handleEvent(ele: Element, event: EventNames) {
+    // do something
+}
+
+handleEvent(document.getElementById('hello'), 'scroll');  // 没问题
+handleEvent(document.getElementById('world'), 'dbclick'); // 报错，event 不能为 'dbclick'
+
+// index.ts(7,47): error TS2345: Argument of type '"dbclick"' is not assignable to parameter of type 'EventNames'.
+```
+
+- 上例中，我们使用 `type` 定了一个字符串字面量类型 `EventNames`，它只能取三种字符串中的一种。
+
+**注意，类型别名与字符串字面量类型都是使用 type 进行定**
+
+## 3.3 元组
+
+- 数组合并了相同类型的对象，而元组（`Tuple`）合并了不同类型的对象。
+- 元组起源于函数编程语言,在这些语言中频繁使用元组。
+
+### 3.3.1 简单的例子
+
+> 定义一对值分别为 `string` 和 `number `的元组
+
+```
+let user: [string, number] = ['poetries', 22];
+```
+
+> 当赋值或访问一个已知索引的元素时，会得到正确的类型
+
+
+```js
+let user: [string, number];
+user[0] = 'poetries';
+user[1] = 22;
+
+user[0].slice(1);
+user[1].toFixed(2);
+```
+
+> 也可以只赋值其中一项
+
+```js
+let user: [string, number];
+user[0] = 'poetries';
+```
+
+### 3.3.2 越界的元素
+
+> 当添加越界的元素时，它的类型会被限制为元组中每个类型的联合类型
+
+
+```js
+let user: [string, number];
+user = ['poetries', 22];
+user.push('http://blog.poetries.top');
+user.push(true);
+
+// index.ts(4,14): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string | number'.
+//   Type 'boolean' is not assignable to type 'number'.
+```
+
+## 3.4 枚举
+
+> 枚举（`Enum`）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等
+
+### 3.4.1 简单的例子
+
+> 枚举使用 `enum` 关键字来定义：
+
+```js
+enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
+```
+
+> 枚举成员会被赋值为从 `0` 开始递增的数字，同时也会对枚举值到枚举名进行反向映射
+
+```js
+enum Days {Sun, Mon, Tue, Wed, Thu, Fri, Sat};
+
+console.log(Days["Sun"] === 0); // true
+console.log(Days["Mon"] === 1); // true
+console.log(Days["Tue"] === 2); // true
+console.log(Days["Sat"] === 6); // true
+
+console.log(Days[0] === "Sun"); // true
+console.log(Days[1] === "Mon"); // true
+console.log(Days[2] === "Tue"); // true
+console.log(Days[6] === "Sat"); // true
+```
+
+> 事实上，上面的例子会被编译为
+
+```js
+var Days;
+(function (Days) {
+    Days[Days["Sun"] = 0] = "Sun";
+    Days[Days["Mon"] = 1] = "Mon";
+    Days[Days["Tue"] = 2] = "Tue";
+    Days[Days["Wed"] = 3] = "Wed";
+    Days[Days["Thu"] = 4] = "Thu";
+    Days[Days["Fri"] = 5] = "Fri";
+    Days[Days["Sat"] = 6] = "Sat";
+})(Days || (Days = {}));
+```
+
+### 3.4.2 手动赋值
+
+> 我们也可以给枚举项手动赋值
+
+
+```js
+enum Days {Sun = 7, Mon = 1, Tue, Wed, Thu, Fri, Sat};
+
+console.log(Days["Sun"] === 7); // true
+console.log(Days["Mon"] === 1); // true
+console.log(Days["Tue"] === 2); // true
+console.log(Days["Sat"] === 6); // true
+```
+
+> 上面的例子中，未手动赋值的枚举项会接着上一个枚举项递增
+
+如果未手动赋值的枚举项与手动赋值的重复了，`TypeScript` 是不会察觉到这一点的
+
+```js
+enum Days {Sun = 3, Mon = 1, Tue, Wed, Thu, Fri, Sat};
+
+console.log(Days["Sun"] === 3); // true
+console.log(Days["Wed"] === 3); // true
+console.log(Days[3] === "Sun"); // false
+console.log(Days[3] === "Wed"); // true
+```
+
+> 上面的例子中，递增到 `3` 的时候与前面的 `Sun` 的取值重复了，但是 `TypeScript` 并没有报错，导致 `Days[3] `的值先是 `"Sun"`，而后又被 `"Wed"` 覆盖了。编译的结果是
+
+```js
+var Days;
+(function (Days) {
+    Days[Days["Sun"] = 3] = "Sun";
+    Days[Days["Mon"] = 1] = "Mon";
+    Days[Days["Tue"] = 2] = "Tue";
+    Days[Days["Wed"] = 3] = "Wed";
+    Days[Days["Thu"] = 4] = "Thu";
+    Days[Days["Fri"] = 5] = "Fri";
+    Days[Days["Sat"] = 6] = "Sat";
+})(Days || (Days = {}));
+```
+
+所以使用的时候需要注意，最好不要出现这种覆盖的情况。
+
+> 手动赋值的枚举项可以不是数字，此时需要使用类型断言来让 `tsc` 无视类型检查 (编译出的 `js` 仍然是可用的)：
+
+```js
+enum Days {Sun = 7, Mon, Tue, Wed, Thu, Fri, Sat = <any>"S"};
+```
+
+```js
+var Days;
+(function (Days) {
+    Days[Days["Sun"] = 7] = "Sun";
+    Days[Days["Mon"] = 8] = "Mon";
+    Days[Days["Tue"] = 9] = "Tue";
+    Days[Days["Wed"] = 10] = "Wed";
+    Days[Days["Thu"] = 11] = "Thu";
+    Days[Days["Fri"] = 12] = "Fri";
+    Days[Days["Sat"] = "S"] = "Sat";
+})(Days || (Days = {}));
+```
+
+> 当然，手动赋值的枚举项也可以为小数或负数，此时后续未手动赋值的项的递增步长仍为 `1`：
+
+```js
+enum Days {Sun = 7, Mon = 1.5, Tue, Wed, Thu, Fri, Sat};
+
+console.log(Days["Sun"] === 7); // true
+console.log(Days["Mon"] === 1.5); // true
+console.log(Days["Tue"] === 2.5); // true
+console.log(Days["Sat"] === 6.5); // true
+```
+
+### 3.4.3 常数项和计算所得项
+
+> 枚举项有两种类型：常数项（`constant member`）和计算所得项（`computed member`）
+
+前面我们所举的例子都是常数项，一个典型的计算所得项的例子：
+
+```js
+enum Color {Red, Green, Blue = "blue".length};
+```
+
+> 上面的例子中，`"blue".length` 就是一个计算所得项。
+
+上面的例子不会报错，但是如果紧接在计算所得项后面的是未手动赋值的项，那么它就会因为无法获得初始值而报错
+
+```js
+enum Color {Red = "red".length, Green, Blue};
+
+// index.ts(1,33): error TS1061: Enum member must have initializer.
+// index.ts(1,40): error TS1061: Enum member must have initializer.
+```
+
+### 3.4.4 常数枚举
+
+> 常数枚举是使用 `const enum` 定义的枚举类型
+
+```js
+const enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+
+> 常数枚举与普通枚举的区别是，它会在编译阶段被删除，并且不能包含计算成员
+
+```js
+//上例的编译结果是：
+
+var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];
+```
+
+```js
+// 假如包含了计算成员，则会在编译阶段报错：
+
+const enum Color {Red, Green, Blue = "blue".length};
+
+// index.ts(1,38): error TS2474: In 'const' enum declarations member initializer must be constant expression.
+```
+
+### 3.4.5 外部枚举
+
+> 外部枚举（`Ambient Enums`）是使用 `declare enum` 定义的枚举类型
+
+```js
+declare enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+
+- 之前提到过，`declare` 定义的类型只会用于编译时的检查，编译结果中会被删除。
+
+上例的编译结果是：
+
+```js
+var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+
+- 外部枚举与声明语句一样，常出现在声明文件中。
+- 同时使用 `declare` 和 `const` 也是可以的：
+
+```js
+declare const enum Directions {
+    Up,
+    Down,
+    Left,
+    Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];
+```
+
+```js
+// 编译结果：
+
+var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];
+```
+
+
+## 3.5 类
+
+### 3.5.1 类的概念
+
+> 类相关的概念做一个简单的介绍
+
+- 类(`Class`)：定义了一件事物的抽象特点，包含它的属性和方法
+- 对象（`Object`）：类的实例，通过 `new` 生成
+- 面向对象（`OOP`）的三大特性：封装、继承、多态
+- 封装（`Encapsulation`）：将对数据的操作细节隐藏起来，只暴露对外的接口。外界调用端不需要（也不可能）知道细节，就能通过对外提供的接口来访问该对象，同时也保证了外界无法任意更改对象内部的数据
+- 继承（`Inheritance`）：子类继承父类，子类除了拥有父类的所有特性外，还有一些更具体的特性
+- 多态（`Polymorphism`）：由继承而产生了相关的不同的类，对同一个方法可以有不同的响应。比如 `Cat` 和 `Dog` 都继承自 `Animal`，但是分别实现了自己的 `eat` 方法。此时针对某一个实例，我们无需了解它是 `Cat `还是 `Dog`，就可以直接调用 `eat `方法，程序会自动判断出来应该如何执行 `eat`
+- 存取器（`getter & setter`）：用以改变属性的读取和赋值行为
+- 修饰符（`Modifiers`）：修饰符是一些关键字，用于限定成员或类型的性质。比如 `public` 表示公有属性或方法
+- 抽象类（`Abstract Class`）：抽象类是供其他类继承的基类，抽象类不允许被实例化。抽象类中的抽象方法必须在子类中被实现
+- 接口（`Interfaces`）：不同类之间公有的属性或方法，可以抽象成一个接口。接口可以被类实现（`implements`）。一个类只能继承自另一个类，但是可以实现多个接口
+
+### 3.5.2 public private 和 protected
+
+> `TypeScript` 可以使用三种访问修饰符（`Access Modifiers`），分别是 `public`、`private` 和 `protected`
+
+
+- `public` 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 `public` 的
+- `private` 修饰的属性或方法是私有的，不能在声明它的类的外部访问
+- `protected` 修饰的属性或方法是受保护的，它和 `private` 类似，区别是它在子类中也是允许被访问的
+
+```js
+class Animal {
+    public name;
+    public constructor(name) {
+        this.name = name;
+    }
+}
+
+let a = new Animal('Jack');
+console.log(a.name); // Jack
+a.name = 'Tom';
+console.log(a.name); // Tom
+```
+
+
+> 上面的例子中，`name` 被设置为了 `public`，所以直接访问实例的 `name` 属性是允许的。
+
+很多时候，我们希望有的属性是无法直接存取的，这时候就可以用 `private` 了
+
+```js
+lass Animal {
+    private name;
+    public constructor(name) {
+        this.name = name;
+    }
+}
+
+let a = new Animal('Jack');
+console.log(a.name); // Jack
+a.name = 'Tom';
+
+// index.ts(9,13): error TS2341: Property 'name' is private and only accessible within class 'Animal'.
+// index.ts(10,1): error TS2341: Property 'name' is private and only accessible within class 'Animal'.
+```
+
+
+> 上面的例子编译后的代码是：
+
+```js
+var Animal = (function () {
+    function Animal(name) {
+        this.name = name;
+    }
+    return Animal;
+}());
+var a = new Animal('Jack');
+console.log(a.name);
+a.name = 'Tom';
+```
+
+> 使用 `private` 修饰的属性或方法，在子类中也是不允许访问的：
+
+```js
+class Animal {
+    private name;
+    public constructor(name) {
+        this.name = name;
+    }
+}
+
+class Cat extends Animal {
+    constructor(name) {
+        super(name);
+        console.log(this.name);
+    }
+}
+
+// index.ts(11,17): error TS2341: Property 'name' is private and only accessible within class 'Animal'.
+```
+
+> 而如果是用 `protected` 修饰，则允许在子类中访问
+
+```js
+class Animal {
+    protected name;
+    public constructor(name) {
+        this.name = name;
+    }
+}
+
+class Cat extends Animal {
+    constructor(name) {
+        super(name);
+        console.log(this.name);
+    }
+}
+```
+
+
+### 3.5.3 抽象类
+
+> `abstract` 用于定义抽象类和其中的抽象方法。
+
+**什么是抽象类？**
+
+> 首先，抽象类是不允许被实例化的
+
+```js
+abstract class Animal {
+    public name;
+    public constructor(name) {
+        this.name = name;
+    }
+    public abstract sayHi();
+}
+
+let a = new Animal('Jack');
+
+// index.ts(9,11): error TS2511: Cannot create an instance of the abstract class 'Animal'.
+```
+
+> 上面的例子中，我们定义了一个抽象类 `Animal`，并且定义了一个抽象方法 `sayHi`。在实例化抽象类的时候报错了。
+
+其次，抽象类中的抽象方法必须被子类实现
+
+```js
+abstract class Animal {
+    public name;
+    public constructor(name) {
+        this.name = name;
+    }
+    public abstract sayHi();
+}
+
+class Cat extends Animal {
+    public eat() {
+        console.log(`${this.name} is eating.`);
+    }
+}
+
+let cat = new Cat('Tom');
+
+// index.ts(9,7): error TS2515: Non-abstract class 'Cat' does not implement inherited abstract member 'sayHi' from class 'Animal'.
+```
+
+> 上面的例子中，我们定义了一个类 `Cat` 继承了抽象类 `Animal`，但是没有实现抽象方法 `sayHi`，所以编译报错了。
+
+下面是一个正确使用抽象类的例子：
+
+```js
+abstract class Animal {
+    public name;
+    public constructor(name) {
+        this.name = name;
+    }
+    public abstract sayHi();
+}
+
+class Cat extends Animal {
+    public sayHi() {
+        console.log(`Meow, My name is ${this.name}`);
+    }
+}
+
+let cat = new Cat('Tom');
+```
+
+上面的例子中，我们实现了抽象方法 `sayHi`，编译通过了。
+
+> 需要注意的是，即使是抽象方法，`TypeScript` 的编译结果中，仍然会存在这个类，上面的代码的编译结果是：
+
+```js
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Animal = (function () {
+    function Animal(name) {
+        this.name = name;
+    }
+    return Animal;
+}());
+var Cat = (function (_super) {
+    __extends(Cat, _super);
+    function Cat() {
+        _super.apply(this, arguments);
+    }
+    Cat.prototype.sayHi = function () {
+        console.log('Meow, My name is ' + this.name);
+    };
+    return Cat;
+}(Animal));
+var cat = new Cat('Tom');
+```
+
+### 3.5.4 类的类型
+
+> 给类加上 `TypeScript` 的类型很简单，与接口类似：
+
+```js
+class Animal {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    sayHi(): string {
+      return `My name is ${this.name}`;
+    }
+}
+
+let a: Animal = new Animal('Jack');
+console.log(a.sayHi()); // My name is Jack
+```
+
+
+## 3.6 类与接口
+
+### 3.6.1 类实现接口
+
+> 实现（`implements`）是面向对象中的一个重要概念。一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成接口（`interfaces`），用 `implements` 关键字来实现。这个特性大大提高了面向对象的灵活性
+
+举例来说，门是一个类，防盗门是门的子类。如果防盗门有一个报警器的功能，我们可以简单的给防盗门添加一个报警方法。这时候如果有另一个类，车，也有报警器的功能，就可以考虑把报警器提取出来，作为一个接口，防盗门和车都去实现它
+
+
+```js
+interface Alarm {
+    alert();
+}
+
+class Door {
+}
+
+class SecurityDoor extends Door implements Alarm {
+    alert() {
+        console.log('SecurityDoor alert');
+    }
+}
+
+class Car implements Alarm {
+    alert() {
+        console.log('Car alert');
+    }
+}
+```
+
+**一个类可以实现多个接口**
+
+```js
+interface Alarm {
+    alert();
+}
+
+interface Light {
+    lightOn();
+    lightOff();
+}
+
+class Car implements Alarm, Light {
+    alert() {
+        console.log('Car alert');
+    }
+    lightOn() {
+        console.log('Car light on');
+    }
+    lightOff() {
+        console.log('Car light off');
+    }
+}
+```
+
+> 上例中，`Car` 实现了 `Alarm` 和 `Light `接口，既能报警，也能开关车灯
+
+### 3.6.2 接口继承接口
+
+> 接口与接口之间可以是继承关系
+
+```js
+interface Alarm {
+    alert();
+}
+
+interface LightableAlarm extends Alarm {
+    lightOn();
+    lightOff();
+}
+```
+
+> 上例中，我们使用 `extends` 使 `LightableAlarm` 继承 `Alarm`
+
+### 3.6.3 接口继承类
+
+> 接口也可以继承类：
+
+```js
+class Point {
+    x: number;
+    y: number;
+}
+
+interface Point3d extends Point {
+    z: number;
+}
+
+let point3d: Point3d = {x: 1, y: 2, z: 3};
+```
+
+### 3.6.4 混合类型
+
+> 可以使用接口的方式来定义一个函数需要符合的形状
+
+```js
+interface SearchFunc {
+    (source: string, subString: string): boolean;
+}
+
+let mySearch: SearchFunc;
+mySearch = function(source: string, subString: string) {
+    return source.search(subString) !== -1;
+}
+```
+
+> 有时候，一个函数还可以有自己的属性和方法
+
+```js
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = <Counter>function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+```
+
+## 3.7 泛型
+
+> 泛型（`Generics`）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性
+
+### 3.7.1 简单的例子
+
+> 首先，我们来实现一个函数 `createArray`，它可以创建一个指定长度的数组，同时将每一项都填充一个默认值
+
+```js
+function createArray(length: number, value: any): Array<any> {
+    let result = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+- 上例中，我们使用了之前提到过的数组泛型来定义返回值的类型。
+- 这段代码编译不会报错，但是一个显而易见的缺陷是，它并没有准确的定义返回值的类型：`Array<any>` 允许数组的每一项都为任意类型。但是我们预期的是，数组中每一项都应该是输入的` value` 的类型。
+
+> 这时候，泛型就派上用场了：
+
+
+```js
+function createArray<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray<string>(3, 'x'); // ['x', 'x', 'x']
+```
+
+> 上例中，我们在函数名后添加了 `<T>`，其中 `T` 用来指代任意输入的类型，在后面的输入 `value: T` 和输出 `Array<T> `中即可使用了
+
+接着在调用的时候，可以指定它具体的类型为 `string`。当然，也可以不手动指定，而让类型推论自动推算出来
+
+```js
+function createArray<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+### 3.7.2 多个类型参数
+
+> 定义泛型的时候，可以一次定义多个类型参数：
+
+```js
+function swap<T, U>(tuple: [T, U]): [U, T] {
+    return [tuple[1], tuple[0]];
+}
+
+swap([7, 'seven']); // ['seven', 7]
+```
+
+> 上例中，我们定义了一个 `swap` 函数，用来交换输入的元组
+
+### 3.7.3 泛型约束
+
+> 在函数内部使用泛型变量的时候，由于事先不知道它是哪种类型，所以不能随意的操作它的属性或方法
+
+```js
+function loggingIdentity<T>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+// index.ts(2,19): error TS2339: Property 'length' does not exist on type 'T'.
+
+```
+
+> 上例中，泛型 `T` 不一定包含属性 `length`，所以编译的时候报错了。
+
+> 这时，我们可以对泛型进行约束，只允许这个函数传入那些包含` length` 属性的变量。这就是泛型约束
+
+```js
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+```
+
+> 上例中，我们使用了 `extends `约束了泛型 `T` 必须符合接口 `Lengthwise` 的形状，也就是必须包含 `length` 属性。
+
+> 此时如果调用 `loggingIdentity` 的时候，传入的 `arg `不包含 `length`，那么在编译阶段就会报错了
+
+```js
+interface Lengthwise {
+    length: number;
+}
+
+function loggingIdentity<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length);
+    return arg;
+}
+
+loggingIdentity(7);
+
+// index.ts(10,17): error TS2345: Argument of type '7' is not assignable to parameter of type 'Lengthwise'.
+```
+
+**多个类型参数之间也可以互相约束：**
+
+```js
+function copyFields<T extends U, U>(target: T, source: U): T {
+    for (let id in source) {
+        target[id] = (<T>source)[id];
+    }
+    return target;
+}
+
+let x = { a: 1, b: 2, c: 3, d: 4 };
+
+copyFields(x, { b: 10, d: 20 });
+```
+
+> 上例中，我们使用了两个类型参数，其中要求 `T` 继承 `U`，这样就保证了` U` 上不会出现 `T` 中不存在的字段
+
+### 3.7.4 泛型接口
+
+
+> 可以使用接口的方式来定义一个函数需要符合的形状
+
+```js
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+
+let mySearch: SearchFunc;
+mySearch = function(source: string, subString: string) {
+    return source.search(subString) !== -1;
+}
+```
+
+> 当然也可以使用含有泛型的接口来定义函数的形状
+
+
+```js
+interface CreateArrayFunc {
+    <T>(length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+> 进一步，我们可以把泛型参数提前到接口名上
+
+```js
+interface CreateArrayFunc<T> {
+    (length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc<any>;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
+```
+
+> 注意，此时在使用泛型接口的时候，需要定义泛型的类型
+
+### 3.7.5 泛型类
+
+> 与泛型接口类似，泛型也可以用于类的类型定义中
+
+```js
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+```
+
+### 3.7.6 泛型参数的默认类型
+
+> 在 `TypeScript 2.3 `以后，我们可以为泛型中的类型参数指定默认类型。当使用泛型时没有在代码中直接指定类型参数，从实际值参数中也无法推测出时，这个默认类型就会起作用
+
+```js
+function createArray<T = string>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+```
+
+
+
+## 3.8 声明合并
+
+
+> 如果定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型
+
+### 3.8.1 函数的合并
+
+> 我们可以使用重载定义多个函数类型
+
+```js
+function reverse(x: number): number;
+function reverse(x: string): string;
+
+function reverse(x: number | string): number | string {
+    if (typeof x === 'number') {
+        return Number(x.toString().split('').reverse().join(''));
+    } else if (typeof x === 'string') {
+        return x.split('').reverse().join('');
+    }
+}
+```
+
+### 3.8.2 接口的合并
+
+> 接口中的属性在合并时会简单的合并到一个接口中
+
+```js
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    weight: number;
+}
+```
+
+
+> 相当于：
+
+```js
+interface Alarm {
+    price: number;
+    weight: number;
+}
+```
+
+**注意，合并的属性的类型必须是唯一的**
+
+```js
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    price: number;  // 虽然重复了，但是类型都是 `number`，所以不会报错
+    weight: number;
+}
+```
+
+```js
+interface Alarm {
+    price: number;
+}
+interface Alarm {
+    price: string;  // 类型不一致，会报错
+    weight: number;
+}
+
+// index.ts(5,3): error TS2403: Subsequent variable declarations must have the same type.  Variable 'price' must be of type 'number', but here has type 'string'.
+
+```
+
+**接口中方法的合并，与函数的合并一样**
+
+```js
+interface Alarm {
+    price: number;
+    alert(s: string): string;
+}
+interface Alarm {
+    weight: number;
+    alert(s: string, n: number): string;
+}
+```
+
+相当于：
+
+```js
+interface Alarm {
+    price: number;
+    weight: number;
+    alert(s: string): string;
+    alert(s: string, n: number): string;
+}
+```
+
+### 3.8.3 类的合并
+
+> 类的合并与接口的合并规则一致
 
 # 四、工程
 
-## 4.1 代码检查
+## 4.1 tsconfig.json
+
+**编译选项**
+
+> 你可以通过 `compilerOptions` 来定制你的编译选项
+
+```js
+{
+  "compilerOptions": {
+
+    /* 基本选项 */
+    "target": "es5",                       // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
+    "module": "commonjs",                  // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
+    "lib": [],                             // 指定要包含在编译中的库文件
+    "allowJs": true,                       // 允许编译 javascript 文件
+    "checkJs": true,                       // 报告 javascript 文件中的错误
+    "jsx": "preserve",                     // 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
+    "declaration": true,                   // 生成相应的 '.d.ts' 文件
+    "sourceMap": true,                     // 生成相应的 '.map' 文件
+    "outFile": "./",                       // 将输出文件合并为一个文件
+    "outDir": "./",                        // 指定输出目录
+    "rootDir": "./",                       // 用来控制输出目录结构 --outDir.
+    "removeComments": true,                // 删除编译后的所有的注释
+    "noEmit": true,                        // 不生成输出文件
+    "importHelpers": true,                 // 从 tslib 导入辅助工具函数
+    "isolatedModules": true,               // 将每个文件做为单独的模块 （与 'ts.transpileModule' 类似）.
+
+    /* 严格的类型检查选项 */
+    "strict": true,                        // 启用所有严格类型检查选项
+    "noImplicitAny": true,                 // 在表达式和声明上有隐含的 any类型时报错
+    "strictNullChecks": true,              // 启用严格的 null 检查
+    "noImplicitThis": true,                // 当 this 表达式值为 any 类型的时候，生成一个错误
+    "alwaysStrict": true,                  // 以严格模式检查每个模块，并在每个文件里加入 'use strict'
+
+    /* 额外的检查 */
+    "noUnusedLocals": true,                // 有未使用的变量时，抛出错误
+    "noUnusedParameters": true,            // 有未使用的参数时，抛出错误
+    "noImplicitReturns": true,             // 并不是所有函数里的代码都有返回值时，抛出错误
+    "noFallthroughCasesInSwitch": true,    // 报告 switch 语句的 fallthrough 错误。（即，不允许 switch 的 case 语句贯穿）
+
+    /* 模块解析选项 */
+    "moduleResolution": "node",            // 选择模块解析策略： 'node' (Node.js) or 'classic' (TypeScript pre-1.6)
+    "baseUrl": "./",                       // 用于解析非相对模块名称的基目录
+    "paths": {},                           // 模块名到基于 baseUrl 的路径映射的列表
+    "rootDirs": [],                        // 根文件夹列表，其组合内容表示项目运行时的结构内容
+    "typeRoots": [],                       // 包含类型声明的文件列表
+    "types": [],                           // 需要包含的类型声明文件名列表
+    "allowSyntheticDefaultImports": true,  // 允许从没有设置默认导出的模块中默认导入。
+
+    /* Source Map Options */
+    "sourceRoot": "./",                    // 指定调试器应该找到 TypeScript 文件而不是源文件的位置
+    "mapRoot": "./",                       // 指定调试器应该找到映射文件而不是生成文件的位置
+    "inlineSourceMap": true,               // 生成单个 soucemaps 文件，而不是将 sourcemaps 生成不同的文件
+    "inlineSources": true,                 // 将代码与 sourcemaps 生成到一个文件中，要求同时设置了 --inlineSourceMap 或 --sourceMap 属性
+
+    /* 其他选项 */
+    "experimentalDecorators": true,        // 启用装饰器
+    "emitDecoratorMetadata": true          // 为装饰器提供元数据的支持
+  }
+}
+```
+
+
+## 4.2 TypeScript 编译
+
+> 运行 `tsc -p ./path-to-project-directory` 。`tsc -w `来启用 `TypeScript`编译器的观测模式，在检测到文件改动之后，它将重新编译
+
+
+**指定需要编译的文件**
+
+```js
+{
+  "files": [
+    "./some/file.ts"
+  ]
+}
+```
+
+**使用 include 和 exclude 选项来指定需要包含的文件，和排除的文件**
+
+```js
+{
+  "include": [
+    "./folder"
+  ],
+  "exclude": [
+    "./folder/**/*.spec.ts",
+    "./folder/someSubFolder"
+  ]
+}
+```
 
 # 五、参考
 
 - [Typescript中文网](https://www.tslang.cn/docs/handbook/typescript-in-5-minutes.html)
-
 
 
