@@ -7,6 +7,8 @@ tags:
 categories: Back-end
 ---
 
+> Nginx 配置文件在线生成: https://nginxconfig.io/
+
 # 第一部分 基础模块
 
 ## 一、性能相关配置
