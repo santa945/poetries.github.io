@@ -1089,6 +1089,21 @@ npm install @types/jquery --save-dev
 
 > http://microsoft.github.io/TypeSearch/
 
+**使用typings安装声明文件**
+
+> https://github.com/typings/typings
+
+```bash
+# Install Typings CLI utility.
+npm install typings --global
+
+# Search for definitions.
+typings search tape
+
+# Find a definition by name.
+typings search --name react
+```
+
 
 ## 2.10 内置对象
 
