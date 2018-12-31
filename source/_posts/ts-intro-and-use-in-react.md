@@ -48,6 +48,11 @@ var = "poet"
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-da2ea080476546f2.png)
 
+
+**Typescript在线编辑器**
+
+> 建议使用在线编辑器练习 http://www.typescriptlang.org/play/index.html
+
 ## 二、数据类型
 
 > `js`是弱类型语言，强弱类语言有什么区别呢？`typescript`最大的优点就是类型检查，可以帮你检查你定义的类型和赋值的类型。
