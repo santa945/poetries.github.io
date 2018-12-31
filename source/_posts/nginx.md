@@ -5,6 +5,8 @@ tags: Nginx
 categories: Back-end
 ---
 
+> Nginx 配置文件在线生成: https://nginxconfig.io/
+
 ### Nginx的启动、停止与重启
 
 - 建立软连接`Nginx`到`/usr/bin`目录下 `ln -s /usr/sbin/nginx /usr/bin`
