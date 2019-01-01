@@ -74,6 +74,7 @@ module.export = {
 
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f6ab875f614)
 
+
 5. 在`src/index.tsx`中写入口文件
 
 ```js
@@ -92,6 +93,7 @@ render()
 ```
 
 > 但是这时候你会发现有一个错误没有处理
+
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-3ac1896339551fcf.png)
 
@@ -153,7 +155,9 @@ module.exports = {
 - **编译目标** 这时候我们切回`tsconfig`配置中，会发现在`compilerOptions`配置项的`target`是`es5`，也就是说把`ts`代码编译成`es5`规范的代码，如果不做兼容的话，我们可以将它设置为`es6`，使其编译成`es6`的代码
 - **模块处理** 在`module`项中，会发现生成的是`commonjs`的模块系统，因为不考虑兼容，所以这里我也将其设定为最新的`esnext`，并且将模块处理方式改为用`node`来处理，设置`moduleResolution`项为`node`，不做模块处理方式设置的话可能会有报错
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-46772c094f3b6ec4.png)
+
 
 9. 项目启动
 
@@ -191,15 +195,20 @@ npm install -D node-sass sass-loader style-loader css-loader
 
 > `webpack`进行`loader`编译的顺序是从下到上的:知道上面的顺序后我们在`webpack`中的配置就非常简单了，直接在`module.rules`下面加上`.scss`文件类型的编译配置即可
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-c145c9bc2d7beba3.png)
+
 
 > 查看效果,这时候我们在`src`下面新建一个`index.scss`，然后在`index.tsx`里面引入这个文件查看
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-b74706639dcc96ec.png)
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-1a6a70075e7c7c50.png)
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-fceef9bad33d1c88.png)
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-f2d61554eee89eb8.png)
 
 
@@ -260,6 +269,7 @@ npm install -D typings-for-css-modules-loader
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-4f452f5cba5782f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-1554f29f39aa3522.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 3. 优化
@@ -269,6 +279,7 @@ npm install -D typings-for-css-modules-loader
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-cc44afa01edc72d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-ad9864348b48135a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
@@ -277,6 +288,7 @@ npm install -D typings-for-css-modules-loader
 > 前置工作 在`src`目录下新建一个`components`文件夹，用于存放通用组件，然后在`components`文件及里面新建一个组件`Test`，然后在网页入口引入这个组件，如下图所示:
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-5492a1601a16945e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-8ab6539f1b27405c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 什么是装饰器，为什么需要装饰器 装饰器本质上就是一个函数，这个函数对类(`class`)本身进行一些处理，也可以将装饰器的写法当做一种语法糖，如果不用装饰器的话，可以写成下图这样
@@ -529,6 +541,7 @@ const theme = require('../../../theme')
 
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8d7b30cfdc)
 
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8d904c2d8c)
 
 > 以后如果有常用的功能性函数也可以往`components/reactExt`中进行添加。
@@ -548,13 +561,17 @@ const theme = require('../../../theme')
 
 这一步在该博客中作用体现不大，但是对真实项目的条理性是存在较好作用的。 如下图
 
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8dad2a591e)
+
 
 **创建store**
 
 1. 新建`src/store`目录用于存放`store`文件，然后在该目录下新建`globalStore`目录和其中的`index.tsx`文件
 
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8db62a7861)
+
 
 2. 然后在这个`index.tsx`文件中有如下代码:其中的`observable`和`action`的功能请自行查看`mobx`文档
 
@@ -566,7 +583,9 @@ const theme = require('../../../theme')
 
 > 连接`store` 创建了`store`之后我们还需要将其和`react`进行连接，这个时候就需要用到`mobx-react`这个库，我们去到`src/index.tsx`中进行修改
 
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8dd42b6277)
+
 
 > 这里面的`configure({enforceActions: 'observed'})`用于限制被`observable`(也就是`store`中添加了`@observable`)的数据的修改方式，让其只能添加了`@action`的函数中进行修改
 
@@ -574,7 +593,9 @@ const theme = require('../../../theme')
 
 1. 我们去到`src/containers/views`目录中，新增`Counter/index.tsx`，并写入如下代码:
 
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8e6498d5b6)
+
 
 
 2. 然后将这个组件用`mobx-react`变为可观测对象，并使用`@inject`注入`globalStore`
@@ -584,6 +605,7 @@ const theme = require('../../../theme')
 3. 最后我们在`src/index.tsx`中引入`Counter`组件，顺便看看它的`props`中是否带有数据
 
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8ebdf84fcb)
+
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f8ec7ec007f)
 
 4. 最后回到`Counter`组件中编写方法检验功能是否正常
@@ -706,18 +728,338 @@ const theme = require('../../../theme')
 
 ## 4.1 添加打包命令
 
-## 4.2 进行`css`和`js`分离
+> 我们先去`webpack.config.js`中观察一下`output`这个配置项
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f94ef778e90)
+
+> 该配置项指定了打包路径和打包后的`js`文件名，在`webpack`的配置项中，`output`是必须有的。 接着我们去到`package.json`中在`script`中添加打包命令`build`，该命令引用我们的`webpack.config.js`配置文件
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f94ef97e678)
+
+> 之后试试运行`npm run build`，会发现已经将项目打包出来了
+
+
+**添加打包路径工具**
+
+> 在上一步中，我们已经知道打包出来的文件位于根目录下的`dist`文件夹中，所以这个路径工具的添加指向`dist`文件夹： 我们去到`build/utils.js`文件中，添加如下代码:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f94f05a96c6)
+
+以后指定打包文件存放路径的时候就可以直接使用这个工具进行指定
+
+
+
+
+
+## 4.2 分离css文件
+
+> 在上面打包的结果中，我们会发现只有一个`app.js`文件，而实际上我们是有写`css`样式的，但是现在的却并没有这个`css`文件，这是因为`webpack`将所有的资源(包含`js,` `css`等等)都看成是`chunk`，然后一起打包进一个文件中，这样会导致打包出来的`js`文件体积巨大，从而拖累页面的加载速度
+
+1. 在`webpack 4+`版本中，我们可以使用`mini-css-extract-plugin`进行`css`代码的分离，所以首先安装它`npm install -D mini-css-extract-plugin`。
+2. 然后我们到`build/plugins.js`中添加这个插件
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f94f05a22d8)
+
+3. 最后需要注意，之前在提升开发体验这一章中有提到过一点，`style-loader`用于将`css-loader`编译出来的代码转为`js`代码并写入`js`文件中，所以在这里，我们需要用`mini-css-extract-plugin`中的`loader`去替换掉`style-loader`，让它写入单独的`css`文件而不是js文件中:
+
+> 我们去到`build/rules/styleRules.js`中，将原本的`style-loader`全都替换成`mini-css-extract-plugin`的`loader`(这一步可以进行开发环境和生产环境的区分，在文章中不进行区分
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f94f074b032)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95243b1af2)
+
+4. 经过上面的步骤，我们可以打包进行测试: 运行`npm run build`可以发现打包结果中`css`文件已经进行了分离
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95246e0168)
+
+
+> 而在打包出来的`index.html`中也可以发现这个`css`文件被引入了
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9525da2e2b)
+
+> 最后我们再在打包路径中将打包出来的`js`文件用`js`文件夹包裹起来即可
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9525f9c958)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f952c7c1a74)
+
+
 
 ## 4.3 修改`html-webpack-plugin`配置项
 
+> 这一步主要用于压缩打包出来的`index.html`文件，但是单页面应用的话`html`内容其实不多，所以做不做也差不多，在本文章中也只是做个介绍:
+
+
+1. 首先在`html-webpack-plugin`中利用的是`html-minifier`来做压缩工作的，所以详细配置点击进去看即可，常用的如下
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95327fdfb4)
+
+
+2. 第二个需要提一下则是`inject`这个配置项，该项指定资源如何注入，我们直接使用默认的`true`即可，他会将`js`资源注入到`<body>`标签的底部，如果要注入到头部填写`head`即可
+
+
+
+
 ## 4.4 代码分离和按需加载
+
+> 这一步和下一步都是在进行代码的拆分，考虑的是如果所有文件都塞进一个`js`文件中，会导致这个`js`文件体积臃肿，而单页面应用的所有构建又是依赖于这个`js`文件，所以需要进行代码分离，只加载当前页面需要构建的`js`文件。通常来说，我们会根据`react-router`分的页面来进行代码分离，再用`react-loadable`进行分割出来的代码的异步加载(当然你也可以将所有组件都进行代码分离然后异步加载)。所以在这里我们先利用`react-router`分两个页面home和page出来
+
+1. 首先我们安装`react-router: npm install -S react-router-dom`，然后在`src/containers/views`中新建`Home`和`Page`组件
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f955223fdb1)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f955498f237)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f955a218dfa)
+
+2. 接着安装`react-loadable: npm install -S react-loadable`, 然后在`src/containers/shared`中新建`App`组件
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f956605e8a3)
+
+> 之后在里面的`index.tsx`中引用`react-router`和`react-loadable`进行组件按需加载: 当然不要忘了使用`react-hot-loader`
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f957819d10f)
+
+
+> 这一步需要注意的是，`Loadable`这个函数中的`loading`参数是必须有的，至于如何使用可以自行参考`react-loadable`的`github`链接
+
+3. 这个时候去到页面看一下：在`/`路径下，没有加载`page.js`这个文件，而切换到`/page`路径则会加载`page.js`文件，这个时候按需加载就完成了:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95831e4bd4)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f958db827e0)
+
+4. 最后我们观察一下打包后的`js`文件可以发现已经进行了分离
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9592077596)
+
+
 
 ## 4.5 添加`optimization`
 
+> `optimization`是`webpack4+`版本中新出的配置项，这个配置项的功能主要是进行代码压缩，优化。在本节中，我们需要将用到的处于`node_modules`中的第三方代码进行分离，在这里主要用到的是两个配置项`optimization.runtimeChunk`和`optimization.splitChunks`，其中`runtimeChunk`用于生成维系各各代码块关系的代码，`splitChunks`则用于指定需要进行分块的代码，和分块后文件名
+
+1. 我们去到`build`目录下，新建`optimization.js`，并添加如下代码
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95b234dd4b)
+
+
+> 然后在`webpack.config.js`中引入这个配置
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95bd023c85)
+
+2. 最后我们打包试试看可以发现第三方代码都被打包进`vendor.js`文件中了
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95bd4ac283)
+
+> 你可以通过比对在添加`optimization`之前和之后打包出来的`app.js`文件来看出效果
+
+
+
+
 ## 4.6 代码压缩
 
+
+> 我们主要是做`js`和`css`的代码压缩和优化
+
+1. 在上面阶段中，我们打包出来的`js`代码是已经经过压缩的
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95dad8cc4a)
+
+
+> 所以在这个阶段我们可以利用`uglifyjs-webpack-plugin`进行一些压缩优化:
+首先我们需要安装`npm install -D uglifyjs-webpack-plugin`，然后去到`build/optimization.js`中添加如下代码即可，具体的优化见代码
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95e8adf639)
+
+> PS: 这里有一个点需要注意，在`uglifyjs-webpack-plugin`这个插件中，如果是`2.x`版本的话是不支持`es6`规范的，所以建议安装`1.x`版本，而我这里的版本是:
+
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f95f0555484)
+
+2. 然后我们进行`css`代码的压缩，这里需要使用到`optimize-css-assets-webpack-plugin`插件:`npm install -D optimize-css-assets-webpack-plugin`。
+我们先去`Home`组件中随意添加一个样式并使用它
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f960309fb62)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f961b48fbd1)
+
+> 然后再去到`build/optimization.js`添加如下代码:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f96298993ed)
+
+
+> 具体的插件使用方式可以自行上`github`查看该插件。 最后查看打包出来后的`css`代码:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f962dc1fe47)
+
+> 到现在压缩代码步骤也做完了，最后将介绍一下`webpack.externals`这个选项
+
 ## 4.7 关于`externals`
+
+> `webpack.externals`配置项用于在构建过程中忽略一些常用包的集成，从而降低构建时间和打包后的包大小，它的配置也很简单，在本章中只做简单介绍:在本项目中，我们可以将`react`和`react-dom`添加进`externals`中，然后在`html`模板中引入它们的外部链接:
+
+1. 我们先去到`webpack.config.js`中，添加`externals`选项，并且把`react`和`react-dom`添加进去
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9644d33821)
+
+> 这个配置项接收的是一个对象(其他形式请自行查阅`webpack`文档)，对象的键是指`webapck`在获取这个模块时候`require`时候的参数，而对应的值则是标明你打算将这个模块挂载的变量名，这里是挂载在`window`对象中的
+
+
+2. 去到`build/tpl/index.html`中，引入`cdn`中`react`和`react-dom`的链接
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9658bd182f)
+
+3. 重启项目，可以发现在`npm run dev`中能够正常使用，并且也已经引入了两者的外部资源
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9661413f04)
+
+
+4. 最后我们来对比一下打包后模块占用情况
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f966474b96f)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9686f0e243)
+
+> 再来对比一下两者打包出来的包体积大小
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f969e86d5c4)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f96a92a2402)
 
 
 
 # 五、团队规范
+
+> 这篇文章的每一步都基于`vscode`这款编辑器，如果你使用的不是`vscode`，那么就需要自行集成相关插件及其配置。该文章只是简单介绍各各代码检测的流程，至于配置项则需要读者自行前往对应的`lint`官网自己查看、配置需要的。
+
+**在这块中我们需要做的如下**:
+
+- 使用`tslint`做代码检测
+- 使用`stylelint`做代码检测
+- 添加`npm script`进行检测
+- 使用`prettier`进行代码格式化
+- 使用`pre-commit`
+
+## 5.1 使用tslint进行代码检测
+
+> 我们的项目因为大量使用`typescript`，所以使用的是`tslint`检测工具，如果在你的项目中没有用到`typescript`，那么请使用`eslint`
+
+1. 首先我们需要在`vscode`中安装插件:
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9dff505830)
+
+> 然后在项目中安装`npm install -D tslint`。此外，因为我们有大量的`.tsx`文件，所以还需要`npm install -D tslint-react`来指定针对`.tsx`语法的限制
+
+2. 接着在根目录下新建`tsling.json`文件，该文件用于写`tslint`配置文件:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9dffb7feb2)
+
+3. 在`tslint.json`中写入配置，配置项参考请[点击这里](https://palantir.github.io/tslint/rules/)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9dffa72149)
+
+
+> 这份配置项中，上面的`extends`是指`tslint`的扩展，第一个扩展是稳定且常规的`tsling`检测标准，第二个则是针对`.tsx`文件做的检测
+
+4. 测试一下是否生效: 我们将`no-console`改为`true`测试一下
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9dff914b71)
+
+> 然后在组件中写一个`console.log`就可以知道这份配置表已经生效
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e0040ce6a)
+
+
+
+## 5.2 使用`stylelint`做代码检测
+
+1. 首先，在`vscode`安装`stylelint`这个插件，该插件可以对`css`、`less`、`scss`等类型的样式表代码进行格式和样式书写顺序上的检测:
+
+```
+npm install -D stylelint
+```
+
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e005118f4)
+
+
+2. 我们在根目录下创建`.stylelintrc.js`文件，然后安装官方推荐的配置`stylelint-config-standard`以及针对`scss`代码类型检测的插件`stylelint-scss`:
+
+```bash
+npm install -D stylelint-config-standard stylelint-scss
+```
+
+3. 然后在`.stylelintrc.js`文件中写入配置项
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e37e5534d)
+
+
+
+4. 但是这时候针对`scss`代码的检测还是有问题的，它不能识别`scss`中例如`@mixin`、`@include`之类的语法:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e37d61834)
+
+所以还需要手动写一些规则覆盖掉针对这类语法的检测使其不报错:
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e3eaf28fa)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e4c7fee18)
+
+
+
+
+## 5.3 添加`npm script`进行检测
+
+> 这一步主要利用`tslint`和`stylelint`附带的命令行命令检测项目中存在的代码规范问题，然后输出到终端查看
+
+
+1. 去到`package.json`中，在`scripts`中添加如下命令
+
+> 这条命令既检查`.tsx`文件也检查`.scss`文件
+
+2. 然后再终端中输入一次，就能看到报错如下
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e60035ebb)
+
+然后定位到文件中去修改即可
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e61e4d27e)
+
+
+## 5.4 使用`prettier`进行代码格式化
+
+> 除了上一节中手动定位并修改不规范的代码外，我们还可以依赖于`vscode`的插件来进行符合我们规范的代码格式化，这个插件推荐使用`prettier`
+
+
+1. 首先在`vscode`中安装这个插件
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e6ad151e7)
+
+2. 然后去到用户设置表中,进到工作区设置进行配置，下图是该模板的配置，当然你也可以自行配置需要的设置
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e6eae3e6f)
+
+3. 回到刚才错误的地方，只要我们一保存就会自动格式化成正确的
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e7581ebae)
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e8cf71d5d)
+
+
+
+
+## 5.5 使用`pre-commit`
+
+> 在前面的篇幅中，我们有将`lint`命令添加进`npm script`中，但是这个命令如果要自己去运行我想很多人都会忘记，结果就会导致可能有不符合规范的代码被上传到远端代码仓库中。这种情况下我们可以做`pre-commit`进行代码强制检测，也就是在`git commit`之前进行一次代码检测，不符合规范不让`commit`。
+实现这个功能我们可以安装`husky`这个插件`npm install -D husky`，然后在`npm script`中添加命令就好了
+
+![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e9472379a)
+
+
