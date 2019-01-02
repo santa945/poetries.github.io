@@ -1063,3 +1063,6 @@ npm install -D stylelint-config-standard stylelint-scss
 ![](https://user-gold-cdn.xitu.io/2018/9/27/16619f9e9472379a)
 
 
+# 六、代码
+
+> 完整代码示例  https://github.com/poetries/ts-react-tpl
