@@ -7,6 +7,7 @@ tags:
 categories: Front-End
 ---
 
+
 ## 一、JS内置对象
 
 > 所谓的内置对象 指的是：`JavaScript`本身就自己有的对象 可以直接拿来就用。例如`Array` `String` 等等。`JavaScript`一共有12内置对象
@@ -165,6 +166,17 @@ let a = { b: 1 }
 - 函数的 `prototype` 是一个对象，也就是原型
 - 对象的 `__proto__` 指向原型， `__proto__ `将对象和原型连接起来组成了原型链
 
+**关于原型有3个相关的概**念:
+
+- 函数对象的`prototype`属性, 可以称之为显式原型属性(简称: 显式原型)
+- 实例对象的`__proto__`属性, 可以称之为隐式原型属性(简称: 隐式原型)
+- 原型对象: 也就是`prototype`属性和`_proto__`属性指向的对象
+
+![](https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype5.png)
+
+> 图中由相互关联的原型组成的链状结构就是原型链，也就是蓝色的这条线
+
+
 ## 三、JSON和Math
 
 > `JS`内置的构造器函数都可以使用`new`关键字实例化一个对象，我们称实例化后的这个对象就是某某构造器的一个实例
@@ -179,4 +191,7 @@ let a = { b: 1 }
 
 - 所以`JSON`和`Math`不属于`10`个构造器函数，但他们`12`个共同属于`Javascript`的内置对象
 
+## 四、更多参考
+
+- [JavaScript深入之从原型到原型链](https://github.com/mqyqingfeng/Blog/issues/2)
 
