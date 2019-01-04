@@ -286,7 +286,11 @@ canvas_nest:
 
 # 首页动画
 home_bg:
-  lizi: false
+  lizi: true
   yu: false
   star: false
-  sky: true
+  sky: false
+
+# 首页动物
+home_animal:
+  enable: true
