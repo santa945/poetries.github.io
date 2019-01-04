@@ -134,7 +134,10 @@
   <script type="text/javascript" src="/js/bg/animal.js"></script>
   <% } %>
 
-
+<!-- 冒泡动画 -->
+<% if(theme.home_circle && theme.home_circle.enable) { %>
+  <script type="text/javascript" src="/js/bg/circle.js"></script>
+<% } %>
 
 <!-- 背景动画 -->
 <canvas id="canvas"></canvas>

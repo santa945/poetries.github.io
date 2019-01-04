@@ -294,3 +294,7 @@ home_bg:
 # 首页动物
 home_animal:
   enable: true
+
+# 首页冒泡动画
+home_circle:
+  enable: true
