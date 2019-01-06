@@ -65,7 +65,9 @@ categories: Front-End
 
 > `Electron` 当前的最新版本为 `4.0.1` (当前时间为 `2019` 年 `1` 月 `6` 号)
 
+
 # 二、环境搭建
+
 
 **1. 安装 electron**
 
@@ -139,7 +141,9 @@ cd my-new-app
 npm start
 ```
 
+
 # 三、Electron 运行流程
+
 
 ## 3.1 Electron 运行的流程
 
@@ -181,9 +185,672 @@ button.addEventListener('click',function(e){
 
 ## 3.4 Electron 开启调试模式
 
-```bash
-  mainWindow.webContents.openDevTools();
-```
+```js
+ mainWindow.webContents.openDevTools();
+ ```
  
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-62c31b57f8b94838.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+# 四、Electron 模块介绍
+
+> `Electron` 模块介绍、`remote` 模块、通 过 `BrowserWindow` 打开新窗口
+
+## 4.1 Electron 主进程和渲染进程中的模块
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-3c15bb39e7080862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 4.2 Electron remote 模块
+
+> `remote` 模块提供了一种在渲染进程(网页)和主进程之间进行进程间通讯(`IPC`)的简便途径
+
+> `Electron` 中, 与 `GUI` 相关的模块(如 `dialog`, `menu` 等)只存在于主进程，而不在渲染进程中 。为了能从渲染进程中使用它们，需要用`ipc`模块来给主进程发送进程间消息。使用 `remote` 模块，可以调用主进程对象的方法，而无需显式地发送进程间消息，这类似于 `Java` 的 `RMI`
+
+## 4.3 通过BrowserWindow 打开新窗口
+
+> `Electron` 渲染进程中通过 `remote` 模块调用主进程中的 `BrowserWindow` 打开新窗口
+
+
+```js
+// 主进程代码
+
+
+const electron = require('electron'); 
+
+// 控制应用生命周期的模块 
+const {app} = electron;
+
+// 创建本地浏览器窗口的模块 
+const {BrowserWindow} = electron;
+
+// 指向窗口对象的一个全局引用，如果没有这个引用，那么当该 javascript 对象被垃圾回收 的
+// 时候该窗口将会自动关闭
+let win;
+
+function createWindow() {
+    // 创建一个新的浏览器窗口
+    win = new BrowserWindow({width: 1104, height: 620});//570+50
+    
+    // 并且装载应用的 index.html 页面
+    win.loadURL(`file://${__dirname}/html/index.html`);
+    
+    // 打开开发工具页面
+    win.webContents.openDevTools();
+    
+    //当窗口关闭时调用的方法
+    win.on('closed', () => {
+        // 解除窗口对象的引用，通常而言如果应用支持多个窗口的话，你会在一个数组里 // 存放窗口对象，在窗口关闭的时候应当删除相应的元素。
+        win = null;
+    });
+}
+
+// 当 Electron 完成初始化并且已经创建了浏览器窗口，则该方法将会被调用。
+// 有些 API 只能在该事件发生后才能被使用
+app.on('ready', createWindow);
+
+// 当所有的窗口被关闭后退出应用 
+app.on('window-all-closed', () => {
+    // 对于 OS X 系统，应用和相应的菜单栏会一直激活直到用户通过 Cmd + Q 显式退出 
+    if (process.platform !== 'darwin') {
+        app.quit(); 
+    }
+});
+
+
+app.on('activate', () => {
+    // 对于 OS X 系统，当 dock 图标被点击后会重新创建一个 app 窗口，并且不会有其他
+    // 窗口打开
+    if (win === null) {
+        createWindow(); 
+    }
+});
+
+// 在这个文件后面你可以直接包含你应用特定的由主进程运行的代码。 
+// 也可以把这些代码放在另一个文件中然后在这里导入
+```
+
+```js
+// 渲染进程代码
+
+const btn = document.querySelector('#btn');
+const path = require('path');
+const BrowerWindow = require('electron').remote.BrowserWindow;
+
+btn.onclick = () => {
+    win = new BrowerWindow({ 
+        width: 300,
+        height: 200, 
+        frame: false, 
+        transparent: true // fullscreen:true
+    }) 
+
+    win.loadURL(path.join('file:',__dirname,'news.html'));
+
+    win.on('close',()=>{win = null});
+}
+```
+
+# 五、自定义顶部菜单/右键菜单
+
+
+## 5.1 自定义软件顶部菜单
+
+> `Electron` 中 `Menu` 模块可以用来创建原生菜单，它可用作应用菜单和 `context` 菜单
+
+> 这个模块是一个主进程的模块，并且可以通过 `remote` 模块给渲染进程调用
+
+```js
+const { Menu } = require('electron');
+
+let template = [
+{
+    label: '文件',
+    submenu: [ 
+        {
+            label: '新建窗口', 
+            click: () => {
+                console.log('aaa') 
+            }
+        }, 
+        {
+            type: 'separator' 
+        },
+        {
+            label: '打开文件',
+            accelerator:'ctrl+x', 
+            click: () => {
+                console.log('bbb') 
+            }
+        },
+    ] 
+},
+{
+    label :'编辑',
+    submenu: [ 
+        {
+            role:'cut', 
+            label:'剪切'
+        },
+        {
+            role:'copy', 
+            label:'复制'
+        }
+    ]
+}
+]
+
+var m=Menu.buildFromTemplate(template); 
+
+Menu.setApplicationMenu(m);
+```
+
+## 5.2 自定义右键菜单
+
+```js
+window.addEventListener('contextmenu', (e) = >{
+    e.preventDefault();
+    m.popup({
+        window: remote.getCurrentWindow()
+    });
+},
+false);
+```
+
+# 六、进程通信
+
+## 6.1 主进程与渲染进程之间的通信
+
+> 有时候我们想在渲染进程中通过一个事件去执行主进程里面的方法。或者在渲染进程中通知 主进程处理事件，主进程处理完成后广播一个事件让渲染进程去处理一些事情。这个时候就 用到了主进程和渲染进程之间的相互通信
+
+> `Electron` 主进程，和渲染进程的通信主要用到两个模块:`ipcMain` 和 `ipcRenderer`
+
+- `ipcMain`:当在主进程中使用时，它处理从渲染器进程(网页)发送出来的异步和同步信息,当然也有可能从主进程向渲染进程发送消息。
+- `ipcRenderer`: 使用它提供的一些方法从渲染进程 (`web` 页面) 发送同步或异步的消息到主进程。 也可以接收主进程回复的消息
+
+**场景 1:渲染进程给主进程发送异步消息**
+
+```js
+//渲染进程
+const { ipcRenderer } = require('electron')
+
+ipcRenderer.send('msg',{name:'张三'}); //异步
+```
+
+```js
+//主进程
+const { ipcMain } = require('electron');
+
+ipcMain.on('msg',(event,arg) => {
+    
+})
+```
+
+**场景 2:渲染进程给主进程发送异步消息，主进程接收到异步消息以后通知渲染进程:**
+
+```js
+//渲染进程
+const { ipcRenderer } = require('electron')
+
+ipcRenderer.send('msg',{name:'张三'}); //异步
+
+```
+
+```js
+//主进程
+const { ipcMain } = require('electron');
+
+ipcMain.on('msg',(event,arg) => { 
+    event.sender.send('reply', 'pong');
+})
+```
+
+```js
+//渲染进程
+const { ipcRenderer } = require('electron')
+
+ipcRenderer.on('reply', function(event, arg) { 
+    console.log(arg); // prints "pong"
+});
+```
+
+**场景 3:渲染进程给主进程发送同步消息**
+
+```js
+//渲染进程
+const { ipcRenderer } = require('electron')
+
+const msg = ipcRenderer.sendSync('msg-a');
+
+console.log(msg)
+```
+
+```js
+//主进程 
+ipcMain.on('msg-a',(event)=> {
+    event.returnValue = 'hello';
+})
+```
+
+**通过主进程渲染进程的通信改造右键菜单**
+
+> @TODO
+
+## 6.2 渲染进程与渲染进程之间的通信
+
+**1. Electron 渲染进程通过 localstorage 给另一个渲染进程传值**
+
+```js
+localStorage.setItem(key,value);
+
+localStorage.getItem(key);
+```
+
+**2. 通过 BrowserWindow 和 webContents 模块实现渲染进 程和渲染进程的通信**
+
+> `webContents` 是一个事件发出者.它负责渲染并控制网页，也是 `BrowserWindow` 对象的属性
+
+**需要了解的几个知识点**
+
+1. 获取当前窗口的 `id`
+
+```js
+const winId = BrowserWindow.getFocusedWindow().id;
+```
+
+2. 监听当前窗口加载完成的事件
+
+```js
+win.webContents.on('did-finish-load',(event) => {
+    
+})
+```
+
+3. 同一窗口之间广播数据
+
+```js
+win.webContents.on('did-finish-load',(event) => {
+    win.webContents.send('msg',winId,'我是 index.html 的数据');
+})
+```
+
+4. 通过 `id` 查找窗口
+
+```js
+let win = BrowserWindow.fromId(winId);
+```
+
+# 七、Electron Shell 模块
+
+> `Electron Shell` 模块在用户默认浏览器 中打开 `URL` 以及 `Electron DOM webview` 标签
+
+> `shell` 模块提供了集成其他桌面客户端的关联功能.
+
+```js
+var shell = require('shell');
+
+shell.openExternal('https://github.com')
+```
+
+**Electron DOM <webview> 标签**
+
+> `Webview` 与 `iframe` 有点相似，但是与 `iframe` 不同, `webview` 和你的应用运行的是不同的进程。它不拥有渲染进程的权限，并且应用和嵌入内容之间的交互全部都是异步的。因为这能 保证应用的安全性不受嵌入内容的影响。
+
+```html
+<webview id="webview" src="https://www.itying.com" style="position:fixed; width:100%; height:100%">
+</webview>
+```
+
+# 八、Electron dialog 弹出框
+
+> `dialog` 模块提供了 `api` 来展示原生的系统对话框，例如打开文件框，`alert` 框， 所以 `web` 应用可以给用户带来跟系统应用相同的体验
+
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-de7cfb527bf5ea19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+```js
+dialog.showErrorBox('title','content');
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-f94a34889a4b1f1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+```js
+dialog.showMessageBox({
+    type: 'info',
+    title: 'message',
+    message: 'hello',
+    buttons: ['ok', 'cancel']
+},
+(index) = >{
+    if (index == 0) {
+        console.log('You click ok.');
+    } else {
+        console.log('You click cancel');
+    }
+})
+```
+
+```js
+// 打开目录  选择文件
+
+dialog.showOpenDialog({
+    properties: ['openFile', 'openDirectory']
+},
+(files) = >{
+    console.log(files);
+})
+```
+
+```js
+dialog.showSaveDialog({
+    title: 'save some file',
+    filters: [{
+        name: 'Images',
+        extensions: ['jpg', 'png', 'gif']
+    },
+    {
+        name: 'Movies',
+        extensions: ['mkv', 'avi', 'mp4']
+    },
+    {
+        name: 'Custom File Type',
+        extensions: ['as']
+    },
+    {
+        name: 'All Files',
+        extensions: ['*']
+    }]
+},
+(filename) = >{
+    console.log(filename);
+})
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-281ce997d8a71eee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+# 九、系统托盘、托盘右键菜单、托盘图标闪烁 
+
+> 系统托盘 托盘右键菜单、托 盘图标闪烁 点击右上角关闭按钮隐 藏到托盘(仿杀毒软件)
+
+**1. Electron 系统托盘、任务通知栏图标介绍**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d8cb64eb94d030a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**2. Electron 创建任务栏图标以及任务栏图标右键菜单**
+
+```js
+var {
+    Menu, Tray, app, BrowserWindow
+} = require('electron');
+
+const path = require('path');
+
+var appIcon = new Tray(path.join(__dirname, 'lover.png'));
+
+const menu = Menu.buildFromTemplate([
+    {
+        label: '设置',
+        click: function() {} //打开相应页面 
+    },
+    {
+        label: '帮助',
+        click: function() {}
+    },
+    {
+        label: '关于',
+        click: function() {}
+    },
+    {
+        label: '退出',
+        click: function() { 
+            // BrowserWindow.getFocusedWindow().webContents().send('close-main-window');
+            app.quit();
+    }
+}])
+appIcon.setToolTip('my best app');
+appIcon.setContextMenu(menu);
+```
+
+**3. 监听任务栏图标的单击、双击事件**
+
+```js
+var {
+    Menu, Tray, app, BrowserWindow
+} = require('electron');
+
+var appIcon = new Tray(path.join(__dirname, 'lover.png'));
+
+appIcon.on('double-click', () = >{
+    console.log(win);
+    win.show();
+})
+```
+
+**4. Electron 点击右上角关闭按钮隐藏任务栏图标**
+
+
+```js
+const win = BrowserWindow.getFocusedWindow();
+
+win.on('close', (e) = >{
+
+    console.log(win.isFocused());
+    
+    if (!win.isFocused()) {
+        win = null;
+    } else {
+        e.preventDefault();/*阻止应用退出*/
+        win.hide();/*隐藏当前窗口*/
+    }
+})
+```
+
+**5. Electron 实现任务栏闪烁图标**
+
+```js
+timer = setInterval(function() {
+    count++;
+    if (count % 2 == 0) {
+        appIcon.setImage(path.join(__dirname, 'empty.ico'))
+    } else {
+        appIcon.setImage(path.join(__dirname, 'lover.png'))
+    }
+},
+500);
+```
+
+# 十、消息通知、监听网络变 化、网络变化弹出通知框
+
+**1. Electron 实现消息通知**
+
+> `Electron` 里面的消息通知是基于 `h5` 的通知 `api` 实现的
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-b09035ca49b73ba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+```js
+const option = {
+    title: 'title',
+    body: 'body',
+    icon: path.join('main-process/favicon2.ico')
+}
+const myNotification = new window.Notification(option.title, option);
+
+myNotification.onclick = () = >{
+    console.log('clicked');
+}
+```
+
+**2. Electron 监听网络变化**
+
+```js
+ window.addEventListener('online', function(){}); window.addEventListener('offline', function(){});
+ ```
+ 
+ # 十一、注册全局快捷键/剪切板事件/nativeImage 模块
+ 
+ > `Electron` 注册全局快捷键 (`globalShortcut`) 以及 `clipboard` 剪 切板事件以及 `nativeImage` 模块(实现类似播放器点击机器码自动复制功 能)
+ 
+ **1. Electron 注册全局快捷键(globalShortcut)**
+ 
+```js
+var app = require('app');
+var globalShortcut = require('electron').globalShortcut;
+
+app.on('ready',function() {
+    // Register a 'ctrl+x' shortcut listener.
+    var ret = globalShortcut.register('ctrl+x',function() {
+        console.log('ctrl+x is pressed');
+    }) 
+    
+    if (!ret) {
+        console.log('registration failed');
+    } 
+    // Check whether a shortcut is registered.
+    console.log(globalShortcut.isRegistered('ctrl+x'));
+});
+
+app.on('will-quit',function() {
+    // Unregister a shortcut.
+    globalShortcut.unregister('ctrl+x'); 
+    
+    // Unregister all shortcuts.
+    globalShortcut.unregisterAll();
+});
+```
+
+**2. clipboard 剪切板事件 clipboard 模块以及 nativeImage 模块**
+
+```js
+const {
+    clipboard,
+    nativeImage
+} = require('electron');
+
+clipboard.writeText("这是一个test");
+
+console.log(clipboard.readText());
+
+let img = nativeImage.createFromPath('static/favicon2.ico');
+
+clipboard.writeImage(img);
+
+const imgDataURL = clipboard.readImage().toDataURL();
+const img3 = new Image();
+
+img3.src = imgDataURL;
+document.body.appendChild(img3);
+```
+
+
+# 十二、结合electron-vue
+
+## 12.1 electron-vue 的使用
+
+**1. electron-vue 的一些资源**
+
+> https://github.com/SimulatedGREG/electron-vue
+
+
+`Electron-vue` 文档 https://simulatedgreg.gitbooks.io/electron-vue/content/cn
+
+**2. electron-vue 环境搭建、创建项目**
+
+```bash
+npm install -g vue-cli
+
+vue init simulatedgreg/electron-vue my-project
+
+cd my-project
+
+yarn # or npm install
+
+yarn run dev # or npm run dev
+```
+
+**3. electron-vue 目录结构分析**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-3137d0001e34cf1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## 12.2 electron-vue 中使用 sass/ElementUi
+
+**1. electron-vue UI 框架 ElementUi 的使用**
+
+> http://element-cn.eleme.io/#/zh-CN
+
+
+**2. electron-vue 中使用 sass**
+
+- [electron-vue 中使用 sass](https://simulatedgreg.gitbooks.io/electron-vue/content/cn/using_pre-processors.html)
+
+
+```bash
+# 安装 sass-loader:
+
+npm install --save-dev sass-loader node-sass
+```
+
+```html
+<!--vue 文件中修改 style 为如下代码:-->
+
+<style lang="scss"> 
+    body {
+        /* SCSS */ 
+    }
+</style>
+```
+
+## 12.3 electron-vue 中隐藏顶部菜单隐藏
+
+> electron-vue 中隐藏顶部菜单隐藏顶部最大化、最小化、关闭按钮 自定最大化、最小化 、关闭按钮
+
+**1. electron-vue 中隐藏顶部菜单**
+
+```js
+mainWindow.setMenu(null)
+```
+
+**2. electron-vue 中隐藏关闭 最大化 最小化按钮**
+
+```js
+mainWindow = new BrowserWindow({
+    height: 620,
+    useContentSize: true,
+    width: 1280 frame: false /*去掉顶部导航 去掉关闭按钮 最大化最小化按钮*/
+})
+```
+
+**3 .electron-vue 自定义关闭/最大化最小化按钮**
+
+```js
+ipc.on('window-min',function() {
+    mainWindow.minimize();
+})
+
+//登录窗口最大化 
+ipc.on('window-max',function(){
+    if (mainWindow.isMaximized()) {
+        mainWindow.restore();
+    } else {
+        mainWindow.maximize();
+    }
+}) 
+
+ipc.on('window-close',function() {
+    mainWindow.close();
+})
+```
+
+**4. electron-vue 自定义导航可拖拽**
+
+- 可拖拽的 `css`: `-webkit-app-region: drag; `
+- 不可拖拽的 `css`:  `-webkit-app-region: no-drag;`
+
+
+# 十三、更多参考
+
+- [electron常用工具](https://github.com/poetries/electron-wiki)
+- [electron中文文档](https://wizardforcel.gitbooks.io/electron-doc/content/faq/electron-faq.html)
 
