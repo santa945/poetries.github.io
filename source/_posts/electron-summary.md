@@ -65,7 +65,6 @@ categories: Front-End
 
 > `Electron` 当前的最新版本为 `4.0.1` (当前时间为 `2019` 年 `1` 月 `6` 号)
 
-
 # 二、环境搭建
 
 **1. 安装 electron**
