@@ -17,6 +17,7 @@
     "hexo-search": "^1.0.4",
     "hexo-server": "^0.3.1",
     "hexo-generator-feed": "^1.1.0",
-    "hexo-tag-cloudmusic": "^1.2.3"
+    "hexo-tag-cloudmusic": "^1.2.3",
+    "hexo-wordcount": "^6.0.1"
   }
 }
