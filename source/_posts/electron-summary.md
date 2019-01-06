@@ -16,8 +16,6 @@ categories: Front-End
 >  `github` 的 `atom` 编辑器、微软的 `vscode` 编辑器，包括阿里内部的一些 软件也是用 `electron` 开发的
 
 
-### 1.1 electron介绍
-
 **1. Electron 是由谁开发的?**
 
 > `Electron` 是由 `Github` 开发
