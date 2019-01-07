@@ -145,7 +145,7 @@ npm start
 
 ## 3.1 Electron 运行的流程
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7d07da8dccab3159.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7d07da8dccab3159.png)
 
 ## 3.2 Electron 主进程和渲染进程
 
