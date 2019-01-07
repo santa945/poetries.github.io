@@ -12,9 +12,17 @@ categories: Front-End
 
 ## 1.1 什么是 TypeScript
 
-> `TypeScript` 是 `JavaScript` 的一个超集，主要提供了类型系统和对 `ES6 `的支持
+- `TypeScript` 是 `JavaScript` 的一个超集，主要提供了类型系统和对 `ES6 `的支持
+- `TypeScript` 是由微软开发的一款开源的编程语言
+- `TypeScript` 是 `Javascript` 的超级，遵循最新的 `ES6`、`Es5` 规范。`TypeScript` 扩展了 `JavaScript` 的语法
+- `TypeScript` 更像后端 `java`、`C#`这样的面向对象语言可以让 `js` 开发大型企业项目
 
 ## 1.2 为什么选择 TypeScript
+
+> `Typescript`和`es6`、`es5`关系
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-167f327f2876c608.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 **TypeScript 增加了代码的可读性和可维护性**
 
@@ -35,6 +43,8 @@ categories: Front-End
 - 大部分第三方库都有提供给 `TypeScript` 的类型定义文件
 - `Google` 开发的` Angular2` 就是使用 `TypeScript` 编写的
 - `TypeScript` 拥抱了 `ES6` 规范，也支持部分 `ESNext` 草案的规范
+- 最新的 `Vue` 、`React` 也可以集成 `TypeScript`
+
 
 **TypeScript 的缺点**
 
@@ -1088,21 +1098,6 @@ npm install @types/jquery --save-dev
 **可以在这个页面搜索你需要的声明文件**
 
 > http://microsoft.github.io/TypeSearch/
-
-**使用typings安装声明文件**
-
-> https://github.com/typings/typings
-
-```bash
-# Install Typings CLI utility.
-npm install typings --global
-
-# Search for definitions.
-typings search tape
-
-# Find a definition by name.
-typings search --name react
-```
 
 
 ## 2.10 内置对象
@@ -2292,8 +2287,410 @@ interface Alarm {
 }
 ```
 
-# 五、参考
+# 五、一些例子演示
+
+## 5.1 定义ajax请求数据接口
+
+```js
+interface Config{
+    type:string;
+    url:string;
+    data?:string;
+    dataType:string;
+}
+
+//原生js封装的ajax 
+function ajax(config:Config){
+
+   var xhr=new XMLHttpRequest();
+
+   xhr.open(config.type,config.url,true);
+
+   xhr.send(config.data);
+
+   xhr.onreadystatechange=function(){
+
+        if(xhr.readyState==4 && xhr.status==200){
+            console.log('chengong');
+
+
+            if(config.dataType=='json'){
+
+                console.log(JSON.parse(xhr.responseText));
+            }else{
+                console.log(xhr.responseText)
+
+            }
+
+
+        }
+   }
+}
+
+
+ajax({
+    type:'get',
+    data:'name=zhangsan',
+    url:'http://a.itying.com/api/productlist', //api
+    dataType:'json'
+})
+```
+
+## 5.2 函数类型接口-对方法约束
+
+```js
+// 函数类型接口:对方法传入的参数 以及返回值进行约束   批量约束
+
+// 加密的函数类型接口
+
+interface encrypt{
+    (key:string,value:string):string;
+}
+
+
+var md5:encrypt=function(key:string,value:string):string{
+        //模拟操作
+        return key+value;
+}
+
+console.log(md5('name','zhangsan'));
+
+
+
+var sha1:encrypt=function(key:string,value:string):string{
+
+    //模拟操作
+    return key+'----'+value;
+}
+
+console.log(sha1('name','lisi'));
+```
+
+## 5.3 可索引接口：数组、对象的约束（不常用）
+
+### 5.3.1 可索引接口-对数组的约束
+
+```js
+interface UserArr{
+    [index:number]:string
+}
+
+
+var arr:UserArr=['aaa','bbb'];
+
+console.log(arr[0]);
+```
+
+### 5.3.2 可索引接口-对对象的约束
+
+```js
+interface UserObj{
+    [index:string]:string
+}
+
+var arr:UserObj={name:'张三'};
+```                
+
+### 5.3.3 类类型接口:对类的约束
+
+> 抽象类抽象有点相似    
+
+```js
+interface Animal{
+    name:string;
+    eat(str:string):void;
+}
+
+class Dog implements Animal{
+
+    name:string;
+    constructor(name:string){
+
+        this.name=name;
+
+    }
+    eat(){
+
+        console.log(this.name+'吃粮食')
+    }
+}
+
+
+var d=new Dog('小黑');
+d.eat();
+
+
+class Cat implements Animal{
+    name:string;
+    constructor(name:string){
+
+        this.name=name;
+
+    }
+    eat(food:string){
+
+        console.log(this.name+'吃'+food);
+    }
+}
+
+var c=new Cat('小花');
+c.eat('老鼠');
+```
+
+## 5.4 接口的扩展
+
+> 接口继承接口 类实现接口
+
+```js
+interface Animal{
+    eat():void;
+}
+
+interface Person extends Animal{
+
+    work():void;
+}
+
+
+class Programmer{
+
+    public name:string;
+    constructor(name:string){
+        this.name=name;
+    }
+    
+    coding(code:string){
+
+        console.log(this.name+code)
+    }
+}
+
+
+class Web extends Programmer implements Person{
+    
+    constructor(name:string){
+       super(name)
+    }
+    eat(){
+
+        console.log(this.name+'喜欢吃馒头')
+    }
+    work(){
+
+        console.log(this.name+'写代码');
+    }
+    
+}
+
+var w=new Web('小李');
+
+// w.eat();
+
+w.coding('写ts代码');
+```
+
+## 5.5 泛型类接口
+
+### 5.5.1 泛型类 泛型方法
+
+- 泛型：软件工程中，我们不仅要创建一致的定义良好的`API`，同时也要考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型，这在创建大型系统时为你提供了十分灵活的功能。
+- 在像`C#`和`Java`这样的语言中，可以使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据。 这样用户就可以以自己的数据类型来使用组件。
+- 通俗理解：泛型就是解决类接口方法的复用性、以及对不特定数据类型的支持(类型校验)
+
+```js
+// 只能返回string类型的数据
+function getData(value:string):string{
+    return value;
+}
+
+// 同时返回 string类型 和number类型  （代码冗余）
+function getData1(value:string):string{
+    return value;
+}
+function getData2(value:number):number{
+    return value;
+}
+```
+
+```js
+//同时返回 string类型 和number类型  any可以解决这个问题
+
+
+ function getData(value:any):any{
+    return '哈哈哈';
+}
+
+
+getData(123);
+getData('str');
+```
+
+```js
+//any放弃了类型检查,传入什么 返回什么。比如:传入number 类型必须返回number类型  传入 string类型必须返回string类型
+
+
+//传入的参数类型和返回的参数类型可以不一致
+function getData(value:any):any{
+  return '哈哈哈';
+}
+
+```
+
+> `T`表示泛型，具体什么类型是调用这个方法的时候决定的
+
+```js
+// T表示泛型，具体什么类型是调用这个方法的时候决定的
+
+function getData<T>(value:T):T{
+   return value;
+}
+getData<number>(123);
+
+getData<string>('1214231');
+
+
+getData<number>('2112');       /*错误的写法*/  
+
+```
+
+```js
+function getData<T>(value:T):any{
+   return '2145214214';
+}
+
+getData<number>(123);  //参数必须是number
+
+getData<string>('这是一个泛型');
+```
+
+
+**泛型类**
+
+> 泛型类：比如有个最小堆算法，需要同时支持返回数字和字符串 `a  -  z`两种类型。  通过类的泛型来实现
+
+```js
+// 基本写法 但是不能传入字符串
+class MinClass{
+    public list:number[]=[];
+    add(num:number){
+        this.list.push(num)
+    }
+    min():number{
+        var minNum=this.list[0];
+        for(var i=0;i<this.list.length;i++){
+            if(minNum>this.list[i]){
+                minNum=this.list[i];
+            }
+        }
+        return minNum;
+    }
+
+}
+
+var m=new MinClass();
+
+m.add(3);
+m.add(22);
+m.add(23);
+m.add(6);
+
+m.add(7);
+alert(m.min());
+```
+
+**类的泛型**
+
+```js
+// 通过泛型改写 可以同时传入number 字符串等
+//类的泛型
+class MinClas<T>{
+
+    public list:T[]=[];
+
+    add(value:T):void{
+
+        this.list.push(value);
+    }
+
+    min():T{        
+        var minNum=this.list[0];
+        for(var i=0;i<this.list.length;i++){
+            if(minNum>this.list[i]){
+                minNum=this.list[i];
+            }
+        }
+        return minNum;
+    }
+}
+
+var m1=new MinClas<number>();   /*实例化类 并且制定了类的T代表的类型是number*/
+m1.add(11);
+m1.add(3);
+m1.add(2);
+alert(m1.min())
+
+
+var m2=new MinClas<string>();   /*实例化类 并且制定了类的T代表的类型是string*/
+
+m2.add('c');
+m2.add('a');
+m2.add('v');
+alert(m2.min())
+```
+
+
+### 5.5.2 泛型接口
+
+**1. 方式1**
+
+```js
+interface ConfigFn{
+
+    <T>(value:T):T;
+}
+
+
+var getData:ConfigFn=function<T>(value:T):T{
+
+    return value;
+}
+
+
+getData<string>('张三');
+
+
+// getData<string>(1243);  //错误
+```
+
+**2. 方式2**
+
+```js
+interface ConfigFn<T>{
+    (value:T):T;
+}
+
+
+function getData<T>(value:T):T{
+
+    return value;
+}
+
+
+var myGetData:ConfigFn<string>=getData;     
+
+
+myGetData('20');  /*正确*/
+
+
+// myGetData(20)  //错误
+```
+
+
+
+
+# 六、更多参考
 
 - [Typescript中文网](https://www.tslang.cn/docs/handbook/typescript-in-5-minutes.html)
+- [技术胖Typescript视频学习入门](http://jspang.com/post/typescript.html#toc-a39)
 
 
