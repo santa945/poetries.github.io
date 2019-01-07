@@ -2389,11 +2389,12 @@ interface UserObj{
 }
 
 var arr:UserObj={name:'张三'};
-```                
+```
 
 ### 5.3.3 类类型接口:对类的约束
 
-> 抽象类抽象有点相似    
+- 抽象类抽象有点相似    
+
 
 ```js
 interface Animal{
