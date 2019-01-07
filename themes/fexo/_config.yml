@@ -223,7 +223,7 @@ about:
     icon: icon-weibo
     text_key: 微博
     text_value: "@poetries"
-    text_value_url: https://weibo.com/poetries1
+    text_value_url: https://weibo.com/u/3836829334
   - type: mail
     icon: icon-mail
     text_key: Email
