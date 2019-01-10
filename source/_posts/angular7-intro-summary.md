@@ -7,6 +7,7 @@ tags:
 categories: Front-End
 ---
 
+
 > 最近在学`Ionic4`，不得不学习`angular`、`Typescript`基础知识，这里简单总结记录一下。
 
 # 一、Angular 介绍
@@ -2116,8 +2117,33 @@ const routes: Routes = [
 }
 ```
 
+## 10.4 routerLink Get传递参数
 
-## 10.4 动态路由
+**1. 跳转**
+
+```html
+  <li *ngFor="let item of list;let key=index;">
+      <!-- <a href="/news-detail?aid=123">{{key}}--{{item}}</a> -->
+       
+      <a [routerLink]="['/news-detail']" [queryParams]="{aid:key}">{{key}}--{{item}}</a>
+
+    </li>
+```
+
+**2. 接收参数**
+
+```js
+    import { ActivatedRoute } from '@angular/router';
+
+    constructor(public route:ActivatedRoute) { }
+
+   this.route.queryParams.subscribe((data)=>{
+        console.log(data);
+   })
+```
+
+
+## 10.5 动态路由
 
 **1.配置动态路由**
 
@@ -2153,7 +2179,7 @@ ngOnInit() {
 }
 ```
 
-## 10.5 动态路由的 js 跳转
+## 10.6 动态路由的 js 跳转
 
 ```js
 // 引入
@@ -2176,7 +2202,7 @@ export class HomeComponent implements OnInit {
 this.router.navigate(['/news', hero.id]);
 ```
 
-## 10.6 路由 get 传值 js 跳转
+## 10.7 路由 get 传值 js 跳转
 
 **1. 引入 NavigationExtras**
 
@@ -2206,7 +2232,7 @@ goNewsContent() {
 }
 ```
 
-## 10.7 父子路由
+## 10.8 父子路由
 
 **1. 创建组件引入组件**
 
