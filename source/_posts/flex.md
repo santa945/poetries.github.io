@@ -7,6 +7,8 @@ tags:
 categories: Front-End
 ---
 
+> 可视化学习 http://cssreference.parryqiu.com/flexbox/
+
 - **以下6个属性设置在容器上**
 	- `flex-direction`
 	- `flex-wrap`
