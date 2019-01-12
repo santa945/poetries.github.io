@@ -37,8 +37,8 @@ home_nav:
   - name: Interview
     url: http://blog.poetries.top/FE-Interview-Questions
     target_blank: true
-  - name: Life
-    url: http://life.poetries.top
+  - name: CssReference
+    url: http://cssreference.parryqiu.com
     target_blank: true
 
 
