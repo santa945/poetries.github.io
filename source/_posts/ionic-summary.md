@@ -8,8 +8,9 @@ categories: Front-End
 ---
 
 
-> 折腾了一段时间`Typescript`、`angular`基础，终于可以学`Ionic4`了.
+> 折腾了一段时间`Typescript`、`angular`基础，终于可以学`Ionic4`了
 
+> 没有`angular`基础，看一下这篇文章 http://blog.poetries.top/2019/01/09/angular7-intro-summary
 
 # 一、介绍
 
@@ -1445,27 +1446,261 @@ sudo chomd 777 your_project_name
 
 ### 12.5.2 安卓版本打包
 
-> 最后生成`apk`文件
+> 最后生成`apk`文件。
 
-1. **通过Android studio生成**
-2. **通过命令生成**
+**打包方式**
+
+> - 通过`Android studio`生成
+> - 通过命令生成
+
+
+**1. 需要安装`jdk`环境，并设置环境变量**
+
+```bash
+# mac上安装
+brew install jdk java
+```
+
+
+**2. 配置`Gradle`**
+
+```bash
+# 打开 GradleBuilder.js
+
+platforms/android/cordova/lib/builders/GradleBuilder.js
+```
+
+> 找到`distributionUrl`
+
+```js
+var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 'https\\://services.gradle.org/distributions/gradle-4.1-all.zip';
+```
+
+> - 把这个资源下载下来(具体下载哪个版本，根据`distributionUrl`来下载)，放到`platforms/android/gradle`
+> - 下载地址：https://services.gradle.org/distributions/gradle-4.1-all.zip
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-34e0956118d63551.png)
+
+
+```js
+// 注释
+// var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 'https\\://services.gradle.org/distributions/gradle-4.1-all.zip';
+
+// 新增
+var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || '../gradle-4.1-all.zip';
+```      
+
+**3. 配置Gradle的环境变量**
+
+**第一步**
+
+> 把上一步下载的`Gradle`把放到任意目录，这里我放的路径`/Users/poetry/cordova/gradle-4.1`
+
+**第二步: 新增环境变量**
+
+> 在`mac`下编辑`.bash_profile`配置文件， `sudo vi  ~/.bash_profile`。新增一个环境变量，这里的`$HOME`就是`/Users/poetry`路径
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-dd5f9e774031dd00.png)
+
+**第三步: 使环境变量生效**
+
+```bash
+source ~/.bash_profile
+```
+
+- 如果你的终端使用`iTerm`，需要加载一条命令
+
+```bash
+sudo vi ~/.zshrc
+
+# 新增
+source .bash_profile
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-db8dd1a25b232020.png)
+
+
+**第四步：新开一个终端**
+
+```bash
+# 执行下面命令看环境变量
+
+echo $PATH
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-cebfc20e00cfff1c.png)
+
+**第五步：测试**
+
+```bash
+gradle -v
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-951f91866ba4d191.png)
+
+
+**4. debug测试版打包**
+
+> 查看当前打包环境`ionic info`
 
 
 ```bash
-cordova build android
+Ionic:
+
+   ionic (Ionic CLI)  : 4.7.1
+   Ionic Framework    : ionic-angular 3.9.2
+   @ionic/app-scripts : 3.2.1
+
+Cordova:
+
+   cordova (Cordova CLI) : 8.1.2 (cordova-lib@8.1.1)
+   Cordova Platforms     : android 7.1.4, browser 5.0.4, ios 4.5.5
+   Cordova Plugins       : cordova-plugin-ionic-webview 1.2.1, (and 11 other plugins)
+
+System:
+
+   Android SDK Tools : 26.1.1
+   NodeJS            : v9.10.0
+   npm               : 5.6.0
+   OS                : macOS Mojave
+   Xcode             : Xcode 10.1 Build version 10B61
 ```
 
-> 配置`Gradle`
+> 注意：需要前面几步环境配置好了，才可以正常执行打包
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-85743f69c341b0a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+```bash
+# 执行这条命令默认打包的是debug版本
+cordova build android 
+```
+
+> 打包后输出`apk`路径 `platforms/android/app/build/outputs/apk/debug/`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-14269923256eada2.png)
+
+> 生成的`apk`。此时可以把`apk`，拖入`Genymotion`模拟器调试
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-8522876e4b378650.png)
 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e6751e1a65f6bcd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**5. 正式版本打包**
+
+**5.1 未签名版本**
+
+> 此时打包的`apk`是没有签名的版本，不可以在手机上安装
+
+```bash
+# 生成未签名版
+ionic cordova build android  --release
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-a1c678cfc6a87dc0.png)
 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-91ab68cd76734edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 打包后输出`apk`路径 `platforms/android/app/build/outputs/apk/release`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-aee4d0aacb742c3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 在手机安装示意图，签名版不能安装
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e8c3274ef110d775.png)
+
+**5.2 签名版本apk打包**
+
+**签名步骤**
+
+**1. 创建私钥，项目根目录下执行命令(记住设置的别名)**
+
+```
+keytool -genkey -v -keystore [自定义秘钥文件名，如 my-app].jks -keyalg RSA -keysize 2048 -validity 36500 -alias [自定义app别名，如 my-alias]
+```
+
+
+- `-genkey`		意味着执行的是生成数字证书操作
+- `v`			表示将生成证书的详细信息打印出来，显示在`dos`窗口中
+- `-keyalg RSA`		表示生成密钥文件所采用的算法为`RSA`
+- `-validity 36500`		表示该数字证书的有效期为`36500`天
+
+**2. 接下来会让设置秘钥库口令(记住秘钥)：**
+
+> 秘钥库就是你的密码
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-9a035fc6f5af1c36.png)
+
+**3. 设置秘钥库口令后会让输入一些APP信息**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-3cdb04cec3db747e.png)
+
+
+**4. 按照提示依次输入后会在你的项目根目录生成秘钥文件 my-app.jks**
+
+> 把之前生成好的`platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk`复制到项目根目录，这样和`my-app.jks`同一目录签名
+
+```bash
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore [上步生成的xxx.jks] app-release-unsigned.apk [步骤1命令中设置的app别名，如 my-alias]
+```
+
+```bash
+# 这里是上面的示例：执行签名命令
+keytool -genkey -v -keystore my-app.jks -keyalg RSA -keysize 2048 -validity 36500 -alias my-app
+```
+
+**5. 验证应用是否签名成功**
+
+```bash
+jarsigner -verify -verbose -certs 你的apk名
+```
+
+```bash
+# 示例
+jarsigner -verify -verbose -certs app-release-unsigned.apk
+```
+
+**5. 优化 apk 文件**
+
+**5.1 首先需要配置环境变量**
+
+```bash
+# 这里以mac下的iTerm2来配置
+vi ~/.bash_profile
+
+# 增加一行
+export PATH=$PATH:$ANDROID_HOME/build-tools/27.0.3
+
+# 这里其实是安卓的路径,我们需要给zipalign配置环境变量
+/Users/poetry/Library/Android/sdk/build-tools/27.0.3/zipalign
+
+# 使得bash_profile生效
+source ~/.bash_profile
+
+# 因为使用到iTerm2需要在.zshrc加入.bash_profile
+vi ~/.zshrc
+
+# 加入bash_profile
+source .bash_profile
+
+# 最后新建窗口echo $PATH就看到环境变量配置了
+
+# 查看是否生效
+zipalign -v
+```
+
+![echo $PATH](https://upload-images.jianshu.io/upload_images/1480597-2fbdaea1e10a67d3.png)
+
+
+**5.2 在项目根目录执行**
+
+```bash
+# 自定义最终生成的apk的名字，如 ionicQa.apk
+zipalign -v 4 app-release-unsigned.apk ionicQa.apk
+```
+
+**6. 遇到的问题**
+
+**6.1 无法打开 jar 文件**
+
+> 将 秘钥文件 `xxx.jks` 与 `android-release-unsigned.apk` 放在同一目录下，放到项目根目录就好了
+
+
+> 此时就构建好了应用，这里是[构建的应用](https://github.com/poetries/ionic-qa-app/blob/master/ionicQa.apk)
 
 ### 12.5.3 网站微信端发布
 
@@ -1497,7 +1732,14 @@ npm install @ionic/app-scripts@latest --save-dev
 > `question?.ContentTitle` `question`可能返回空
 
 
+
 # 十四、更多参考
+
+## 14.1 项目学习
+
+> https://github.com/poetries/ionic-qa-app
+
+## 14.2 文档参考
 
 - [Ionic官方文档](https://ionicframework.com/docs/)
 - [ionic官方GitHub](https://github.com/ionic-team)
