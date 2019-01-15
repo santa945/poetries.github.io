@@ -287,8 +287,8 @@ canvas_nest:
 
 # 首页动画
 home_bg:
-  lizi: true
-  yu: false
+  lizi: false
+  yu: true
   star: false
   sky: false
 
@@ -302,7 +302,7 @@ home_circle:
 
 # 首页波浪动画
 home_wave:
-  enable: true
+  enable: false
   
 # 字数统计、阅读时长
 # Post wordcount display settings
