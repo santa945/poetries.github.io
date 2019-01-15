@@ -139,6 +139,20 @@
   <script type="text/javascript" src="/js/bg/circle.js"></script>
 <% } %>
 
+<!-- 波浪动画 -->
+<% if(theme.home_wave && theme.home_wave.enable) { %> 
+  <div class="animation-wrapper">
+      <div class="stagger-visualizer">
+        <div class="cursor color-red"></div>
+        <div class="dots-wrapper"></div>
+      </div>
+    </div>
+    <link href="/css/home-wave.css"  rel="stylesheet">
+    <script type="text/javascript" src="/js/wave-animate.js"></script>
+    <script type="text/javascript" src="/js/bg/wave.js"></script>
+<% } %>
+
+  
 <!-- 背景动画 -->
 <canvas id="canvas"></canvas>
 <% if(theme.home_bg && theme.home_bg.lizi) { %>

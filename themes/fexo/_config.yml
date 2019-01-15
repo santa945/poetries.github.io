@@ -298,6 +298,10 @@ home_animal:
 
 # 首页冒泡动画
 home_circle:
+  enable: false
+
+# 首页波浪动画
+home_wave:
   enable: true
   
 # 字数统计、阅读时长
