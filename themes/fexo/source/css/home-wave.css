@@ -59,7 +59,7 @@
   
   /* 首页波浪样式 */
 .animation-wrapper {
-  width: 50%;
+  width: 40%;
   padding-bottom: 40%;
 }
 
@@ -67,7 +67,7 @@
   position: absolute;
   width: 1100px;
   height: 550px;
-  transform-origin: bottom right;
+  transform-origin: center bottom;
 }
 
 .stagger-visualizer .dots-wrapper {
