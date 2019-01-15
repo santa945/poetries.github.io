@@ -29,3 +29,14 @@ svg {
     border: 1px solid currentColor;
     transform: scale(0);
 }
+
+@media screen and (max-width:480px){
+  .img-avatar {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+  }
+ }
