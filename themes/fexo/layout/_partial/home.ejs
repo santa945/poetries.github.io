@@ -25,7 +25,17 @@
       </li>
     <% }) %>
   </ul>
-
+  <!-- 波浪动画 -->
+  <% if(theme.home_wave && theme.home_wave.enable) { %> 
+    <div  style="display: flex;justify-content: center; align-items:center">
+      <div class="animation-wrapper">
+        <div class="stagger-visualizer">
+          <div class="cursor color-red"></div>
+          <div class="dots-wrapper"></div>
+        </div>
+      </div>
+    </div>
+  <% } %>
 </div>
 
 <!-- 统计 -->
@@ -141,12 +151,6 @@
 
 <!-- 波浪动画 -->
 <% if(theme.home_wave && theme.home_wave.enable) { %> 
-  <div class="animation-wrapper">
-      <div class="stagger-visualizer">
-        <div class="cursor color-red"></div>
-        <div class="dots-wrapper"></div>
-      </div>
-    </div>
     <link href="/css/home-wave.css"  rel="stylesheet">
     <script type="text/javascript" src="/js/wave-animate.js"></script>
     <script type="text/javascript" src="/js/bg/wave.js"></script>
