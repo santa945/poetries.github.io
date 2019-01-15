@@ -5,6 +5,7 @@ url: http://blog.poetries.top
 
 # Set avatar (Absolute url and relative url)
 avatar: /images/avatar.jpg
+avatar_github_chart: http://ghchart.rshah.org/poetries
 
 # Set favicon
 favicon: /favicon.ico
