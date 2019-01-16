@@ -39,7 +39,7 @@ home_nav:
     url: http://blog.poetries.top/FE-Interview-Questions
     target_blank: true
   - name: CssReference
-    url: http://cssreference.parryqiu.com
+    url: http://blog.poetries.top/css-reference
     target_blank: true
 
 
@@ -266,6 +266,10 @@ project:
     name: vue-music
     url: https://github.com/poetries/vue-music
     intro: 使用vue2.0构建音乐播放器
+  - type: personal
+    name: QA
+    url: https://github.com/poetries/ionic-qa-app
+    intro: Ionic4+Angular7+Cordova 构建QA双平台
   - type: personal
     name: boss
     url: https://github.com/poetries/boss
