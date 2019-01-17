@@ -1461,8 +1461,8 @@ sudo chomd 777 your_project_name
 brew install jdk java
 ```
 
-
 **2. 配置`Gradle`**
+
 
 ```bash
 # 打开 GradleBuilder.js
@@ -1470,7 +1470,9 @@ brew install jdk java
 platforms/android/cordova/lib/builders/GradleBuilder.js
 ```
 
+
 > 找到`distributionUrl`
+
 
 ```js
 var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 'https\\://services.gradle.org/distributions/gradle-4.1-all.zip';
@@ -1488,7 +1490,8 @@ var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 
 
 // 新增
 var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || '../gradle-4.1-all.zip';
-```      
+```
+
 
 **3. 配置Gradle的环境变量**
 
