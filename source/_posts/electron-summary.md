@@ -145,7 +145,7 @@ npm start
 
 ## 3.1 Electron 运行的流程
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7d07da8dccab3159.png)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7d07da8dccab3159.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 3.2 Electron 主进程和渲染进程
 
@@ -206,8 +206,9 @@ button.addEventListener('click',function(e){
 
 ## 4.3 通过BrowserWindow 打开新窗口
 
-> `Electron` 渲染进程中通过 `remote` 模块调用主进程中的 `BrowserWindow` 打开新窗口
+> `Electron` 渲染进程中通过 **`remote` 模块调用主进程中的 `BrowserWindow`** 打开新窗口
 
+> https://electronjs.org/docs/api/browser-window
 
 ```js
 // 主进程代码
@@ -268,7 +269,8 @@ app.on('activate', () => {
 ```
 
 ```js
-// 渲染进程代码
+// 渲染进程代码 /src/render/index.js
+// 打开新窗口属性用法有点类似vscode打开新的窗口
 
 const btn = document.querySelector('#btn');
 const path = require('path');
@@ -278,8 +280,9 @@ btn.onclick = () => {
     win = new BrowerWindow({ 
         width: 300,
         height: 200, 
-        frame: false, 
-        transparent: true // fullscreen:true
+        frame: false, // false隐藏关闭按钮、菜单选项 true显示
+        fullscreen:true, // 全屏展示
+        transparent: true 
     }) 
 
     win.loadURL(path.join('file:',__dirname,'news.html'));
@@ -288,73 +291,202 @@ btn.onclick = () => {
 }
 ```
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-fc3bd825336aac08.png)
+
+
 # 五、自定义顶部菜单/右键菜单
 
 
-## 5.1 自定义软件顶部菜单
+## 5.1 主进程中调用Menu模块-自定义软件顶部菜单
+
+> https://electronjs.org/docs/api/menu-item
+
 
 > `Electron` 中 `Menu` 模块可以用来创建原生菜单，它可用作应用菜单和 `context` 菜单
 
 > 这个模块是一个主进程的模块，并且可以通过 `remote` 模块给渲染进程调用
 
 ```js
-const { Menu } = require('electron');
+// main/menu.js
+const { Menu }  = require('electron')
 
-let template = [
-{
-    label: '文件',
-    submenu: [ 
-        {
-            label: '新建窗口', 
-            click: () => {
-                console.log('aaa') 
+// 文档 https://electronjs.org/docs/api/menu-item
+// 菜单项目
+let menus = [
+    {
+        label: '文件',
+        submenu: [
+            {
+                label: '新建文件',
+                accelerator: 'ctrl+n', // 绑定快捷键
+                click: function () { // 绑定事件
+                    console.log('新建文件')
+                }
+            },
+            {
+                label: '新建窗口',
+                click: function () {
+                    console.log('新建窗口')
+                }
             }
-        }, 
-        {
-            type: 'separator' 
-        },
-        {
-            label: '打开文件',
-            accelerator:'ctrl+x', 
-            click: () => {
-                console.log('bbb') 
+        ]
+    },
+    {
+        label: '编辑',
+        submenu: [
+            {
+                label: '复制',
+                role: 'copy' // 调用内置角色实现对应功能
+            },
+            {
+                label: '剪切',
+                role: 'cut'  // 调用内置角色实现对应功能
             }
-        },
-    ] 
-},
-{
-    label :'编辑',
-    submenu: [ 
-        {
-            role:'cut', 
-            label:'剪切'
-        },
-        {
-            role:'copy', 
-            label:'复制'
-        }
-    ]
-}
+        ]
+    },
+    {
+        label: '视图',
+        submenu: [
+            {
+                label: '浏览'
+            },
+            {
+                label: '搜索'
+            }
+        ]
+    }
 ]
 
-var m=Menu.buildFromTemplate(template); 
-
-Menu.setApplicationMenu(m);
+let m = Menu.buildFromTemplate(menus)
+Menu.setApplicationMenu(m)
 ```
-
-## 5.2 自定义右键菜单
 
 ```js
-window.addEventListener('contextmenu', (e) = >{
-    e.preventDefault();
-    m.popup({
-        window: remote.getCurrentWindow()
-    });
-},
-false);
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/menu.js')
+};
+
 ```
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7f8faae7e2a933e4.png)
+
+> 我们给菜单绑定事件，在命令行控制台可以看到
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d3bf0c07d42771eb.png)
+
+## 5.2 渲染进程中调用Menu模块
+
+> 不推荐使用这种方式，建议在主进程中使用
+
+**1. remote**
+
+> 通过`remote`调用主进程的方法
+
+```js
+// 菜单引入的方式发生变化
+const { Menu }  = require('electron').remote
+
+// 其他代码和上面菜单一样
+// ...
+```
+
+**2. 加入index.html**
+
+```html
+<script src="render/menu.js"></script>
+```
+
+## 5.3 渲染进程中自定义右键菜单
+
+**1. 定义菜单**
+
+```js
+// render/menu.js
+
+// 在渲染进程中通过remote模块调用主进程中的模块
+const { Menu }  = require('electron').remote
+const { remote } = require('electron')
+
+// 文档 https://electronjs.org/docs/api/menu-item
+// 菜单项目
+let menus = [
+    {
+        label: '文件',
+        submenu: [
+            {
+                label: '新建文件',
+                accelerator: 'ctrl+n', // 绑定快捷键
+                click: function () { // 绑定事件
+                    console.log('新建文件')
+                }
+            },
+            {
+                label: '新建窗口',
+                click: function () {
+                    console.log('新建窗口')
+                }
+            }
+        ]
+    },
+    {
+        label: '编辑',
+        submenu: [
+            {
+                label: '复制',
+                role: 'copy' // 调用内置角色实现对应功能
+            },
+            {
+                label: '剪切',
+                role: 'cut'  // 调用内置角色实现对应功能
+            }
+        ]
+    },
+    {
+        label: '视图',
+        submenu: [
+            {
+                label: '浏览'
+            },
+            {
+                label: '搜索'
+            }
+        ]
+    }
+]
+
+let m = Menu.buildFromTemplate(menus)
+// Menu.setApplicationMenu(m)
+
+// 绑定右键菜单
+window.addEventListener('contextmenu', (e)=>{
+   e.preventDefault()
+   m.popup({
+    window: remote.getCurrentWindow()
+   })
+}, false)
+```
+
+
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e241c2350cf1aeba.png)
+
+
+**2. 引入**
+
+```html
+<!--index.html-->
+<script src="render/menu.js"></script>
+```
+
+
 # 六、进程通信
+
+- 渲染进程 https://electronjs.org/docs/api/ipc-renderer
+- 主进程 https://electronjs.org/docs/api/ipc-main
 
 ## 6.1 主进程与渲染进程之间的通信
 
@@ -365,85 +497,370 @@ false);
 - `ipcMain`:当在主进程中使用时，它处理从渲染器进程(网页)发送出来的异步和同步信息,当然也有可能从主进程向渲染进程发送消息。
 - `ipcRenderer`: 使用它提供的一些方法从渲染进程 (`web` 页面) 发送同步或异步的消息到主进程。 也可以接收主进程回复的消息
 
-**场景 1:渲染进程给主进程发送异步消息**
+### 6.1.1 渲染进程给主进程发送异步消息
 
-```js
-//渲染进程
-const { ipcRenderer } = require('electron')
+> 间接实现渲染进程执行主进程里面的方法
 
-ipcRenderer.send('msg',{name:'张三'}); //异步
+**1. 引入ipcRender**
+
+```html
+<!--src/index.html-->
+<button id="send">在 渲染进程中执行主进程里的方法（异步）</button>
+<script src="render/ipcRender.js"></script>
 ```
 
-```js
-//主进程
-const { ipcMain } = require('electron');
+**2. 引入ipcMain**
 
-ipcMain.on('msg',(event,arg) => {
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain.js')
+};
+```
+
+
+**3. 渲染进程发送消息**
+
+
+```js
+// src/render/ipcRender.js
+//渲染进程
+
+let send = document.querySelector('#send');
+const { ipcRenderer } = require('electron');
+
+send.onclick = function () {
+    // 传递消息给主进程
+    // 异步
+    ipcRenderer.send('sendMsg', {name:'poetries', age: 23})
+}
+```
+
+**2. 主进程接收消息**
+
+```js
+// src/main/ipcMain.js
+
+//主进程
+
+const { ipcMain }  = require('electron')
+
+// 主进程处理渲染进程广播数据
+ipcMain.on('sendMsg', (event, data)=> {
+    console.log('data\n ', data)
+    console.log('event\n ', event)
+})
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-b7e836d9e6539014.png)
+
+
+
+### 6.1.2 渲染进程发送消息，主进程接收消息并反馈
+
+> 渲染进程给主进程发送异步消息，主进程接收到异步消息以后通知渲染进程
+
+**1. 引入ipcRender**
+
+```html
+<!--src/index.html-->
+<button id="sendFeedback">在 渲染进程中执行主进程里的方法，并反馈给主进程（异步）</button>
+<script src="render/ipcRender.js"></script>
+```
+
+**2. 引入ipcMain**
+
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain.js')
+};
+```
+
+**3. 渲染进程发送消息**
+
+```js
+// src/render/ipcRender.js
+
+//渲染进程
+let sendFeedback = document.querySelector('#sendFeedback');
+
+const { ipcRenderer } = require('electron');
+
+// 向主进程发送消息
+sendFeedback.onclick = function () {
+    // 触发主进程里面的方法
+    ipcRenderer.send('sendFeedback', {name:'poetries', age: 23})
+}
+```
+
+**4. 主进程收到消息处理并广播反馈通知渲染进程**
+
+```js
+// src/main/ipcMain.js
+
+//主进程
+const { ipcMain }  = require('electron')
+
+
+// 主进程处理渲染进程广播数据，并反馈给渲染进程
+ipcMain.on('sendFeedback', (event, data)=> {
+    // console.log('data\n ', data)
+    // console.log('event\n ', event)
     
+    // 主进程给渲染进程广播数据
+    event.sender.send('sendFeedbackToRender', '来自主进程的反馈')
 })
 ```
 
-**场景 2:渲染进程给主进程发送异步消息，主进程接收到异步消息以后通知渲染进程:**
+**5. 渲染进程处理主进程广播的数据**
 
 ```js
-//渲染进程
-const { ipcRenderer } = require('electron')
-
-ipcRenderer.send('msg',{name:'张三'}); //异步
-
-```
-
-```js
-//主进程
-const { ipcMain } = require('electron');
-
-ipcMain.on('msg',(event,arg) => { 
-    event.sender.send('reply', 'pong');
+// src/render/ipcRender.js
+// 向主进程发送消息后，接收主进程广播的事件
+ipcRenderer.on('sendFeedbackToRender', (e, data)=>{
+    console.log('event\n ', e)
+    console.log('data\n ', data)
 })
 ```
 
-```js
-//渲染进程
-const { ipcRenderer } = require('electron')
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7b22ed78b9a19d5a.png)
 
-ipcRenderer.on('reply', function(event, arg) { 
-    console.log(arg); // prints "pong"
-});
+
+### 6.1.3 渲染进程给主进程发送同步消息
+
+**1. 引入ipcRender**
+
+```html
+<!--src/index.html-->
+ <button id="sendSync">渲染进程和主进程同步通信</button>
+<script src="render/ipcRender.js"></script>
 ```
 
-**场景 3:渲染进程给主进程发送同步消息**
+**2. 引入ipcMain**
 
 ```js
-//渲染进程
-const { ipcRenderer } = require('electron')
+// 在主进程src/index.js中引入
+const createWindow = () => {
 
-const msg = ipcRenderer.sendSync('msg-a');
-
-console.log(msg)
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain.js')
+};
 ```
 
+**3. 渲染进程给主进程同步通信**
+
 ```js
-//主进程 
-ipcMain.on('msg-a',(event)=> {
-    event.returnValue = 'hello';
+// src/render/ipcMain.js
+let sendSync = document.querySelector('#sendSync');
+
+// 渲染进程和主进程同步通信
+sendSync.onclick = function () {
+    // 同步广播数据
+   let msg =  ipcRenderer.sendSync('sendsync', {name:'poetries', age: 23})
+    
+   // 同步返回主进程反馈的数据
+   console.log('msg\n ', msg)
+}
+```
+
+**4. 主进程接收数据处理**
+
+```js
+// src/main/ipcMain.js
+
+// 渲染进程和主进程同步通信 接收同步广播
+ipcMain.on('sendsync', (event, data)=> {
+    // console.log('data\n ', data)
+    // console.log('event\n ', event)
+    // 主进程给渲染进程广播数据
+    event.returnValue ='渲染进程和主进程同步通信 接收同步广播，来自主进程的反馈.';
 })
 ```
 
-**通过主进程渲染进程的通信改造右键菜单**
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-abdff579c3fb74fa.png)
 
-> @TODO
+### 6.1.4 渲染进程广播通知主进程打开窗口
+
+> 一般都是在渲染进程中执行广播操作，去通知主进程完成任务
+
+**1. 引入openWindow**
+
+```html
+<!--src/index.html-->
+ <button id="sendSync">渲染进程和主进程同步通信</button>
+<script src="render/openWindow.js"></script>
+```
+
+**2. 引入ipcMain2**
+
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain2.js')
+};
+```
+
+**3. 渲染进程通知主进程打开窗口**
+
+```js
+// src/render/openWindow.js
+
+/* eslint-disable */
+let openWindow = document.querySelector('#openWindow');
+
+var { ipcRenderer } = require('electron');
+
+// 渲染进程和渲染进程直接的通信========
+openWindow.onclick = function () {
+    // 通过广播的形式 通知主进程执行操作
+    ipcRenderer.send('openwindow', {name:'poetries', age: 23})
+}
+```
+
+**4. 主进程收到通知执行操作**
+
+```js
+// src/main/ipcMain2.js
+
+/* eslint-disable */
+let { ipcMain,BrowserWindow } = require('electron')
+const path = require('path')
+
+let win;
+
+// 接收到广播
+ipcMain.on('openwindow', (e, data)=> {
+    // 调用window打开新窗口
+    win = new BrowserWindow({
+        width: 400,
+        height: 300,
+    });
+    win.loadURL(path.join('file:',__dirname, '../news.html'));
+    win.webContents.openDevTools()
+    win.on('closed', () => {
+        win = null;
+      });
+})
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-d094a09efe23f09b.png)
+
+
 
 ## 6.2 渲染进程与渲染进程之间的通信
 
-**1. Electron 渲染进程通过 localstorage 给另一个渲染进程传值**
+> 也就是两个窗口直接的通信
 
-```js
-localStorage.setItem(key,value);
+### 6.2.1 localstorage传值
 
-localStorage.getItem(key);
+> `Electron` 渲染进程通过 `localstorage` 给另一个渲染进程传值
+
+
+**1. 引入openWindow**
+
+```html
+<!--src/index.html-->
+ <button id="sendSync">渲染进程和主进程同步通信</button>
+<script src="render/openWindow.js"></script>
 ```
 
-**2. 通过 BrowserWindow 和 webContents 模块实现渲染进 程和渲染进程的通信**
+**2. 引入ipcMain2**
+
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain2.js')
+};
+```
+
+**3. 渲染进程通知主进程打开窗口**
+
+```js
+// src/render/openWindow.js
+
+/* eslint-disable */
+let openWindow = document.querySelector('#openWindow');
+
+var { ipcRenderer } = require('electron');
+
+// 渲染进程和渲染进程直接的通信========
+openWindow.onclick = function () {
+    // 通过广播的形式 通知主进程执行操作
+    ipcRenderer.send('openwindow', {name:'poetries', age: 23})
+    
+    // ======= localstorage传值 =====
+     localStorage.setItem('username', 'poetries')
+}
+```
+
+**4. 新建news页面**
+
+```html
+<!--src/news.html-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    news page
+  </body>
+  <script src="render/news.js"></script>
+</html>
+```
+
+```js
+// src/render/news.js
+
+let username = localStorage.getItem('username')
+console.log(username)
+```
+
+**5. 主进程收到通知执行操作**
+
+```js
+// src/main/ipcMain2.js
+
+/* eslint-disable */
+let { ipcMain,BrowserWindow } = require('electron')
+const path = require('path')
+
+let win;
+
+// 接收到广播
+ipcMain.on('openwindow', (e, data)=> {
+    // 调用window打开新窗口
+    win = new BrowserWindow({
+        width: 400,
+        height: 300,
+    });
+    win.loadURL(path.join('file:',__dirname, '../news.html'));
+    win.webContents.openDevTools()
+    win.on('closed', () => {
+        win = null;
+      });
+})
+```
+
+
+### 6.2.2 BrowserWindow和webContents方式实现
+
+> 通过 `BrowserWindow` 和 `webContents` 模块实现渲染进程和渲染进程的通信
 
 > `webContents` 是一个事件发出者.它负责渲染并控制网页，也是 `BrowserWindow` 对象的属性
 
@@ -477,97 +894,547 @@ win.webContents.on('did-finish-load',(event) => {
 let win = BrowserWindow.fromId(winId);
 ```
 
-# 七、Electron Shell 模块
+> 下面是具体演示
 
-> `Electron Shell` 模块在用户默认浏览器 中打开 `URL` 以及 `Electron DOM webview` 标签
+**1. 引入openWindow**
 
-> `shell` 模块提供了集成其他桌面客户端的关联功能.
-
-```js
-var shell = require('shell');
-
-shell.openExternal('https://github.com')
+```html
+<!--src/index.html-->
+ <button id="sendSync">渲染进程和主进程同步通信</button>
+<script src="render/openWindow.js"></script>
 ```
 
-**Electron DOM <webview> 标签**
+**2. 引入ipcMain2**
+
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/ipcMain2.js')
+};
+```
+
+**3. 渲染进程通知主进程打开窗口**
+
+```js
+// src/render/openWindow.js
+
+/* eslint-disable */
+let openWindow = document.querySelector('#openWindow');
+
+var { ipcRenderer } = require('electron');
+
+// 渲染进程和渲染进程直接的通信========
+openWindow.onclick = function () {
+    // 通过广播的形式 通知主进程执行操作
+    ipcRenderer.send('openwindow', {name:'poetries', age: 23})
+}
+```
+
+**4. 主进程收到通知执行操作**
+
+```js
+// src/main/ipcMain2.js
+
+let { ipcMain,BrowserWindow } = require('electron')
+const path = require('path')
+
+let win;
+
+// 接收到广播
+ipcMain.on('openwindow', (e, userInfo)=> {
+    // 调用window打开新窗口
+    win = new BrowserWindow({
+        width: 400,
+        height: 300,
+    });
+    win.loadURL(path.join('file:',__dirname, '../news.html'));
+
+    // 新开窗口调试模式
+    win.webContents.openDevTools()
+
+    // 把渲染进程传递过来的数据再次传递给渲染进程news
+    // 等待窗口加载完
+    win.webContents.on('did-finish-load', ()=>[
+        win.webContents.send('toNews', userInfo)
+    ])
+    
+
+    win.on('closed', () => {
+        win = null;
+      });
+})
+```
+
+**5. news接收主进程传递的数据**
+
+> 数据经过渲染进程->主进程->`news`渲染进程
+
+```html
+<!--news页面-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    news page
+  </body>
+  <script src="render/news.js"></script>
+</html>
+```
+
+```js
+// src/render/news.js
+
+var { ipcRenderer } = require('electron');
+
+// let username = localStorage.getItem('username')
+// console.log(username)
+
+// 监听主进程传递过来的数据 
+ipcRenderer.on('toNews',(e, userInfo)=>{
+    console.log(userInfo)
+})
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-a50aae62116329c2.png)
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-48de9dfe0df0cd6c.png)
+
+> 那么，这里有一个问题，`news`进程接收到了广播后如何给出反馈呢？
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-cc88a9c47cbefcd0.png)
+
+**1. 在主进程中获取窗口ID传递**
+
+```js
+// src/main/ipcMain2.js
+
+
+let { ipcMain,BrowserWindow } = require('electron')
+const path = require('path')
+
+let win;
+
+// 接收到广播
+ipcMain.on('openwindow', (e, userInfo)=> {
+      // 获取当前窗口ID 放在第一行保险  因为后面也打开了新窗口使得获取的ID有问题
+    let winId = BrowserWindow.getFocusedWindow().id
+
+    // 调用window打开新窗口
+    win = new BrowserWindow({
+        width: 400,
+        height: 300,
+    });
+    win.loadURL(path.join('file:',__dirname, '../news.html'));
+
+    // 新开窗口调试模式
+    win.webContents.openDevTools()
+
+  
+
+    // 把渲染进程传递过来的数据再次传递给渲染进程news
+    // 等待窗口加载完
+    win.webContents.on('did-finish-load', ()=>[
+        win.webContents.send('toNews', userInfo, winId)
+    ])
+    
+
+    win.on('closed', () => {
+        win = null;
+      });
+})
+```
+
+**2. 在news进程中广播数据**
+
+```js
+// src/render/news.js
+
+var { ipcRenderer } = require('electron');
+
+// 注意这里 在渲染进程中需要从remote中获取BrowserWindow
+const BrowerWindow = require('electron').remote.BrowserWindow;
+
+// let username = localStorage.getItem('username')
+// console.log(username)
+
+// 监听主进程传递过来的数据 
+ipcRenderer.on('toNews',(e, userInfo, winId)=>{
+    // windID 第一个窗口ID
+    // 获取对应ID的窗口
+    let firstWin = BrowerWindow.fromId(winId)
+    firstWin.webContents.send('toIndex', '来自news进程反馈的信息')
+    console.log(userInfo)
+})
+```
+
+
+**3. 在另一个渲染进程中处理广播**
+
+```js
+/* eslint-disable */
+let openWindow = document.querySelector('#openWindow');
+
+var { ipcRenderer } = require('electron');
+
+// 渲染进程和渲染进程直接的通信========
+openWindow.onclick = function () {
+    // 传递消息给主进程
+    ipcRenderer.send('openwindow', {name:'poetries', age: 23})
+
+    // 传递给打开的窗口 渲染进程和渲染进程直接的通信
+    localStorage.setItem('username', 'poetries')
+    
+}
+
+// 接收news渲染进程传递回来的消息
+ipcRenderer.on('toIndex', (e, data)=>{
+    console.log('===', data)
+})
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-1a80c8ad2194b480.png)
+
+
+
+# 七、Electron Shell 模块
+
+## 7.1 Shell 模块使用
+
+> 文档 https://electronjs.org/docs/api/shell
+
+> `Electron Shell` 模块在用户默认浏览器 中打开 `URL` 以及 `Electron DOM webview` 标签。`Shell`既属于主进程模块又是渲染进程模块
+
+> `shell` 模块提供了集成其他桌面客户端的关联功能
+
+
+**1. 引入**
+
+```html
+<!--index.html-->
+<button id="shellDom">通过shell打开外部链接</button>
+<script src="render/shell.js"></script>
+```
+
+**2. shell.js**
+
+```js
+// src/render/shell.js
+
+const { shell } = require('electron')
+let shellDom = document.querySelector('#shellDom');
+
+shellDom.onclick = function (e) {
+   shell.openExternal('https://github.com/poetries')
+}
+```
+
+
+## 7.2 `Electron DOM` `<webview>` 标签
 
 > `Webview` 与 `iframe` 有点相似，但是与 `iframe` 不同, `webview` 和你的应用运行的是不同的进程。它不拥有渲染进程的权限，并且应用和嵌入内容之间的交互全部都是异步的。因为这能 保证应用的安全性不受嵌入内容的影响。
 
 ```html
-<webview id="webview" src="https://www.itying.com" style="position:fixed; width:100%; height:100%">
+<!--src/index.html中引入-->
+<webview id="webview" src="http://blog.poetries.top" style="position:fixed; width:100%; height:100%">
 </webview>
 ```
 
+## 7.3 `shell`模块`<webview>`结合`Menu`模块使用案例
+
+
+**1. 新建src/render/webview.js**
+
+```js
+/* eslint-disable */
+var { ipcRenderer } = require('electron');
+let myWebview = document.querySelector('#myWebview')
+
+ipcRenderer.on('openwebview', (e, url)=>{
+    myWebview.src = url
+})
+```
+
+**2. 引入src/index.html**
+
+```html
+<webview id="myWebview" src="http://blog.poetries.top" style="position:fixed; width:100%; height:100%">
+</webview>
+    
+<script src="render/webview.js"></script>
+```
+
+**3. 新建src/main/menu.js**
+
+```js
+/* eslint-disable */
+const { shell, Menu, BrowserWindow } = require('electron');
+
+// 当前窗口渲染网页
+function openWebView(url) {
+    // 获取当前窗口Id
+    let win = BrowserWindow.getFocusedWindow()
+
+    // 广播通知渲染进程打开webview
+    win.webContents.send('openwebview', url)
+}
+
+// 在窗口外打开网页
+function openWeb(url) {
+    shell.openExternal(url)
+}
+
+let template = [
+    {
+        label: '帮助',
+        submenu: [
+            {
+                label: '关于我们',
+                click: function () {
+                    openWeb('http://blog.poetries.top')
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: '联系我们',
+                click: function () {
+                    openWeb('https://github.com/poetries')
+                }
+            }
+        ]
+    },
+   {
+        label: '加载网页',
+        submenu: [
+            {
+                label: '博客',
+                click: function () {
+                    openWebView('http://blog.poetries.top')
+                }
+            },
+            {
+                type: 'separator' // 分隔符
+            },
+            {
+                label: 'GitHub',
+                click: function () {
+                    openWebView('https://github.com/poetries')
+                }
+            },
+            {
+                type: 'separator' // 分隔符
+            },
+            {
+                label: '简书',
+                click: function () {
+                    openWebView('https://www.jianshu.com/users/94077fcddfc0/timeline')
+                }
+            }
+        ]
+   },
+   {
+    label: '视频网站',
+    submenu: [
+        {
+            label: '优酷',
+            click: function () {
+                openWebView('https://www.youku.com')
+            }
+        },
+        {
+            type: 'separator' // 分隔符
+        },
+        {
+            label: '爱奇艺',
+            click: function () {
+                openWebView('https://www.iqiyi.com/')
+            }
+        },
+        {
+            type: 'separator' // 分隔符
+        },
+        {
+            label: '腾讯视频',
+            click: function () {
+                openWebView('https://v.qq.com/')
+            }
+        }
+    ]
+    }
+]
+
+let m = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(m)
+```
+
+**4. 引入menu**
+
+```js
+// 在主进程src/index.js中引入
+const createWindow = () => {
+
+  // 创建菜单  
+  // 引入菜单模块
+  require('./main/menu.js')
+};
+```
+
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-96d5d9b578ae4503.png)
+
+
+
 # 八、Electron dialog 弹出框
+
+> 文档 https://electronjs.org/docs/api/dialog
+
+> `dialog`属于主进程中的模块
 
 > `dialog` 模块提供了 `api` 来展示原生的系统对话框，例如打开文件框，`alert` 框， 所以 `web` 应用可以给用户带来跟系统应用相同的体验
 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-de7cfb527bf5ea19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+**1. 在src/index.html中引入**
 
+```html
+<button id="showError">showError</button><br />
+<button id="showMsg">showMsg</button><br />
+<button id="showOpenDialog">showOpenDialog</button><br />
+<button id="saveDialog">saveDialog</button><br />
 
-```js
-dialog.showErrorBox('title','content');
+<script src="render/dialog.js"></script>
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f94a34889a4b1f1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+**2. 新建render/dialog.js**
 
 ```js
-dialog.showMessageBox({
+// render/dialog.js
+
+let showError = document.querySelector('#showError');
+let showMsg = document.querySelector('#showMsg');
+let showOpenDialog = document.querySelector('#showOpenDialog');
+let saveDialog = document.querySelector('#saveDialog');
+
+var {remote} = require('electron')
+
+showError.onclick = function () {
+    remote.dialog.showErrorBox('警告', '操作有误')
+}
+showMsg.onclick = function () {
+    remote.dialog.showMessageBox({
+        type: 'info',
+        title: '提示信息',
+        message: '内容',
+        buttons: ['确定', '取消']
+    },function(index){
+        console.log(index)
+    })
+}
+showOpenDialog.onclick = function () {
+    remote.dialog.showOpenDialog({
+        // 打开文件夹
+        properties: ['openDirectory', 'openFile']
+
+        // 打开文件
+        // properties: ['openFile']
+    }, function (data) {
+        console.log(data)
+    })
+}
+saveDialog.onclick = function () {
+    remote.dialog.showSaveDialog({
+        title: 'Save File',
+        defaultPath: '/Users/poetry/Downloads/',
+        // filters 指定一个文件类型数组，用于规定用户可见或可选的特定类型范围
+        filters: [
+            { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+            { name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] },
+            { name: 'Custom File Type', extensions: ['as'] },
+            { name: 'All Files', extensions: ['*'] }
+        ]
+    }, function (path) {
+        // 不是真的保存 ，具体还需nodejs处理
+        console.log(path)
+    })
+}
+```
+
+**showError**
+
+```js
+remote.dialog.showErrorBox('警告', '操作有误')
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-209b3adbfc2dacac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**showMessageBox**
+
+```js
+remote.dialog.showMessageBox({
     type: 'info',
-    title: 'message',
-    message: 'hello',
-    buttons: ['ok', 'cancel']
-},
-(index) = >{
-    if (index == 0) {
-        console.log('You click ok.');
-    } else {
-        console.log('You click cancel');
-    }
+    title: '提示信息',
+    message: '内容',
+    buttons: ['确定', '取消']
+},function(index){
+    console.log(index)
 })
 ```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-89ef356b82380150.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**showOpenDialog**
 
 ```js
-// 打开目录  选择文件
+remote.dialog.showOpenDialog({
+    // 打开文件夹
+    properties: ['openDirectory', 'openFile']
 
-dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
-},
-(files) = >{
-    console.log(files);
+    // 打开文件
+    // properties: ['openFile']
+}, function (data) {
+    console.log(data)
 })
 ```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-2cf5712d5571e731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**showSaveDialog**
 
 ```js
-dialog.showSaveDialog({
-    title: 'save some file',
-    filters: [{
-        name: 'Images',
-        extensions: ['jpg', 'png', 'gif']
-    },
-    {
-        name: 'Movies',
-        extensions: ['mkv', 'avi', 'mp4']
-    },
-    {
-        name: 'Custom File Type',
-        extensions: ['as']
-    },
-    {
-        name: 'All Files',
-        extensions: ['*']
-    }]
-},
-(filename) = >{
-    console.log(filename);
+remote.dialog.showSaveDialog({
+    title: 'Save File',
+    defaultPath: '/Users/poetry/Downloads/',
+    // filters 指定一个文件类型数组，用于规定用户可见或可选的特定类型范围
+    filters: [
+        { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+        { name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] },
+        { name: 'Custom File Type', extensions: ['as'] },
+        { name: 'All Files', extensions: ['*'] }
+    ]
+}, function (path) {
+    // 不是真的保存 ，具体还需nodejs处理
+    console.log(path)
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-281ce997d8a71eee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e97ca8b42a31121b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 九、系统托盘、托盘右键菜单、托盘图标闪烁 
+
+
+# 九、实现一个类似EditPlus的简易记事本代码编辑器
+
+> 代码 https://github.com/poetries/electron-demo/tree/master/notepad
+
+
+# 十、系统托盘、托盘右键菜单、托盘图标闪烁 
 
 > 系统托盘 托盘右键菜单、托 盘图标闪烁 点击右上角关闭按钮隐 藏到托盘(仿杀毒软件)
 
@@ -659,7 +1526,7 @@ timer = setInterval(function() {
 500);
 ```
 
-# 十、消息通知、监听网络变 化、网络变化弹出通知框
+# 十一、消息通知、监听网络变 化、网络变化弹出通知框
 
 **1. Electron 实现消息通知**
 
@@ -687,7 +1554,7 @@ myNotification.onclick = () = >{
  window.addEventListener('online', function(){}); window.addEventListener('offline', function(){});
  ```
  
- # 十一、注册全局快捷键/剪切板事件/nativeImage 模块
+# 十二、注册全局快捷键/剪切板事件/nativeImage 模块
  
  > `Electron` 注册全局快捷键 (`globalShortcut`) 以及 `clipboard` 剪 切板事件以及 `nativeImage` 模块(实现类似播放器点击机器码自动复制功 能)
  
@@ -743,9 +1610,9 @@ document.body.appendChild(img3);
 ```
 
 
-# 十二、结合electron-vue
+# 十三、结合electron-vue
 
-## 12.1 electron-vue 的使用
+## 13.1 electron-vue 的使用
 
 **1. electron-vue 的一些资源**
 
@@ -772,7 +1639,7 @@ yarn run dev # or npm run dev
 
 ![image.png](https://upload-images.jianshu.io/upload_images/1480597-3137d0001e34cf1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 12.2 electron-vue 中使用 sass/ElementUi
+## 13.2 electron-vue 中使用 sass/ElementUi
 
 **1. electron-vue UI 框架 ElementUi 的使用**
 
@@ -800,7 +1667,7 @@ npm install --save-dev sass-loader node-sass
 </style>
 ```
 
-## 12.3 electron-vue 中隐藏顶部菜单隐藏
+## 13.3 electron-vue 中隐藏顶部菜单隐藏
 
 > electron-vue 中隐藏顶部菜单隐藏顶部最大化、最小化、关闭按钮 自定最大化、最小化 、关闭按钮
 
@@ -847,8 +1714,9 @@ ipc.on('window-close',function() {
 - 不可拖拽的 `css`:  `-webkit-app-region: no-drag;`
 
 
-# 十三、更多参考
+# 十四、更多参考
 
-- [electron常用工具](https://github.com/poetries/electron-wiki)
+- [一些比较常用的API，克隆后跑起来你就可以快速查看这些常用API](https://github.com/electron/electron-api-demos)
+- [electron学习资料整理](https://github.com/poetries/electron-wiki)
 - [electron中文文档](https://wizardforcel.gitbooks.io/electron-doc/content/faq/electron-faq.html)
 
