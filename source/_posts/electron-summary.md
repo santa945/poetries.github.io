@@ -296,6 +296,7 @@ btn.onclick = () => {
 
 # 五、自定义顶部菜单/右键菜单
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-94da6a6688b084d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 5.1 主进程中调用Menu模块-自定义软件顶部菜单
 
@@ -484,6 +485,8 @@ window.addEventListener('contextmenu', (e)=>{
 
 
 # 六、进程通信
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-2a9dddc335959ec4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - 渲染进程 https://electronjs.org/docs/api/ipc-renderer
 - 主进程 https://electronjs.org/docs/api/ipc-main
@@ -1104,6 +1107,9 @@ ipcRenderer.on('toIndex', (e, data)=>{
 
 # 七、Electron Shell 模块
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-eabc8dbe46f65cfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 ## 7.1 Shell 模块使用
 
 > 文档 https://electronjs.org/docs/api/shell
@@ -1293,6 +1299,9 @@ const createWindow = () => {
 
 # 八、Electron dialog 弹出框
 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7aafe8b93818de91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
 > 文档 https://electronjs.org/docs/api/dialog
 
 > `dialog`属于主进程中的模块
@@ -1436,23 +1445,34 @@ remote.dialog.showSaveDialog({
 
 # 十、系统托盘、托盘右键菜单、托盘图标闪烁 
 
-> 系统托盘 托盘右键菜单、托 盘图标闪烁 点击右上角关闭按钮隐 藏到托盘(仿杀毒软件)
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-e891469217a99101.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-**1. Electron 系统托盘、任务通知栏图标介绍**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d8cb64eb94d030a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 文档 https://electronjs.org/docs/api/tray
 
+> 系统托盘，托盘右键菜单、托盘图标闪烁 点击右上角关闭按钮隐藏到托盘(仿杀毒软件)
+
+
+**1. 引入文件**
+
+```js
+// src/index.js
+const createWindow = () => {
+    require('./main/tray.js')
+};
+```
 
 **2. Electron 创建任务栏图标以及任务栏图标右键菜单**
 
 ```js
+// src/main/tray.js
 var {
     Menu, Tray, app, BrowserWindow
 } = require('electron');
 
 const path = require('path');
 
-var appIcon = new Tray(path.join(__dirname, 'lover.png'));
+var appIcon = new Tray(path.join(__dirname, '../static/lover.png'));
 
 const menu = Menu.buildFromTemplate([
     {
@@ -1474,22 +1494,27 @@ const menu = Menu.buildFromTemplate([
             app.quit();
     }
 }])
-appIcon.setToolTip('my best app');
+// 鼠标放上去提示信息
+appIcon.setToolTip('hello poetries');
 appIcon.setContextMenu(menu);
 ```
+
+![mac系统托盘](https://upload-images.jianshu.io/upload_images/1480597-5b774901ba687b8d.png)
+
 
 **3. 监听任务栏图标的单击、双击事件**
 
 ```js
-var {
-    Menu, Tray, app, BrowserWindow
-} = require('electron');
+// 实现点击关闭按钮，让应用保存在托盘里面，双击托盘打开
+let win = BrowserWindow.getFocusedWindow()
 
-var appIcon = new Tray(path.join(__dirname, 'lover.png'));
+win.on('close', (e)=>{
+    e.preventDefault()
+    win.hide()
+})
 
-appIcon.on('double-click', () = >{
-    console.log(win);
-    win.show();
+iconTray.on('double-click', (e)=>{
+    win.show()
 })
 ```
 
@@ -1499,7 +1524,7 @@ appIcon.on('double-click', () = >{
 ```js
 const win = BrowserWindow.getFocusedWindow();
 
-win.on('close', (e) = >{
+win.on('close', (e) =>{
 
     console.log(win.isFocused());
     
@@ -1515,12 +1540,14 @@ win.on('close', (e) = >{
 **5. Electron 实现任务栏闪烁图标**
 
 ```js
+var appIcon = new Tray(path.join(__dirname, '../static/lover.png'));
+
 timer = setInterval(function() {
     count++;
     if (count % 2 == 0) {
-        appIcon.setImage(path.join(__dirname, 'empty.ico'))
+        appIcon.setImage(path.join(__dirname, '../static/empty.ico'))
     } else {
-        appIcon.setImage(path.join(__dirname, 'lover.png'))
+        appIcon.setImage(path.join(__dirname, '../static/lover.png'))
     }
 },
 500);
@@ -1528,86 +1555,212 @@ timer = setInterval(function() {
 
 # 十一、消息通知、监听网络变 化、网络变化弹出通知框
 
+## 11.1 消息通知
+
 **1. Electron 实现消息通知**
 
 > `Electron` 里面的消息通知是基于 `h5` 的通知 `api` 实现的
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b09035ca49b73ba3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 文档 https://developer.mozilla.org/zh-CN/docs/Web/API/notification
 
+**1. 新建notification.js**
 
 ```js
-const option = {
-    title: 'title',
-    body: 'body',
-    icon: path.join('main-process/favicon2.ico')
-}
-const myNotification = new window.Notification(option.title, option);
+// h5api实现通知
+const path = require('path')
 
-myNotification.onclick = () = >{
-    console.log('clicked');
+let options = {
+    title: 'electron 通知API',
+    body: 'hello poetries',
+    icon: path.join('../static/img/favicon2.ico') // 通知图标
+}
+
+
+document.querySelector('#showNotification').onclick = function () {
+    let myNotification  = new window.Notification(options.title, options)
+    
+    // 消息可点击
+    myNotification.onclick = function () {
+        console.log('click notification')
+    }
 }
 ```
 
-**2. Electron 监听网络变化**
+
+**2. 引入**
+
+```html
+<!--src/index.html-->
+
+<button id="showNotification">弹出消息通知</button>
+<script src="render/notification.js"></script>
+```
+
+`mac`上的消息通知
+
+![mac上的消息通知](https://upload-images.jianshu.io/upload_images/1480597-9fbaee5cd9c9ad09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+## 11.2 监听网络变化
+
+**1. 基本使用**
 
 ```js
- window.addEventListener('online', function(){}); window.addEventListener('offline', function(){});
+ // 监听网络变化
+// 端开网络 再次连接测试
+ window.addEventListener('online', function(){
+    console.log('online')
+ }); 
+ 
+ window.addEventListener('offline', function(){
+    console.log('offline')
+ });
  ```
+ 
+ **2. 监听网络变化实现消息通知**
+ 
+ ```js
+// 端开网络 再次连接测试
+// 监听网络变化实现消息通知
+ window.addEventListener('online', function(){
+    console.log('online')
+ }); 
+ window.addEventListener('offline', function(){
+    // 断开网络触发事件
+    var options = {
+        title: 'QQ邮箱',
+        body: '网络异常，请检查你的网络',
+        icon: path.join('../static/img/favicon2.ico') // 通知图标
+    }
+    var myNotification  = new window.Notification(options.title, options)
+    myNotification.onclick = function () {
+        console.log('click notification')
+    }
+ });
+ ```
+ 
+ ![image.png](https://upload-images.jianshu.io/upload_images/1480597-e2ae4e20a2229ef5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+ 
+ 
  
 # 十二、注册全局快捷键/剪切板事件/nativeImage 模块
  
- > `Electron` 注册全局快捷键 (`globalShortcut`) 以及 `clipboard` 剪 切板事件以及 `nativeImage` 模块(实现类似播放器点击机器码自动复制功 能)
+> `Electron` 注册全局快捷键 (`globalShortcut`) 以及 `clipboard` 剪 切板事件以及 `nativeImage` 模块(实现类似播放器点击机器码自动复制功 能)
  
- **1. Electron 注册全局快捷键(globalShortcut)**
+
+## 12.1 注册全局快捷键
  
-```js
-var app = require('app');
-var globalShortcut = require('electron').globalShortcut;
+ 
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-8d288b412f99b18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-app.on('ready',function() {
-    // Register a 'ctrl+x' shortcut listener.
-    var ret = globalShortcut.register('ctrl+x',function() {
-        console.log('ctrl+x is pressed');
-    }) 
-    
-    if (!ret) {
-        console.log('registration failed');
-    } 
-    // Check whether a shortcut is registered.
-    console.log(globalShortcut.isRegistered('ctrl+x'));
-});
+- [keyboard-shortcuts文档]( https://electronjs.org/docs/tutorial/keyboard-shortcuts)
+- [app模块参考文档](https://electronjs.org/docs/api/app)
 
-app.on('will-quit',function() {
-    // Unregister a shortcut.
-    globalShortcut.unregister('ctrl+x'); 
-    
-    // Unregister all shortcuts.
-    globalShortcut.unregisterAll();
-});
-```
 
-**2. clipboard 剪切板事件 clipboard 模块以及 nativeImage 模块**
+**1. 新建src/main/shortCut.js**
 
 ```js
-const {
-    clipboard,
-    nativeImage
-} = require('electron');
+const {globalShortcut, app} = require('electron')
 
-clipboard.writeText("这是一个test");
+app.on('ready', ()=>{
+    // 注册全局快捷键
+    globalShortcut.register('command+e', ()=>{
+        console.log(1)
+    })
 
-console.log(clipboard.readText());
+    // 检测快捷键是否注册成功 true是注册成功
+    let isRegister = globalShortcut.isRegistered('command+e')
+    console.log(isRegister)
+})
 
-let img = nativeImage.createFromPath('static/favicon2.ico');
-
-clipboard.writeImage(img);
-
-const imgDataURL = clipboard.readImage().toDataURL();
-const img3 = new Image();
-
-img3.src = imgDataURL;
-document.body.appendChild(img3);
+// 退出的时候取消全局快捷键
+app.on('will-quit', ()=>{
+    globalShortcut.unregister('command+e')
+})
 ```
+
+
+**2. 引入src/index.js**
+
+```js
+// 注意在外部引入即可 不用放到app中
+require('./main/shortCut.js')
+```
+
+
+
+## 12.2  剪切板clipboard、nativeImage 模块
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-7e015801fa54f4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+- [剪切板clipboard文档](https://electronjs.org/docs/api/clipboard)
+- [nativeImage模块](https://electronjs.org/docs/api/native-image)
+
+
+**1. html**
+
+```html
+<!--src/index.html-->
+<div>
+  <h2>双击下面信息复制</h2>
+  <p id='msg'>123456789</p>
+  <button id="plat">粘贴</button><br />
+  <input id="text" type="text"/>
+</div>.
+<div>
+  <h2>复制图片到界面</h2>
+  <button id="copyImg">复制图片</button><br />
+</div>
+<script src="render/clipboard.js"></script>
+```
+
+**2. 新建src/render/clipboard.js**
+
+```js
+// clipboard可以在主进程或渲染进程使用
+const { clipboard, nativeImage }  = require('electron')
+
+//复制
+// 运行ctrl+v可看到复制的内容
+// clipboard.writeText('poetries')
+
+// clipboard.readText() //获取复制的内容 粘贴
+
+// 双击复制消息
+let msg = document.querySelector('#msg')
+let plat = document.querySelector('#plat')
+let text = document.querySelector('#text')
+
+msg.ondblclick  = function () {
+    clipboard.writeText(msg.innerHTML)
+    alert(msg.innerHTML)
+}
+plat.onclick = function () {
+    text.value = clipboard.readText()
+}
+
+// 复制图片显示到界面
+let copyImg = document.querySelector('#copyImg')
+copyImg.onclick = function () {
+    // 结合nativeImage模块
+    let image = nativeImage.createFromPath('../static/img/lover.png') 
+
+    // 复制图片
+    clipboard.writeImage(image)
+
+    // 粘贴图片
+    let imgSrc = clipboard.readImage().toDataURL() // base64图片
+
+    // 显示到页面上
+    let imgDom = new Image()
+    imgDom.src = imgSrc 
+    document.body.appendChild(imgDom)
+}
+```
+
 
 
 # 十三、结合electron-vue
@@ -1716,7 +1869,7 @@ ipc.on('window-close',function() {
 
 # 十四、更多参考
 
+- [本文对应DEMO地址](https://github.com/poetries/electron-demo)
 - [一些比较常用的API，克隆后跑起来你就可以快速查看这些常用API](https://github.com/electron/electron-api-demos)
 - [electron学习资料整理](https://github.com/poetries/electron-wiki)
 - [electron中文文档](https://wizardforcel.gitbooks.io/electron-doc/content/faq/electron-faq.html)
-
