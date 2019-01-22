@@ -1,5 +1,5 @@
 ---
-title: 初识Electron
+title: Electron构建跨平台应用mac/windows/linux
 date: 2019-01-06 17:40:43
 tags: 
    - Electron
