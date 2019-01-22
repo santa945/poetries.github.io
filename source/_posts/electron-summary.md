@@ -1762,7 +1762,6 @@ copyImg.onclick = function () {
 ```
 
 
-
 # 十三、结合electron-vue
 
 ## 13.1 electron-vue 的使用
@@ -1827,22 +1826,29 @@ npm install --save-dev sass-loader node-sass
 **1. electron-vue 中隐藏顶部菜单**
 
 ```js
+// src/main/index.js
 mainWindow.setMenu(null)
 ```
 
 **2. electron-vue 中隐藏关闭 最大化 最小化按钮**
 
 ```js
+// src/main/index.js
 mainWindow = new BrowserWindow({
     height: 620,
     useContentSize: true,
-    width: 1280 frame: false /*去掉顶部导航 去掉关闭按钮 最大化最小化按钮*/
+    width: 1280,
+    frame: false /*去掉顶部导航 去掉关闭按钮 最大化最小化按钮*/
 })
 ```
 
 **3 .electron-vue 自定义关闭/最大化最小化按钮**
 
+
+
 ```js
+// 注意在mac下不需要监听窗口最大最小化、以为系统默认支持，这个只是针对windows平台
+
 ipc.on('window-min',function() {
     mainWindow.minimize();
 })
@@ -1866,6 +1872,373 @@ ipc.on('window-close',function() {
 - 可拖拽的 `css`: `-webkit-app-region: drag; `
 - 不可拖拽的 `css`:  `-webkit-app-region: no-drag;`
 
+
+## 13.4 使用electron-vue开发舆情监控系统
+
+### 13.4.1 配置开发环境
+
+**1. 项目搭建**
+
+```bash
+npm install -g vue-cli
+
+vue init simulatedgreg/electron-vue my-project
+
+cd my-project
+
+yarn # or npm install
+
+yarn run dev # or npm run dev
+```
+
+**2. 安装一些依赖**
+
+```bash
+# 安装 sass-loader:
+npm install --save-dev sass-loader node-sass
+
+# 安装elementUI、js-md5
+npm i element-ui  js-md5 -S
+```
+
+- 在`.electron-vue/webpack.renderer.config.js`中配置`sass-loader`就可以编写``sass`了
+
+```html
+<!--vue 文件中修改 style 为如下代码:-->
+
+<style lang="scss"> 
+    body {
+        /* SCSS */ 
+    }
+</style>
+```
+
+### 13.4.2 主进程配置
+
+**1. `src/main/index.js`**
+
+```js
+function createWindow () {
+  // 去掉顶部菜单
+  mainWindow.setMenu(null)
+  
+  // 菜单项
+  require('./model/menu.js');
+  
+  // 系统托盘相关
+  require('./model/tray.js');
+```
+
+**2. `src/main/menu.js`菜单配置**
+
+```js
+const { Menu,ipcMain,BrowserWindow} = require('electron');
+
+
+//右键菜单
+const contextMenuTemplate=[
+    {
+        label: '复制', role: 'copy' },
+    {
+        label: '黏贴', role: 'paste' },        
+    { type: 'separator' }, //分隔线
+    {
+        label: '其他功能',     
+        click: () => {
+        console.log('click')
+         }
+    }
+];
+
+const contextMenu=Menu.buildFromTemplate(contextMenuTemplate);
+
+
+ipcMain.on('contextmenu',function(){
+
+    contextMenu.popup(BrowserWindow.getFocusedWindow());
+
+})
+```
+
+**3. `src/main/tray.js`系统托盘配置**
+
+> 托盘点击监听事件只有在`windows`下才生效，`mac`系统默认支持
+
+```js
+(function () {
+    const path=require('path');
+    const {app,Menu,BrowserWindow,Tray, shell} = require('electron');
+
+    //创建系统托盘
+    const tray = new Tray(path.resolve(__static, 'favicon.png'))
+
+    //给托盘增加右键菜单
+    const template= [
+        {
+            label: '设置',
+            click: function () {
+                shell.openExternal('http://blog.poetries.top')
+            }
+        },
+        {
+            label: '帮助',
+            click: function () {
+                shell.openExternal('http://blog.poetries.top/2019/01/06/electron-summary')
+            }
+        },
+        {
+            label: '关于',
+            click: function () {
+                shell.openExternal('https://github.com/poetries/yuqing-monitor-electron')
+            }
+        },
+        {
+            label: '退出',
+            click: function () {
+                // BrowserWindow.getFocusedWindow().webContents().send('close-main-window');
+                app.quit();
+            
+            }
+        }
+    ];
+
+    const menu = Menu.buildFromTemplate(template);
+    tray.setContextMenu(menu);
+
+
+    tray.setToolTip('舆情监控系统');
+
+
+    //监听关闭事件隐藏到系统托盘
+    // 这里需要注意：在window中才生效，mac下系统默认支持
+    // var win = BrowserWindow.getFocusedWindow();
+    // win.on('close',(e)=>{
+    //         if(!win.isFocused()){
+    //             win=null;
+    //         }else{
+    //             e.preventDefault();  /*阻止应用退出*/
+
+    //             win.hide(); /*隐藏当前窗口*/
+
+    //         }       
+    // })
+
+    // //监听托盘的双击事件
+    // tray.on('double-click',()=>{               
+    //     win.show();
+    // })
+})()
+```
+
+**4. `src/main/shortCut.js`快捷键配置**
+
+在`src/main/index.js`中引入（`require('src/main/shortCut.js')`）即可，不需要放到`app`监控中
+
+```js
+var {globalShortcut, app} = require('electron')
+
+app.on('ready', ()=>{
+    // 注册全局快捷键
+    globalShortcut.register('command+e', ()=>{
+        console.log(1)
+    })
+
+    // 检测快捷键是否注册成功 true是注册成功
+    let isRegister = globalShortcut.isRegistered('command+e')
+    console.log(isRegister)
+})
+
+// 退出的时候取消全局快捷键
+app.on('will-quit', ()=>{
+    globalShortcut.unregister('command+e')
+})
+```
+
+### 13.4.3 渲染进程配置
+
+**1. src/render/main.js配置**
+
+```js
+import Vue from 'vue'
+import axios from 'axios'
+
+import App from './App'
+import router from './router'
+import store from './store'
+
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import VueHighcharts from 'vue-highcharts';
+import VueSocketIO from 'vue-socket.io'
+
+Vue.use(ElementUI);
+Vue.use(VueHighcharts);
+
+//引入socket.io配置连接
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: 'http://118.123.14.36:3000',
+  vuex: {
+      store,
+      actionPrefix: 'SOCKET_',
+      mutationPrefix: 'SOCKET_'
+  }
+}))
+
+if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
+Vue.http = Vue.prototype.$http = axios
+Vue.config.productionTip = false
+
+
+/* eslint-disable no-new */
+new Vue({
+  components: { App },
+  router,
+  store,
+  template: '<App/>'
+}).$mount('#app')
+```
+
+**2. 路由配置src/renderer/router/index.js**
+
+```js
+import Vue from 'vue'
+import Router from 'vue-router'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/home',
+      name: 'home',
+      component: require('@/components/Home').default
+    },
+    {
+      path: '/report',
+      name: 'report',
+      component: require('@/components/Report').default
+    },
+    {
+      path: '/negativereport',
+      name: 'negativereport',
+      component: require('@/components/NegativeReport').default
+    },
+    {
+      path: '/positivereport',
+      name: 'positivereport',
+      component: require('@/components/PositiveReport').default
+    },
+    {
+      path: '/keyword',
+      name: 'keyword',
+      component: require('@/components/KeyWord').default
+    },
+    {
+      path: '/alarm',
+      name: 'alarm',
+      component: require('@/components/Alarm').default
+    },
+    {
+      path: '/msg',
+      name: 'msg',
+      component: require('@/components/Msg').default
+    },
+    {
+      path: '*',
+      redirect: '/home'
+    }
+  ]
+})
+```
+
+> [其他页面更多详情Github](https://github.com/poetries/yuqing-monitor-electron/tree/master/src/renderer)
+
+**3. 在渲染进程中使用主进程方式**
+
+```js
+// electron挂载到了vue实例上 $electron
+this.$electron.shell
+```
+
+### 13.4.4 多平台打包
+
+> 需要注意的是打包`mac`版本在`mac`系统上打包，打包`window`则在`windows`上打包，可以避免很多问题
+
+
+```bash
+# 在不同平台上执行即可打包应用
+npm run build
+```
+
+#### 13.4.4.1 打包介绍
+
+> [electron-vue打包文档](https://simulatedgreg.gitbooks.io/electron-vue/content/cn/using-electron-packager.html)
+
+**1. electron 中构建应用最常用的模块**
+
+- `electron-packager` 
+- `electron-builder`
+
+> `electron-packager` 和 `electron-builder`在自己单独创建的应用用也可以完成打包功 能。但是由于配置太复杂所以我们不建议单独配置
+
+**2. electron-forge**
+
+> https://github.com/electron-userland/electron-forge
+
+```
+electron-forge package 
+electron-forge make
+```
+
+**3. electron-vue中的打包方式**
+
+
+```bash
+# https://simulatedgreg.gitbooks.io/electron-vue/content/cn/using-electron-packager. html
+# 之需要执行一条命令
+npm run build
+```
+
+#### 13.4.4.2 修改应用信息
+
+**1. 修改package.json**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-3d77650ad5e4f1a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+**2. 修改src/index.ejs标题信息**
+
+**3. 修改build/icons图标**
+
+#### 13.4.4.3 打包遇到的问题
+
+**1. 创建应用托盘的时候可能会遇到错误**
+
+- 把托盘图片放在根目录`static`里面，然后注意下面写法。 
+
+```js
+var tray = new Tray(path.join(__static,'favicon.ico'))
+```
+
+- 如果托盘路径没有问题，还是包托盘相关错误的话，把托盘对应的图片换成`.png` 格式重试
+
+**2. 模块问题可能会遇到的错误**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-55209a332e74eef6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-a5bd54ac66d34244.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**解决办法**
+
+- 删掉 `node_modules` 然后重新用 `npm install` 安装依赖
+- 用 `yarn` 来安装模块
+- 用手机创建一个热点电脑连上热点重试
+
+> 最后执行`yarn run build`即可
+
+
+> 项目源码 https://github.com/poetries/yuqing-monitor-electron
 
 # 十四、更多参考
 
