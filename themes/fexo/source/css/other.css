@@ -157,3 +157,7 @@ body {
     border-left:6px solid #c7e6cc;
     background:#f1f5f3;
 }
+
+.article.article-type-post {
+    overflow-x: auto;
+}
