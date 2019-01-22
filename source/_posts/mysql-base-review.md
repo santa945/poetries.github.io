@@ -1669,3 +1669,9 @@ select database(),version(),user();
 #该例中,mysql计算log(rand()*pi())表达式9999999次。
 selectbenchmark(9999999,log(rand()*pi()));
 ```
+
+## 八、可视化管理数据
+
+> 一般为了方便管理数据，我们都需要用到可视化工具
+
+- [navicat-for-mysql](https://www.navicat.com.cn/download/navicat-for-mysql)
