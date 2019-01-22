@@ -353,7 +353,7 @@ db.col.update({'title':'MongoDB 学习'},{$set:{'title':'MongoDB'}})
 |`db.users.find({}, {“username” : 1, “email” : 1})`|`select username, email from users`|查找`username`,`email`这`2`个子项|
 |`db.users.find({“age” : {“$gt” : 18}})`|`select * from users where age >18`|查找`age > 18`的会员|
 |`db.users.find({“age” : {“$gte” : 18}})`|`select * from users where age >=18`|查找`age >= 18`的人|
-|`db.users.find({“age” : {“$lt” : 18}})|select * from users where age <18`	|查找`age < 18`的人|
+|`db.users.find({“age” : {“$lt” : 18}})`|`select * from users where age <18`	|查找`age < 18`的人|
 |`db.users.find({“age” : {“$lte” : 18}})`|`select * from users where age <=18`|查找`age <= 18`的人|
 |`db.users.find({“username” : {“$ne” : “joe”}})`|`select * from users where username <> “joe”`|查找 `username != joe`的会员|
 |`db.users.find({“ticket_no” : {“$in” : [725, 542, 390]}})`|`select * from users where ticket_no in (725, 542, 390)`|符合`tickt_no`在此范围的结果|
