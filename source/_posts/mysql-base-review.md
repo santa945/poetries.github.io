@@ -1670,7 +1670,70 @@ select database(),version(),user();
 selectbenchmark(9999999,log(rand()*pi()));
 ```
 
-## 八、可视化管理数据
+## 八、Mysql十条常用语句
+
+**1. 链接到数据库服务器**
+
+```
+mysql -h 地址 -u root -p 密码
+```
+
+**2. 查看所有库**
+
+```
+show databases;
+```
+
+**3. 选库**
+
+```
+use 库名
+```
+
+**4. 查看库下面的表**
+
+```
+show tables;
+```
+
+**5. 建表**
+
+```
+create table msg{
+    id int auto_increment primary key，
+	content varcha(200)，
+	pubtime int
+}charset utf8;
+```
+
+**6. 告诉服务器你的字符集：set names gbk/utg8;**
+
+**7. 添加数据**
+
+```
+insert into msg(id,content,pubtime) values(1,'哈哈哈哈',13445);
+```
+
+**8. 查询所有数据**
+
+```
+select * from msg;
+```
+
+**9. 按id查询**
+
+```
+select * from where id = 2...
+```
+
+**10. 快速清空表**
+
+```
+truncate 表名
+```
+
+
+## 九、可视化管理数据
 
 > 一般为了方便管理数据，我们都需要用到可视化工具
 
