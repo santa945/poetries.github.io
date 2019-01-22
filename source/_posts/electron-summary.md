@@ -2237,6 +2237,7 @@ var tray = new Tray(path.join(__static,'favicon.ico'))
 
 > 最后执行`yarn run build`即可
 
+![](https://upload-images.jianshu.io/upload_images/1480597-128e2c02d19b79c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 项目源码 https://github.com/poetries/yuqing-monitor-electron
 
