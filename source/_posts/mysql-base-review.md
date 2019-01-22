@@ -1738,3 +1738,8 @@ truncate 表名
 > 一般为了方便管理数据，我们都需要用到可视化工具
 
 - [navicat-for-mysql](https://www.navicat.com.cn/download/navicat-for-mysql)
+
+
+> 这里提供一份数据表，供学习使用，[导入sql数据到navicat](https://blog.csdn.net/qq_33699659/article/details/79261661)
+
+> http://blog.poetries.top/sql/mysql-table.sql
