@@ -277,7 +277,7 @@ project:
   - type: personal
     name: yuqing-monitor-electron
     url: https://github.com/poetries/yuqing-monitor-electron
-    intro: Electron构建多平台应用mac/windows/linux
+    intro: Electron构建多平台应用
 
 # Online contact 
 daovoice: true
