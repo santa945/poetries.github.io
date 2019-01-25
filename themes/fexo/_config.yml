@@ -274,6 +274,10 @@ project:
     name: boss
     url: https://github.com/poetries/boss
     intro: React+express+sock.io+mongodb build a boss
+  - type: personal
+    name: yuqing-monitor-electron
+    url: https://github.com/poetries/yuqing-monitor-electron
+    intro: Electron构建多平台应用mac/windows/linux
 
 # Online contact 
 daovoice: true
