@@ -1,5 +1,5 @@
 ---
-title: 混合App之Ionic4小结篇
+title: 混合App之Ionic3小结篇
 date: 2019-01-10 18:10:24
 tags: 
  - Ionic
@@ -7,8 +7,6 @@ tags:
 categories: Front-End
 ---
 
-
-> 折腾了一段时间`Typescript`、`angular`基础，终于可以学`Ionic4`了
 
 > 没有`angular`基础，看一下这篇文章 http://blog.poetries.top/2019/01/09/angular7-intro-summary
 
