@@ -1,11 +1,12 @@
 ---
-title: RN之开发GitHub适配IOS、Android总结篇
-date: 2018-12-02 16:50:12
+title: React Native学习之适配Android/IOS总结篇
+date: 2019-06-08 14:50:12
 tags: 
  - RN
  - react
 categories: Front-End
 ---
+
 
 ## 一、环境搭建
 
@@ -76,6 +77,13 @@ react-native run-ios
 
 ![](https://raw.githubusercontent.com/crazycodeboy/RNStudyNotes/master/React%20Native%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E4%B8%8E%E5%BF%83%E5%BE%97/images/Sourcesmianban.jpg)
 
+
+**指定模拟的设备类型**
+
+- 你可以使用`--simulator`参数，在其后加上要使用的设备名称来指定要模拟的设备类型（目前默认为`"iPhone X"`）。如果你要模拟 `iPhone 4s`，那么这样运行命令即可：`react-native run-ios --simulator "iPhone 4s"`。
+- 你可以在终端中运行`xcrun simctl list devices`来查看具体可用的设备名称
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-f04e0693ec0e164a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 #### 1.1.2 安卓环境搭建
@@ -158,6 +166,9 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 
 > 确保你先运行了模拟器或者连接了真机，然后在你的项目目录中运行`react-native run-android`
 
+**Android Studio自带工具运行**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-4b49f2372cdc208e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **使用genymotion模拟器**
 
@@ -186,9 +197,48 @@ react-native run-android
 
 > 打开`genymotion`，欢迎页面出来了，成功，修改一下文字，重新加载一遍，成功
 
-- 第一次默认不是热加载形式，就是改变文件内容需要手动刷新的，这里设置一下热加载，以后内容这里就会自动刷新，`mac`是执行`command+r`，选择第四个`hot reloading`如下
+- 第一次默认不是热加载形式，就是改变文件内容需要手动刷新的，这里设置一下热加载，以后内容这里就会自动刷新，`mac`是执行`command+r`，选择第四个`hot reloading`
 
-### 1.2 移除vscode装饰器报错
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-ea8cebedd642d16a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+> 运行`react-native run-andriod` 会下载很多东西，然后出现这个标志说明编译没有问题，还缺少一个模拟设备
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-95fc3301c8104585.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-f1e86ec68749d4e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-a3a274853fc192a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**如果是安卓5.0以下需要配置一下IP**
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-07127b4e56c64d1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 1.2 安卓设备真机调试
+
+**1. 开启 USB 调试**
+
+> 在默认情况下 `Android` 设备只能从应用市场来安装应用。你需要开启 `USB` 调试才能自由安装开发版本的 `APP`
+
+**2. 通过 USB 数据线连接设备**
+
+> 下面检查你的设备是否能正确连接到 `ADB（Android Debug Bridge）`，使用`adb devices`命令：
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-3ef09000d4bd3180.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**3. 运行应用**
+
+> 现在你可以运行`react-native run-android`来在设备上安装并启动应用了
+
+**从设备上访问开发服务器**
+
+- 运行`adb reverse tcp:8081 tcp:8081`
+- 在命令行执行 `adb shell input keyevent 82`弹出开发者工具。打开热更新和远程调试
+
+![](https://upload-images.jianshu.io/upload_images/1480597-726a558d6e4d9d3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+### 1.3 移除vscode装饰器报错
 
 > 点击`Visual Studio Code`左下角的配置按钮。在搜索框内输入“experimentalDecorators”，发现竟然能够找到选项，如下
 
@@ -1382,56 +1432,269 @@ ios shouldRasterizeIOS bool
 > 提示：我们在使用具有不同分辨率的图标时，一定要引用标准分辨率的图片如`require('./img/check.png')`，如果我们这样写`require('./img/check@2x.png')`，那么应用在不同分辨率的设备上都只会显示`check@2x.png`图片，也就无法达到图片自适配的效果。
 
 
-## 七、实战开发GitHub客户端
+## 七、react-navigation
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0d321a91ef7a8b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-**效果图**
-
-**环境**
-
-- `nodejs 8`
-- `react native 0.44.3`
-
-**所用技术**
-
-- `ES5/ES6`
-- `React`
-- `Flexbox`
-- `AsyncStorage`
-- `fetch api`
-- `Redux`
-
-**第三方工具**
-
-- `react-native-splash-screen`
-- `react-native-htmlview`
-- `react-native-parallax-scroll-view`
-- `react-native-scrollable-tab-view`
-- `react-native-sortable-listview`
-
-### 7.1 初始化项目
-
-### 7.2 项目结构组织
-
-### 7.3 Icon图标
-
-### 7.4 flux路由
-
-### 7.5 tabs配置
-
-### 7.6 redux数据管理
-
-### 7.7 应用部署/热更新 CodePush最新集成
-
-### 7.8 打包应用
-
-#### 7.8.1 Android打包APK
-
-#### 7.8.2 IOS打包
+> 文档 https://reactnavigation.org/docs/zh-Hans/getting-started.html
 
 
-## 八、更多参考
+### 7.1 页面切换
+
+- 跳转到新的页面(将新路由推送到堆栈导航器，如果它尚未在堆栈中，则跳转到该页面) `this.props.navigation.navigate('Details',{})`
+- 不考虑现有导航历史的情况下添加其他路由 `this.props.navigation.push`
+- 返回 `this.props.navigation.goBack()`
+- 返回到堆栈中的第一个页面 `navigation.popToTop()`
+
+### 7.2 传递参数给路由
+
+- `navigate`接受可选的第二个参数，以便将参数传递给要导航到的路由。 例如：`this.props.navigation.navigate('RouteName', {paramName: 'value'})`。
+- 我们可以使用`this.props.navigation.getParam`读取参数
+- 你也可以使用 `this.props.navigation.state.params`作为`getParam`的替代方案， 如果未指定参数，它的值是 `null`
+
+
+```js
+/* 1. Navigate to the Details route with params */
+this.props.navigation.navigate('Details', {
+  itemId: 86,
+  otherParam: 'anything you want here',
+});
+
+/* 2. Get the param, provide a fallback value if not available */
+const { navigation } = this.props;
+const itemId = navigation.getParam('itemId', 'NO-ID');
+const otherParam = navigation.getParam('otherParam', 'some default value');
+```
+
+### 7.3 配置标题栏
+
+> 每个页面组件可以有一个名为`navigationOptions`的静态属性，它是一个对象或一个返回包含各种配置选项的对象的函数。我们用于设置标题栏的标题的是`title`这个属性，如以下示例所示
+
+```js
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+  };
+
+  /* render function, etc */
+}
+
+class DetailsScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Details',
+  };
+
+  /* render function, etc */
+}
+```
+
+> `createStackNavigator`默认情况下按照平台惯例设置，所以在`iOS`上标题居中，在`Android`上左对齐
+
+#### 7.3.1 动态设置标题
+
+```js
+class DetailsScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('otherParam', 'A Nested Details Screen'),
+    };
+  };
+
+  /* render function, etc */
+}
+```
+
+#### 7.3.2 使用setParams更新navigationOptions
+
+> 通常有必要从已加载的页面组件本身更新当前页面的`navigationOptions`配置。 我们可以使用`this.props.navigation.setParams`来做到这一点
+
+```html
+ /* Inside of render() */
+  <Button
+    title="Update the title"
+    onPress={() => this.props.navigation.setParams({otherParam: 'Updated!'})}
+  />
+```
+
+#### 7.3.3 调整标题样式
+
+> 定制标题样式时有三个关键属性：headerStyle、headerTintColor和headerTitleStyle
+
+- `headerStyle`：一个应用于 `header` 的最外层 `View` 的 样式对象， 如果你设置 `backgroundColor` ，他就是`header` 的颜色
+- `headerTintColor`：返回按钮和标题都使用这个属性作为它们的颜色。 在下面的例子中，我们将 `tint color` 设置为白色（#fff），所以返回按钮和标题栏标题将变为白色
+- `headerTitleStyle`：如果我们想为标题定制`fontFamily`，`fontWeight`和其他`Text`样式属性，我们可以用它来完成。
+
+```js
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
+
+  /* render function, etc */
+}
+```
+
+#### 7.3.4 统一配置所有页面头部defaultNavigationOptions
+
+> 在初始化时，还可以在 `stack navigator` 的配置中指定共享的`navigationOptions` 静态属性优先于该配置
+
+```js
+const Home = createStackNavigator(
+  {
+    Feed: ExampleScreen,
+    Profile: ExampleScreen,
+  }, {
+    defaultNavigationOptions: {
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#000',
+      },
+    },
+    navigationOptions: {
+      tabBarLabel: 'Home!',
+    },
+  }
+);
+```
+
+#### 7.3.5 覆盖共享的navigationOptions
+
+```js
+class DetailsScreen extends React.Component {
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
+
+    return {
+      title: params ? params.otherParam : 'A Nested Details Screen',
+      /* These values are used instead of the shared configuration! */
+      headerStyle: {
+        backgroundColor: navigationOptions.headerTintColor,
+      },
+      headerTintColor: navigationOptions.headerStyle.backgroundColor,
+    };
+  };
+
+  /* render function, etc */
+}
+```
+
+### 7.4 标题栏和其所属的页面之间的交互
+
+```js
+class HomeScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: <LogoTitle />,
+      headerRight: (
+        <Button
+          onPress={navigation.getParam('increaseCount')} //执行事件
+          title="+1"
+          color="#fff"
+        />
+      ),
+    };
+  };
+
+  componentDidMount() {
+    // 设置事件
+    this.props.navigation.setParams({ increaseCount: this._increaseCount });
+  }
+
+  state = {
+    count: 0,
+  };
+
+  _increaseCount = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  /* later in the render function we display the count */
+}
+```
+
+
+## 八、打包
+
+### 8.1 修改app名称、logo、启动图
+
+**修改图标和名称**
+
+> 找到根目录`/android/app/src/main/res`
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-73f6687748865cf7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**启动页**
+
+> - 在`react-native`的`android`中的启动图和`IOS`不相同点在于，`android`没有默认的启动图，在`IOS`里面有
+> - 使用插件 `import SplashScreen from 'react-native-splash-screen';`
+> - https://github.com/crazycodeboy/react-native-splash-screen
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-28306169eab84128.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+**react-native ios端icon和启动图的设置**
+
+> https://www.jianshu.com/p/b49629529a95
+
+### 8.2 Android打包APK
+
+**1. 在Android/app目录下执行这条命令**
+
+```bash
+keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+```
+
+![image.png](https://upload-images.jianshu.io/upload_images/1480597-564cbf4a47717be1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+```
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias
+MYAPP_RELEASE_STORE_PASSWORD=123456
+MYAPP_RELEASE_KEY_PASSWORD=123456
+```
+
+**2. 在app/build.gradle中配置**
+
+```
+signingConfigs {
+      release {
+          if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+              storeFile file(MYAPP_RELEASE_STORE_FILE)
+              storePassword MYAPP_RELEASE_STORE_PASSWORD
+              keyAlias MYAPP_RELEASE_KEY_ALIAS
+              keyPassword MYAPP_RELEASE_KEY_PASSWORD
+          }
+      }
+  }
+  buildTypes {
+      release {
+          minifyEnabled enableProguardInReleaseBuilds
+          proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+          signingConfig signingConfigs.release
+      }
+  }
+ ```
+ 
+ ![image.png](https://upload-images.jianshu.io/upload_images/1480597-a8c910ef2b3d66db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ 
+ 
+ **3. 减少打包apk大小**
+ 
+ ![image.png](https://upload-images.jianshu.io/upload_images/1480597-6dd1cc84b48d95e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ 
+ **4. 输出目录**
+ 
+ > `android/app/build/outputs/apk/`
+
+
+### 8.3 IOS打包
+
+
+## 九、更多参考
 
 - [常用的react-native组件整理](https://github.com/poetries/react-native-components)
 - [React Native 研究与实践](https://github.com/crazycodeboy/RNStudyNotes/)
