@@ -11,7 +11,7 @@ categories: Front-End
 
 2. **排除Taro编译选项** `config/index.js`配置文件中找到如下
 
-```j`
+```
 ...
 compile: {
     exclude: ['src/components/ec-canvas/echarts.js']
