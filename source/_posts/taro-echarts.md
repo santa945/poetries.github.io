@@ -7,17 +7,18 @@ categories: Front-End
 
 ## 一、使用echarts-for-weixin
 
-1. 到`github`下载https://github.com/ecomfe/echarts-for-weixin下的`ec-canvas`文件到项目`components`文件中
+1. 下载 `https://github.com/ecomfe/echarts-for-weixin` 下的 `ec-canvas` 文件到项目 `components`中
+
 2. **排除Taro编译选项** `config/index.js`配置文件中找到如下
 
-```js
+```j`
 ...
 compile: {
     exclude: ['src/components/ec-canvas/echarts.js']
 }
 ```
 
-3. 定制`echart`文件大小可减少小程序构建包的大小
+3. 定制`echart`文件大小可减少小程序构建包的大小。然后替换`src/components/ec-canvas/echarts.js`文件即可
 
 > https://www.echartsjs.com/zh/builder.html
 
