@@ -130,7 +130,7 @@ git revert commit
 
 > 将本地分支的更新，推送到远程主机，其命令格式与`git pull`相似
 
-#### 4.5 分支操作
+### 4.5 分支操作
 
 - 使用 `Git` 下载指定分支命令为：`git clone -b 分支名仓库地址`
 - 拉取远程新分支 `git checkout -b serverfix origin/serverfix`
