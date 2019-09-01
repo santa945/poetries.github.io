@@ -34,9 +34,6 @@ import _isEqual from 'lodash/isEqual.js'
 import Nerv from 'nervjs'
 import * as echarts from '../ec-canvas/echarts'
 
-/**
-https://github.com/eyelly-wu/taro-echarts
- */
  
 let Taro_ = Taro
 if (process.env.TARO_ENV === 'h5') {
