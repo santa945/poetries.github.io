@@ -369,7 +369,29 @@ let tomcat = buildName('Tom', 'Cat');
 let tom = buildName(undefined, 'Tom');
 ```
 
-## 八、断言
+## 八、类型断言
+
+- 有时候你会遇到这样的情况，你会比 `TypeScript` 更了解某个值的详细信息。 通常这会发生在你清楚地知道一个实体具有比它现有类型更确切的类型。
+- 通过类型断言这种方式可以告诉编译器，“相信我，我知道自己在干什么”。 类型断言好比其它语言里的类型转换，但是不进行特殊的数据检查和解构。 它没有运行时的影响，只是在编译阶段起作用。 `TypeScript` 会假设你，程序员，已经进行了必须的检查。
+
+类型断言有两种形式。 其一是“尖括号”语法：
+
+```js
+let someValue: any = 'this is a string'
+
+let strLength: number = (<string>someValue).length
+```
+
+> 另一个为 `as` 语法：
+
+```js
+let someValue: any = 'this is a string'
+
+let strLength: number = (someValue as string).length
+```
+
+> 两种形式是等价的。 至于使用哪个大多数情况下是凭个人喜好；然而，当你在 `TypeScript` 里使用 `JSX` 时，只有` as` 语法断言是被允许
+
 
 **正确的做法**
 
@@ -541,11 +563,24 @@ getData<string>('张三');
 getData<string>(1243);  //错误
 ```
 
-## 十四、初学者的困惑
+## 十四、声明文件与命名空间： declare 和 namespace
 
-### 如何优雅的声明类型
 
-#### 1.1 基础
+```js
+declare var // 声明全局变量
+declare function // 声明全局方法
+declare class // 声明全局类
+declare enum // 声明全局枚举类型
+declare global // 扩展全局变量
+declare module // 扩展模块
+```
+
+
+## 十五、初学者的困惑
+
+### 15.1 如何优雅的声明类型
+
+#### 15.1.1 基础
 
 ```js
 interface Basic {
@@ -585,7 +620,7 @@ enum Status {
 }
 ```
 
-#### 1.2 糅合
+#### 15.1.2 糅合
 
 **独立声明**
 
@@ -605,7 +640,7 @@ enum Status {
 > 当遇到确实解决不了的类型报错的时候，`as any` 能带给你不一样的快感，但是不建议使用啊
 
 
-### 如何引用外部库
+### 15.2 如何引用外部库
 
 > 在 `JS` 中，`npm` 上有丰富的海量的库帮我们完成日常的编码，可能并不是所有的库都能完全被应用到 `TS` 中，因为有些缺少类型声明
 
@@ -655,10 +690,135 @@ declare module 'progressbar.js' {
 
 > 如此我们便完成了一个简单的声明，当然实际使用中的 API 肯定比上述情况复杂，根据使用情况，用了哪些 API 或者参数，就补充那些的声明即可
 
-### 如何组织一个 TS 项目
+### 15.3 如何组织一个 TS 项目
 
 - TS 项目的目录组织上，跟 JS 项目一样，补充好 types 的声明就可以了
 - 需要注意的是，将你希望对外暴露的能力相关的类型声明都暴露出去，不友好的声明会让接入你项目的人非常的痛苦，同时，在 package.json 中需要指定 type 的 path, 比如："types": "dist/types/index.d.ts"
 - 另外，务必加上 tslint, 更规范的去用 TS 实现功能，对于入门而言尤为重要
+
+### 15.4 TSX 和 JSX
+
+- 之前我们在用 `JavaScript` 写 `React` 时，对文件的扩展名没有什么特别的要求，`.js` 或者 `.jsx` 都行。
+- 但在 `TypeScript` 中，如果你要使用 `JSX` 语法，就不能使用 `.ts`，必须使用 `.tsx`。如果你不知道，或者忘了这么做，那么你会在使用了 `JSX` 代码的地方收到类型报错，但代码本身怎么看都没有问题。这也是刚上手 `TypeScript + React` 时几乎每个人都会遇到的坑。
+- 关于这一点，`TypeScript` 只是在官方教程的示例代码中直接用了 `*.tsx`，但并没有明确说明这一问题
+
+### 15.5 变量的 Type 怎么找
+
+- 上手 `TypeScript` 之后很快我们就发现，即便是原生的 `DOM`、或是 `React` 的 `API`，也经常会要我们手动指定类型。但这些结构并不是简单的 `JavaScript `原始类型，在使用 `JavaScript` 编写相关代码时候由于没有这种需要，我们也没关心过这些东西的类型，突然问起来，还真不知道这些类型叫什么名字。
+- 不光是这些标准类型，同样的问题在很多第三方的库中也会遇到，比如一些组件库会检查你传入的 `Props`
+- 在我看来，这中间其实缺少了一部分的文档，来指导新用户如何找到所需要的类型。既然社区没有提供，那就我来吧。
+- 当然，让每个开发者都熟记所有的类型肯定是不现实的，总不能每接触一个新的库，就要去记一堆类型吧。放心，世界还是美好的，这种事情，当然是有方法的。
+- 最直白的方法就是去看库的 `Types Definition`，也就是那些 `.*d.ts` 文件。如果你刚好有在用 `VS Code` 的话，有一个非常方便的操作：把鼠标移动到你想知道它类型的代码上（比如某个变量、某个函数调用，或是某个 JSX 标签、某个组件的 props），右键选择「Go to Definition」（或者光标选中后按 F12），就可以跳转到它的类型定义文件了。
+- 如果你更习惯使用 VS Code 之外的编辑器，我相信时至今日，它们应该也都早就对 `TypeScript` 提供了支持。具体操作我不太熟悉，你可以自己探索下（我一直用 VS Code，其它的不太熟）
+- 一般来说，这个操作可以直接把你带到你想要的地方，但考虑到类型是可以继承的，有时候一次跳转可能不太够，遇到这种情况，那就需要你随机应变一下，沿着继承关系多跳几次，直到找到你想要的内容。
+- 对于不熟悉的类型，可以通过这个方法去寻找，慢慢熟悉以后，你会发现，一些常见的类型还是很好找的，稍微联想一下英文的表达方式，配合自动补全的提示，一般都不难找到
+
+### 15.6 常见 Types 之 DOM
+
+- `TypeScript` 自带了一些基本的类型定义，包括 ECMAScript 和 DOM 的类型定义，所有你需要的类型都可以从这里找到。如果你想做一些「纯 TypeScript 开发」的话，有这些就够了
+- 比如下面这张截图，就是对 `<div>` 标签的类型定义。我们可以看到，它继承了更加通用的 `HTMLElement` 类型，并且扩展了一个即将被废弃的 `align` 属性，以及两组 `addEventListener` 和 `removeEventListener`，注意这里使用了重载。
+
+![](https://upload-images.jianshu.io/upload_images/1480597-dcfaf93694768f45.png)
+
+> 这里的命名也不是随便起的，都是在 MDN 上可以查到的。还是以 `<div>` 为例，我们已经知道它继承自 `HTMLElement`，其实再往上，`HTMLElement` 继承自 `Element`，`Element` 又继承自 `Node`，顺着这条路，你可以挖掘出所有 `HTML` 标签的类型
+   
+![](https://upload-images.jianshu.io/upload_images/1480597-6fb995a8d53ec426.png)
+
+> 对于一些 DOM 相关的属性，比如 `onclick`、`onchange` 等，你都可以如法炮制，找到它们的定义。
+
+### 15.7 常见 Types 之 React
+
+- 关于 TypeScript 的问题，有不少其实是在使用第三方库的时候遇到的，React 就是其中比较典型的一个
+- 其实方法都一样，只不过相关的类型定义不在 `TypeScript` 中，而是在 `@types/react` 中。
+- `React` 的类型定义的名称其实也很直观，比如我们常见的 `React.Component`，在定义 `Class` 组件时，我们需要对 `Props` 和 `State` 预先进行类型定义，为什么呢？答案就在它的类型定义中
+
+![](https://upload-images.jianshu.io/upload_images/1480597-e39fd42e624336d2.png)
+
+- 再比如，当我们在写一些组件时，我们可能会需要向下传递 `this.props.children`，但 `children` 并没有被设为默认值，需要我们自己定义到 `props` 上，那么它的类型应该是什么呢
+- 到类型定义中搜一下关键字 `children`，很快我们就找到了下面的定义
+
+![](https://upload-images.jianshu.io/upload_images/1480597-a9af00d02766e131.png)
+
+> 所有 `React` 中 `JSX` 所代表的内容，无论是 `render()` 的返回，还是 `children`，我们都可以定义为一个 `ReactNode`。那这个 `ReactNode` 长什么样呢？我们通过右键继续寻找
+
+![](https://upload-images.jianshu.io/upload_images/1480597-1e3123a0c8b5e815.png)
+
+> 看到这里，我们不光找到了我们想要的类型，还顺带明白了为什么 `render()` 可以返回 `boolean`、`null`、`undefined` 表示不渲染任何内容。
+那么事件呢？当我们给组件定义事件处理函数的时候，也经常会被要求指定类型。还是老办法，找不到咱就搜，比如 `onClick` 不清楚，那我们就以它为关键字去搜
+
+![](https://upload-images.jianshu.io/upload_images/1480597-792d8e15f6158762.png)
+
+> 据此我们找到一个叫 `MouseEventHandler` 的定义，这名字，够直白吧。好了，我们找到想要的了。不过既然来了，不如继续看一下，看看还能发现什么。我们右键 `MouseEventHandler` 急需往下看：
+
+![](https://upload-images.jianshu.io/upload_images/1480597-ac3c0a386998058a.png)
+
+> 看到了吗，所有的事件处理函数都有对应的定义，每个都需要一个泛型参数，传递了事件的类型，名称也挺直白的
+
+![](https://upload-images.jianshu.io/upload_images/1480597-726ccc12d8012f4f.png)
+
+> 事件的类型也被我们挖出来了，以后如果需要单独定义一个事件相关的类型，就可以直接用了。以此类推，不管是什么东西的类型，都可以去它们对应的 `@types/xxx `里，按关键字搜
+
+### 15.8 多重 extends
+
+- 我们知道 `Interface` 是可以多继承的，`extends` 后面可以跟多个其它 `Interface`，我们不能保证被继承的多个 `Interface` 一定没有重复的属性，那么当属性重复，但类型定义不同时，最终的结果会怎么样呢？
+- 在 `TypeScript` 中，`Interface` 会按照从右往左的顺序去合并多个被继承的 `Interface`，也就是说，同名属性，左边的会覆盖右边的
+
+```js
+interface A {
+  value?: string
+}
+interface B {
+  value: string
+}
+interface C {
+  value: number
+}
+interface D extends A, B {}// value?: string
+interface E extends B, C {}// value: string
+```
+
+### 15.9 obj[prop] 无法访问怎么办
+
+- 有时候我们会定义一些集合型的数据，例如对象、枚举等，但在调用的时候，我们未必会直接通过 `obj.prop` 的形式去调用，可能会是以 `obj[prop]` 这种动态索引的形式去访问，但通过动态索引的方式就无法确定最终访问的元素是否存在，因此在 `TypeScript` 中，默认是不允许这种操作的
+- 但这又是个非常合理，而且非常常见的场景，怎么办呢？`TypeScript` 允许为类型添加索引，以实现这一点。
+
+```js
+interface Foo {
+  x: string,
+  y: number
+  [index: string]: string | number
+}
+```
+
+- 这个方法虽然有效，但每次都要手动为类型加索引，重复多了也挺心累的。包括在一些「配置对象」中，我们甚至无法确定有哪些类型，有没有一种更加通用、更加一劳永逸的方法。
+- 其实在 `TypeScript `的官方文档中就有提到这个方案，官方管它叫 `OptionBag`，大概就是指 `config`、o`ption` 等用于提供配置信息的这么一类参数。我不是很确定这到底是个常规的英文单词，还是 `TypeScript` 中特定的术语（个人感觉是前者），反正就这么个意思吧。
+简单说来，我们可以定义下面这样一个类型：
+
+```js
+interface OptionBag {
+  [index: string]: any
+}
+```
+
+- 这是一个非常通用的结构，以字符串为键，值可以是任何类型，并且支持索引 —— 这不就是 `Object` 么。
+- 之后所有需要动态索引的结构，或是作为配置对象的结构，都可以直接指定为，或是继承 `OptionBag`。这个方案以牺牲一定的类型检查为代价，换取了操作上的便利。
+- 理论上讲，`OptionBag` 可以适用于所有类似对象这样的结构，但不建议各位真就这么做。这个方案只能是用在一些对类型要求不那么严格，或是无法预知类型的场景中，能够确定的类型还是尽可能地写一下，否则就失去了使用 `TypeScript` 意义了
+
+
+## 十六、其他技巧
+
+**1. 安全导航操作符 ( ?. )和非空断言操作符（!.）**
+
+- **安全导航操作符 ( ?. ) 和空属性路径**： 
+
+> 为了解决导航时变量值为null时，页面运行时出错的问题
+
+- **非空断言操作符**
+
+> 能确定变量值一定不为空时使用。与安全导航操作符不同的是，非空断言操作符不会防止出现 `null` 或 `undefined`
+
+```
+let s = e!.name; // 断言e是非空并访问name属性
+```
 
 
