@@ -821,4 +821,28 @@ interface OptionBag {
 let s = e!.name; // 断言e是非空并访问name属性
 ```
 
+**2. 关键字is的作用，判断一个变量属于某个接口|类型**
+
+> typescript中有一个特殊的关键字，可以用来判断一个变量属于某个接口|类
+
+例如，此时有一个接口A
+
+```js
+interface IAProps {
+  name: string
+  js: any
+}
+```
+
+现在需要判断一个变量是否为该类型
+
+定义规则：
+
+```js
+// 属于接口A
+let isAProps = (props: any): props is IAProps => typeof (props as IAProps)['js'] !== 'undefined'
+```
+
+
+> [原文地址](https://github.com/poetries/poetries.github.io/edit/dev/source/_posts/ts-base-compare.md)
 
