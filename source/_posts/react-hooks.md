@@ -248,3 +248,5 @@ class Example extends React.Component {
 1. 我们写的有状态组件，通常会产生很多的副作用（`side effect`），比如发起`ajax`请求获取数据，添加一些监听的注册和取消注册，手动修改dom等等。我们之前都把这些副作用的函数写在生命周期函数钩子里，比如`componentDidMount`，`componentDidUpdate`和`componentWillUnmount`。而现在的useEffect就相当与这些声明周期函数钩子的集合体。它以一抵三
 2. 同时，由于前文所说hooks可以反复多次使用，相互独立。所以我们合理的做法是，给每一个副作用一个单独的useEffect钩子。这样一来，这些副作用不再一股脑堆在生命周期钩子里，代码变得更加清晰
 
+
+> 更多参考 http://www.ruanyifeng.com/blog/2019/09/react-hooks.html
