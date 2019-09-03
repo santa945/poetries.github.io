@@ -9,7 +9,18 @@ categories: Front-End
 
 # 第一章 基础篇
 
-> TS基础篇，思维导图 https://www.jianshu.com/p/ae20eac598e5
+> TS基础篇
+
+![](http://blog.poetries.top/img-repo/20190903/base-1.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-2.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-3.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-4.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-5.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-6.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-7.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-8.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-9.webp)
+![](http://blog.poetries.top/img-repo/20190903/base-10.webp)
 
 ## 一、基本类型
 
@@ -1265,6 +1276,15 @@ let s = e!.name; // 断言e是非空并访问name属性
 
 # 第二章 工程篇
 
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-1.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-2.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-3.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-4.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-5.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-6.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-7.webp)
+![](http://blog.poetries.top/img-repo/20190903/gongcheng-8.webp)
+
 ## 一、使用命名空间
 
 > 不要在一个模块中使用命名空间，最好在一个全局中使用
@@ -1775,4 +1795,3 @@ export = jQuery;
 
 
 > [原文地址](https://github.com/poetries/poetries.github.io/edit/dev/source/_posts/ts-in-action.md)
-
