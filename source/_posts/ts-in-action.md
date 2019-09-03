@@ -1,20 +1,53 @@
 ---
-title: Typescript基础写法对比[转]
-date: 2019-08-17 11:55:24
+title: Typescript实践总结[基础+工程+实践]
+date: 2019-09-03 16:25:24
 tags: 
    - JavaScript
    - Typescript
 categories: Front-End
 ---
 
+# 第一章 基础篇
+
 > TS基础篇，思维导图 https://www.jianshu.com/p/ae20eac598e5
 
-## 一、原始数据类型
+## 一、基本类型
 
-- JavaScript 的类型分为两种：原始数据类型和对象类型。
-- 原始数据类型包括：布尔值、数值、字符串、null、undefined 以及 ES6 中的新类型 Symbol
-- 本节主要介绍前五种原始数据类型在 TypeScript 中的应用。
-- 布尔值是最基础的数据类型，在 TypeScript 中，使用 boolean 定义布尔值类型
+- `JavaScript` 的类型分为两种：原始数据类型和对象类型。
+- 原始数据类型包括：布尔值、数值、字符串、`null`、`undefined` 以及 ES6 中的新类型 `Symbol`
+- 本节主要介绍前五种原始数据类型在 `TypeScript` 中的应用。
+- 布尔值是最基础的数据类型，在 `TypeScript` 中，使用 `boolean` 定义布尔值类型
+
+**ES6数据类型**
+
+- `Boolean`
+- `Number`
+- `String`
+- `Array`
+- `Function`
+- `Object`
+- `Symbol`
+- `undefined`
+- `null`
+
+**Typescript数据类型**
+
+- `Boolean`
+- `Number`
+- `String`
+- `Array`
+- `Function`
+- `Object`
+- `Symbol`
+- `undefined`
+- `null`
+- `void`
+- `any`
+- `never`
+- 元组
+- 枚举
+- 高级类型
+
 
 **正确的写法**
 
@@ -369,6 +402,61 @@ let tomcat = buildName('Tom', 'Cat');
 let tom = buildName(undefined, 'Tom');
 ```
 
+### 7.1 函数相关知识点梳理
+
+**四种声明方式：**
+
+- 通过`function`
+- 通过变量
+- 通过接口
+- 通过类型别名
+
+
+```js
+// 函数定义
+function add1(x: number, y: number) {
+    return x + y
+}
+
+// 通过变量
+let add2: (x: number, y: number) => number
+
+// 通过类型别名
+let add3 = (x: number, y: number) => number
+
+// 通过类型别名
+interface add4 {
+    (x: number, y: number): number
+}
+```
+
+**用interface定义函数和用type定义函数有区别?**
+
+- `type`：不是创建新的类型，只是为一个给定的类型起一个名字。`type`还可以进行联合、交叉等操作，引用起来更简洁
+- `interface`：创建新的类型，接口之间还可以继承、声明合并
+- 如果可能，建议优先使用 `interface`。
+- 混合接口一般是为第三方类库写声明文件时会用到，很多类库名称可以直接当函数调用，也可以有些属性和方法。例子可以看一下`@types/jest/index.d.ts` 里面有一些混合接口。
+- 用混合接口声明函数和用接口声明类的区别是，接口不能声明类的构造函数（既不带名称的函数），但混合接口可以，其他都一样。
+
+**函数重载**
+
+函数名相同，返回类型不同
+
+```js
+function add8(...rest: number[]): number;
+function add8(...rest: string[]): string;
+function add8(...rest: any[]): any {
+    let first = rest[0];
+    if(typeof first === 'string') {
+        return rest.join('')
+    }
+    if(typeof first === 'number') {
+        return rest.reduce((pre, cur) => pre + cur)
+    }
+}
+```
+
+
 ## 八、类型断言
 
 - 有时候你会遇到这样的情况，你会比 `TypeScript` 更了解某个值的详细信息。 通常这会发生在你清楚地知道一个实体具有比它现有类型更确切的类型。
@@ -508,13 +596,65 @@ Animal.isAnimal(a); // true
 // 只能通过类名调用
 a.isAnimal(a); // TypeError: a.isAnimal is not a function ❌
 ➖➖➖➖➖➖➖➖➖抽象类➖➖➖➖➖➖➖➖➖
+// 只能被继承，不能被实例化
 abstract class Animal {
-  abstract makeSound():void
-  move():void {
-    console.log('roaming the earch...')
+  eat(){
+    console.log('eat')
   }
+  abstract sleep(): void
 }
 // 子类必须实现抽象类的抽象方法
+class Dog extends Animal {
+    constructor(name: string) {
+        super()
+        this.name = name
+    }
+    name: string;
+    run() {}
+    sleep() {
+        console.log('dog sleep')
+    }
+}
+
+let dog = new Dog('wang')
+dog.eat()
+```
+
+### 11.1类与接口的关系
+
+```js
+interface Human {
+    name: string;
+    eat(): void;
+}
+
+// 实现接口中声明的属性
+class Person implements Human {
+    constructor(name: string) {
+        this.name = name
+    }
+    name: string;
+    eat() {}
+}
+```
+
+```js
+// 接口可以像类一样实现继承
+interface Man extends Human {
+    run(): voild
+}
+interface Child {
+    cry(): voild
+}
+interface Boy extends Man,Child {}
+
+// 添加被继承过来的属性
+let body: Boy = {
+    name: 'xx',
+    run() {},
+    eat() {},
+    cry() {}
+}
 ```
 
 ## 十二、public private 和 protected
@@ -525,7 +665,7 @@ abstract class Animal {
 
 ## 十三、泛型
 
-> 泛型就是解决 类 接口 方法的复用性、以及对不特定数据类型的支持
+> 泛型就是解决 类 接口 方法的复用性、以及对不特定数据类型的支持。**泛型理解为代表类型的参数，只是另一个维度的参数**
 
 **正确的做法**
 
@@ -563,24 +703,325 @@ getData<string>('张三');
 getData<string>(1243);  //错误
 ```
 
-## 十四、声明文件与命名空间： declare 和 namespace
-
+### 13.1 泛型函数和接口
 
 ```js
-declare var // 声明全局变量
-declare function // 声明全局方法
-declare class // 声明全局类
-declare enum // 声明全局枚举类型
-declare global // 扩展全局变量
-declare module // 扩展模块
+// 这两个等价的，使用时无需指定类型
+type Log = <T>(value: T) => T;
+
+// 只约束改成员
+interface Log {
+  <T>(value: T):T
+}
+
+// 这两个等价的，使用时必须指定类型
+type Log<T> = (value: T) => T;
+
+// 约束接口的所有成员
+interface Log<T> {
+  (value: T):T
+}
+```
+
+### 13.2 泛型类与泛型约束
+
+```js
+// 把泛型放到类的后面，就可以约束所有成员
+class Log<T> {
+    run(value: T) {
+        return value
+    }
+    // 不能约束静态成员
+   // static eat() // 报错
+}
+
+// 实例化类 传入类型
+let log1 = new Log<number>()
+log1.run(1)
+
+// 不指定类型参数传任意都允许
+let log2 = new Log()
+log2.run('1')
+```
+
+**类型约束**
+
+```js
+interface Length {
+    length: number
+}
+
+// T继承了接口 约束了不是任意类型都可传。传入的参数必须有length属性
+function log<T extends Length>(value: T): T {
+    console.log(value, value.length)
+    return value
+}
+// 如数组、字符串、对象都有length属性
+log([1])
+log('1')
+log({a:1})
+```
+
+- 函数和类可以轻松支持多种类型，增强程序的扩展性
+- 不必写多条函数重载
+- 灵活控制类型之间的约束
+
+
+## 十四、类型检查机制
+
+### 14.1 类型检查机制
+
+> 编译器在做类型检查时，秉承的一些原则，表现出的一些行为
+
+作用：辅助开发，提高开发效率
+
+- 类型推断
+- 类型兼容性
+- 类型保护
+
+> 所谓类型推断：不需要指定变量的类型（函数的返回值类型），TS可以根据某些规则自动的为其推断出一个类型
+
+- 基础类型推断
+- 最佳通用类型推断
+- 上下文类型推断
+
+> 基础类型推断，从右向左。但是有些是从左向右推断
+
+如事件
+
+```js
+// ts 根据onkeydown推断出类型
+window.onkeydown = event=>{
+    console.log(event)
+}
+```
+
+> 通过类型断言阻断TS的类型推断
+
+```js
+interface Foo {
+    bar: number
+}
+
+//let foo = {} as Foo
+//foo.bar = 1
+
+let foo: Foo = {
+    bar: 1
+}
+```
+
+### 14.2 类型保护机制
+
+**不同的判断方法有不同的使用场景：**
+
+- `typeof`：判断一个变量的类型
+- `instanceof`：判断一个实例是否属于某个类
+- `in`：判断一个属性是否属于某个对象
+- 类型保护函数：某些判断可能不是一条语句能够搞定的，需要更多复杂的逻辑，适合封装到一个函数内
+
+```js
+function getLanguage(type: Type) {
+    let lang = type === type.Strong ? new Java(): new Javascript()
+    
+    // 类型保护instanceof
+    if(lang instanceof Java){
+        lang.hellJava()
+    }else {
+        lang.hellJavaScript()
+    }
+    
+    // in
+    if('java' in lang) {
+        lang.hellJava()
+    }else {
+        lang.hellJavaScript()
+    }
+    
+    // 类型保护函数方式
+    if(isJava(lang)) {
+        lang.hellJava()
+    }else {
+        lang.hellJavaScript()
+    }
+}
+
+// 创建一种类型保护函数
+function isJava(lang: Java | Javascript): lang is Java {
+    // 类型断言
+    return (lang as Java).lang.helloJava !== undefined
+}
 ```
 
 
-## 十五、初学者的困惑
+## 十五、高级类型
 
-### 15.1 如何优雅的声明类型
+### 15.1 交叉类型（取并集）
 
-#### 15.1.1 基础
+```js
+interface DogInterface {
+    run(): void
+}
+interface CatInterface {
+    jump(): void
+}
+
+// pet 具备两个接口的所有方法
+let pet: DogInterface & CatInterface = {
+    run() {},
+    jump() {}
+}
+
+// 联合类型
+let a: number | string = 1
+let b: 'a' | 'b' | 'c' // 字面量联合类型
+let c: 1 | 2 | 3 // 数字联合类型
+
+
+class Dog implements DogInterface {
+    run() {}
+    eat() {}
+}
+class Cat  implements CatInterface {
+    jump() {}
+    eat() {}
+}
+enum Master { Boy, Girl }
+function getPet(master: Master) {
+    let pet = master === Master.Boy ? new Dog() : new Cat();
+    // pet.run()
+    // pet.jump()
+    pet.eat()
+    return pet
+}
+
+interface Square {
+    kind: "square";
+    size: number;
+}
+interface Rectangle {
+    kind: "rectangle";
+    width: number;
+    height: number;
+}
+interface Circle {
+    kind: "circle";
+    radius: number;
+}
+
+type Shape = Square | Rectangle | Circle
+
+function area(s: Shape) {
+    switch (s.kind) {
+        case "square":
+            return s.size * s.size;
+        case "rectangle":
+            return s.height * s.width;
+        case 'circle':
+            return Math.PI * s.radius ** 2
+        default:
+            return ((e: never) => {throw new Error(e)})(s)
+    }
+}
+console.log(area({kind: 'circle', radius: 1}))
+```
+
+### 15.2 索引类型
+
+```js
+let obj = {
+    a: 1,
+    b: 2,
+    c: 3
+}
+
+// function getValues(obj: any, keys: string[]) {
+//     return keys.map(key => obj[key])
+// }
+function getValues<T, K extends keyof T>(obj: T, keys: K[]): T[K][] {
+    return keys.map(key => obj[key])
+}
+console.log(getValues(obj, ['a', 'b']))
+// console.log(getValues(obj, ['d', 'e']))
+
+// keyof T
+interface Obj {
+    a: number;
+    b: string;
+}
+let key: keyof Obj
+
+// T[K]
+let value: Obj['a']
+
+// T extends U
+```
+
+
+### 15.3 映射类型
+
+```js
+interface Obj {
+    a: string;
+    b: number;
+}
+
+// 使得每个成员属性变为只读
+type ReadonlyObj = Readonly<Obj>
+
+// 把一个接口属性变为可选
+type PartialObj = Partial<Obj>
+
+// 抽取obj的子集
+type PickObj = Pick<Obj, 'a' | 'b'>
+
+type RecordObj = Record<'x' | 'y', Obj>
+```
+
+### 15.4 条件类型
+
+```js
+// T extends U ? X : Y
+
+type TypeName<T> =
+    T extends string ? "string" :
+    T extends number ? "number" :
+    T extends boolean ? "boolean" :
+    T extends undefined ? "undefined" :
+    T extends Function ? "function" :
+    "object";
+type T1 = TypeName<string>
+type T2 = TypeName<string[]>
+
+// (A | B) extends U ? X : Y
+// (A extends U ? X : Y) | (B extends U ? X : Y)
+type T3 = TypeName<string | string[]>
+
+type Diff<T, U> = T extends U ? never : T
+type T4 = Diff<"a" | "b" | "c", "a" | "e">
+// Diff<"a", "a" | "e"> | Diff<"b", "a" | "e"> | Diff<"c", "a" | "e">
+// never | "b" | "c"
+// "b" | "c"
+
+type NotNull<T> = Diff<T, null | undefined>
+type T5 = NotNull<string | number | undefined | null>
+
+// Exclude<T, U>
+// NonNullable<T>
+
+// Extract<T, U>
+type T6 = Extract<"a" | "b" | "c", "a" | "e">
+
+// ReturnType<T>
+type T8 = ReturnType<() => string>
+```
+
+
+## 十六、初学者的困惑
+
+### 16.1 如何优雅的声明类型
+
+#### 16.1.1 基础
 
 ```js
 interface Basic {
@@ -620,7 +1061,7 @@ enum Status {
 }
 ```
 
-#### 15.1.2 糅合
+#### 16.1.2 糅合
 
 **独立声明**
 
@@ -640,7 +1081,7 @@ enum Status {
 > 当遇到确实解决不了的类型报错的时候，`as any` 能带给你不一样的快感，但是不建议使用啊
 
 
-### 15.2 如何引用外部库
+### 16.2 如何引用外部库
 
 > 在 `JS` 中，`npm` 上有丰富的海量的库帮我们完成日常的编码，可能并不是所有的库都能完全被应用到 `TS` 中，因为有些缺少类型声明
 
@@ -690,19 +1131,19 @@ declare module 'progressbar.js' {
 
 > 如此我们便完成了一个简单的声明，当然实际使用中的 API 肯定比上述情况复杂，根据使用情况，用了哪些 API 或者参数，就补充那些的声明即可
 
-### 15.3 如何组织一个 TS 项目
+### 16.3 如何组织一个 TS 项目
 
 - TS 项目的目录组织上，跟 JS 项目一样，补充好 types 的声明就可以了
 - 需要注意的是，将你希望对外暴露的能力相关的类型声明都暴露出去，不友好的声明会让接入你项目的人非常的痛苦，同时，在 package.json 中需要指定 type 的 path, 比如："types": "dist/types/index.d.ts"
 - 另外，务必加上 tslint, 更规范的去用 TS 实现功能，对于入门而言尤为重要
 
-### 15.4 TSX 和 JSX
+### 16.4 TSX 和 JSX
 
 - 之前我们在用 `JavaScript` 写 `React` 时，对文件的扩展名没有什么特别的要求，`.js` 或者 `.jsx` 都行。
 - 但在 `TypeScript` 中，如果你要使用 `JSX` 语法，就不能使用 `.ts`，必须使用 `.tsx`。如果你不知道，或者忘了这么做，那么你会在使用了 `JSX` 代码的地方收到类型报错，但代码本身怎么看都没有问题。这也是刚上手 `TypeScript + React` 时几乎每个人都会遇到的坑。
 - 关于这一点，`TypeScript` 只是在官方教程的示例代码中直接用了 `*.tsx`，但并没有明确说明这一问题
 
-### 15.5 变量的 Type 怎么找
+### 16.5 变量的 Type 怎么找
 
 - 上手 `TypeScript` 之后很快我们就发现，即便是原生的 `DOM`、或是 `React` 的 `API`，也经常会要我们手动指定类型。但这些结构并不是简单的 `JavaScript `原始类型，在使用 `JavaScript` 编写相关代码时候由于没有这种需要，我们也没关心过这些东西的类型，突然问起来，还真不知道这些类型叫什么名字。
 - 不光是这些标准类型，同样的问题在很多第三方的库中也会遇到，比如一些组件库会检查你传入的 `Props`
@@ -713,7 +1154,7 @@ declare module 'progressbar.js' {
 - 一般来说，这个操作可以直接把你带到你想要的地方，但考虑到类型是可以继承的，有时候一次跳转可能不太够，遇到这种情况，那就需要你随机应变一下，沿着继承关系多跳几次，直到找到你想要的内容。
 - 对于不熟悉的类型，可以通过这个方法去寻找，慢慢熟悉以后，你会发现，一些常见的类型还是很好找的，稍微联想一下英文的表达方式，配合自动补全的提示，一般都不难找到
 
-### 15.6 常见 Types 之 DOM
+### 16.6 常见 Types 之 DOM
 
 - `TypeScript` 自带了一些基本的类型定义，包括 ECMAScript 和 DOM 的类型定义，所有你需要的类型都可以从这里找到。如果你想做一些「纯 TypeScript 开发」的话，有这些就够了
 - 比如下面这张截图，就是对 `<div>` 标签的类型定义。我们可以看到，它继承了更加通用的 `HTMLElement` 类型，并且扩展了一个即将被废弃的 `align` 属性，以及两组 `addEventListener` 和 `removeEventListener`，注意这里使用了重载。
@@ -726,7 +1167,7 @@ declare module 'progressbar.js' {
 
 > 对于一些 DOM 相关的属性，比如 `onclick`、`onchange` 等，你都可以如法炮制，找到它们的定义。
 
-### 15.7 常见 Types 之 React
+### 16.7 常见 Types 之 React
 
 - 关于 TypeScript 的问题，有不少其实是在使用第三方库的时候遇到的，React 就是其中比较典型的一个
 - 其实方法都一样，只不过相关的类型定义不在 `TypeScript` 中，而是在 `@types/react` 中。
@@ -758,7 +1199,7 @@ declare module 'progressbar.js' {
 
 > 事件的类型也被我们挖出来了，以后如果需要单独定义一个事件相关的类型，就可以直接用了。以此类推，不管是什么东西的类型，都可以去它们对应的 `@types/xxx `里，按关键字搜
 
-### 15.8 多重 extends
+### 16.8 多重 extends
 
 - 我们知道 `Interface` 是可以多继承的，`extends` 后面可以跟多个其它 `Interface`，我们不能保证被继承的多个 `Interface` 一定没有重复的属性，那么当属性重复，但类型定义不同时，最终的结果会怎么样呢？
 - 在 `TypeScript` 中，`Interface` 会按照从右往左的顺序去合并多个被继承的 `Interface`，也就是说，同名属性，左边的会覆盖右边的
@@ -777,7 +1218,7 @@ interface D extends A, B {}// value?: string
 interface E extends B, C {}// value: string
 ```
 
-### 15.9 obj[prop] 无法访问怎么办
+### 16.9 obj[prop] 无法访问怎么办
 
 - 有时候我们会定义一些集合型的数据，例如对象、枚举等，但在调用的时候，我们未必会直接通过 `obj.prop` 的形式去调用，可能会是以 `obj[prop]` 这种动态索引的形式去访问，但通过动态索引的方式就无法确定最终访问的元素是否存在，因此在 `TypeScript` 中，默认是不允许这种操作的
 - 但这又是个非常合理，而且非常常见的场景，怎么办呢？`TypeScript` 允许为类型添加索引，以实现这一点。
@@ -805,7 +1246,7 @@ interface OptionBag {
 - 理论上讲，`OptionBag` 可以适用于所有类似对象这样的结构，但不建议各位真就这么做。这个方案只能是用在一些对类型要求不那么严格，或是无法预知类型的场景中，能够确定的类型还是尽可能地写一下，否则就失去了使用 `TypeScript` 意义了
 
 
-## 十六、其他技巧
+## 十七、其他技巧
 
 **1. 安全导航操作符 ( ?. )和非空断言操作符（!.）**
 
@@ -821,28 +1262,517 @@ interface OptionBag {
 let s = e!.name; // 断言e是非空并访问name属性
 ```
 
-**2. 关键字is的作用，判断一个变量属于某个接口|类型**
 
-> typescript中有一个特殊的关键字，可以用来判断一个变量属于某个接口|类
+# 第二章 工程篇
 
-例如，此时有一个接口A
+## 一、使用命名空间
+
+> 不要在一个模块中使用命名空间，最好在一个全局中使用
 
 ```js
-interface IAProps {
-  name: string
-  js: any
+// a.ts
+namespace Shape {
+    const pi = Math.PI
+    export function cricle(r: number) {
+        return pi * r ** 2
+    }
 }
 ```
 
-现在需要判断一个变量是否为该类型
+```js
+// b.ts
 
-定义规则：
+// 三斜线引用a
+/// <reference path="a.ts" />
+namespace Shape {
+    export function square(x: number) {
+        return x * x
+    }
+}
+
+console.log(Shape.cricle(2))
+console.log(Shape.square(2))
+
+// 更方便使用 不是es6中的import
+import cricle = Shape.cricle
+console.log(cricle(2))
+```
+
+## 二、理解联合声明
 
 ```js
-// 属于接口A
-let isAProps = (props: any): props is IAProps => typeof (props as IAProps)['js'] !== 'undefined'
+// 接口声明合并
+interface A {
+    x: number;
+    // y: string;
+    foo(bar: number): number; // 5
+    foo(bar: 'a'): string; // 2
+}
+
+interface A {
+    y: number;
+    foo(bar: string): string; // 3
+    foo(bar: string[]): string[]; // 4
+    foo(bar: 'b'): string; // 1
+}
+
+let a: A = {
+    x: 1,
+    y: 2,
+    foo(bar: any) {
+        return bar
+    }
+}
+
+// 命名空间和类声明合并--命名空间需要放到后面
+class C {}
+namespace C {
+    export let state = 1
+}
+console.log(C.state)
+
+// 命名空间和函数声明合并--命名空间需要放到后面
+function Lib() {}
+namespace Lib {
+    export let version = '1.0'
+}
+console.log(Lib.version)
+
+// 命名空间和枚举声明合并--位置没有要求
+enum Color {
+    Red,
+    Yellow,
+    Blue
+}
+namespace Color {
+    export function mix() {}
+}
+console.log(Color)
+```
+
+## 三、如何编写声明文件--引入类库
+
+> 类库分为三类：全局类库、模块类库、`UMD`类库
+
+```js
+declare var // 声明全局变量
+declare function // 声明全局方法
+declare class // 声明全局类
+declare enum // 声明全局枚举类型
+declare global // 扩展全局变量
+declare module // 扩展模块
+```
+
+> 大多数的声明文件社区已经帮我们安装好了，使用`@types/包名`声明文件即可
+
+> Typescript声明文件查找 https://microsoft.github.io/TypeSearch/
+
+**以jquery为例子**
+
+```
+yarn add @types/jquery 
 ```
 
 
-> [原文地址](https://github.com/poetries/poetries.github.io/edit/dev/source/_posts/ts-base-compare.md)
+**引入了一个JS类库，但是社区又没有提供类型声明文件，我该如何去编写它的类型声明文件**
+
+> 先确定这个库的类型，全局库、模块库、还是UMD库，然后参照下面介绍的方法，把它的`API`声明逐步添加进来（暂时用不到的`API`也可以不写）
+
+### 3.1 三种类库声明文件写法
+
+#### 3.1.1 全局库
+
+```js
+// global-lib.d.ts
+    
+declare function globalLib(options: globalLib.Options): void;
+// 函数和命名空间的声明合并 为这个函数提供了一些属性
+declare namespace globalLib {
+    const version: string;
+    function doSomething(): void;
+    interface Options {
+        [key: string]: any
+    }
+}
+```
+
+```js
+// global-lib.js
+// 和声明文件对应
+function globalLib(options) {
+    console.log(options);
+}
+
+globalLib.version = '1.0.0';
+
+globalLib.doSomething = function() {
+    console.log('globalLib do something');
+};
+```
+
+```js
+// 全局使用 index.ts
+globalLib({x:1})
+globalLib.doSomething()
+```
+
+#### 3.1.2 模块类库
+
+```js
+// module-lib.d.ts
+declare function moduleLib(options: Options): void
+
+interface Options {
+    [key: string]: any
+}
+
+declare namespace moduleLib {
+    const version: string
+    function doSomething(): void
+}
+
+export = moduleLib
+```
+
+```js
+// module-lib.js
+const version = '1.0.0';
+
+function doSomething() {
+    console.log('moduleLib do something');
+}
+
+function moduleLib(options) {
+    console.log(options);
+}
+
+moduleLib.version = version;
+moduleLib.doSomething = doSomething;
+
+module.exports = moduleLib;
+```
+
+```js
+// index.ts 使用
+import umdLib from './umd-lib'
+
+umdLib.doSomething()
+```
+
+
+
+#### 3.1.3 UMD类库
+
+```js
+// umd-lib.d.ts
+
+declare namespace umdLib {
+    // 省略了export
+    const version: string
+    function doSomething(): void
+}
+
+// UMD库不可缺少的语句
+export as namespace umdLib
+
+export = umdLib
+```
+
+```js
+// umd-lib.js
+(function (root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(factory);
+    } else if (typeof module === "object" && module.exports) {
+        module.exports = factory();
+    } else {
+        root.umdLib = factory();
+    }
+}(this, function() {
+    return {
+        // 需要为这两个成员编写声明文件
+        version: '1.0.0',
+        doSomething() {
+            console.log('umdLib do something');
+        }
+    }
+}))
+```
+
+```js
+// index.ts使用
+import umdLib from './umd-lib'
+// 可以不用导入umd-lib模块。但是需要打开tsconfig.tson中的umd配置
+umdLib.doSomething()
+```
+
+### 3.2 两种插件声明文件写法
+
+
+#### 3.2.1 模块化插件declare module
+
+
+> `declare module` 可以给类库添加一些自定义方法。 扩展模块
+
+
+```js
+// 模块插件
+import m from 'moment';
+declare module 'moment' {
+    // 给moment自定义一些方法
+    export function myFunction(): void;
+}
+m.myFunction = () => {}
+```
+
+#### 3.2.2 全局插件declare global
+
+```js
+// 全局插件
+declare global {
+    namespace globalLib {
+        function doAnyting(): void
+    }
+}
+// 在全局变量添加方法
+// 会对全局变量造成污染 一般不这么做
+globalLib.doAnyting = () => {}
+```
+
+
+### 3.3 jquery声明文件示例
+
+```js
+// index.d.ts入口
+
+// Type definitions for jquery 3.3
+// Project: https://jquery.com
+// Definitions by: Leonard Thieu <https://github.com/leonard-thieu>
+//                 Boris Yankov <https://github.com/borisyankov>
+//                 Christian Hoffmeister <https://github.com/choffmeister>
+//                 Steve Fenton <https://github.com/Steve-Fenton>
+//                 Diullei Gomes <https://github.com/Diullei>
+//                 Tass Iliopoulos <https://github.com/tasoili>
+//                 Jason Swearingen <https://github.com/jasons-novaleaf>
+//                 Sean Hill <https://github.com/seanski>
+//                 Guus Goossens <https://github.com/Guuz>
+//                 Kelly Summerlin <https://github.com/ksummerlin>
+//                 Basarat Ali Syed <https://github.com/basarat>
+//                 Nicholas Wolverson <https://github.com/nwolverson>
+//                 Derek Cicerone <https://github.com/derekcicerone>
+//                 Andrew Gaspar <https://github.com/AndrewGaspar>
+//                 Seikichi Kondo <https://github.com/seikichi>
+//                 Benjamin Jackman <https://github.com/benjaminjackman>
+//                 Poul Sorensen <https://github.com/s093294>
+//                 Josh Strobl <https://github.com/JoshStrobl>
+//                 John Reilly <https://github.com/johnnyreilly>
+//                 Dick van den Brink <https://github.com/DickvdBrink>
+//                 Thomas Schulz <https://github.com/King2500>
+//                 Terry Mun <https://github.com/terrymun>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+// TypeScript Version: 2.3
+
+// 三斜线引入模块
+
+/// <reference types="sizzle" />
+/// <reference path="JQueryStatic.d.ts" />
+/// <reference path="JQuery.d.ts" />
+/// <reference path="misc.d.ts" />
+/// <reference path="legacy.d.ts" />
+
+export = jQuery;
+```
+
+
+
+## 四、配置tsconfig.json
+
+### 4.1 基础配置
+
+```js
+{
+  // ===与文件相关的选项===
+  "files" : ['src/index.ts'], // 编译的文件列表
+  "include": ['src'], // 指定编译文件
+  "exclude": ['src/lib'], // 排除编译文件
+  
+  // ====与编译相关的选项====
+  "compilerOptions": {
+      // "incremental": true,                // 增量编译，再次编译会增量编译
+      // "tsBuildInfoFile": "./buildFile",   // 增量编译文件的存储位置
+      // "diagnostics": true,                // 打印诊断信息
+
+      // "target": "es5",           // 目标语言的版本
+      // "module": "commonjs",      // 生成代码的模块标准
+      // "outFile": "./app.js",     // 将多个相互依赖的文件生成一个文件，可以用在 AMD 模块中
+        
+       // 比如你需要使用es2019方法 需要在这里导入模块 "lib": ['es2019.arrary']
+      // "lib": [],                 // TS 需要引用的库，即声明文件，es5 默认 "dom", "es5", "scripthost"
+
+      // "allowJs": true,           // 允许编译 JS 文件（js、jsx）
+      // "checkJs": true,           // 允许在 JS 文件中报错，通常与 allowJS 一起使用
+      // "outDir": "./out",         // 指定输出目录
+      // "rootDir": "./",           // 指定输入文件目录（用于输出）
+
+      // "declaration": true,         // 生成声明文件
+      // "declarationDir": "./d",     // 声明文件的路径
+      // "emitDeclarationOnly": true, // 只生成声明文件
+      // "sourceMap": true,           // 生成目标文件的 sourceMap
+      // "inlineSourceMap": true,     // 生成目标文件的 inline sourceMap
+      // "declarationMap": true,      // 生成声明文件的 sourceMap
+      // "typeRoots": [],             // 声明文件目录，默认 node_modules/@types
+      // "types": [],                 // 声明文件包
+
+      // "removeComments": true,    // 删除注释
+
+      // "noEmit": true,            // 不输出文件
+      // "noEmitOnError": true,     // 发生错误时不输出文件
+
+      // "noEmitHelpers": true,     // 不生成 helper 函数，需额外安装 ts-helpers
+      // "importHelpers": true,     // 通过 tslib 引入 helper 函数，文件必须是模块
+
+      // "downlevelIteration": true,    // 降级遍历器的实现（es3/5）
+
+      // "strict": true,                        // 开启所有严格的类型检查
+      // "alwaysStrict": false,                 // 在代码中注入 "use strict";
+      // "noImplicitAny": false,                // 不允许隐式的 any 类型
+      // "strictNullChecks": false,             // 不允许把 null、undefined 赋值给其他类型变量
+      // "strictFunctionTypes": false           // 不允许函数参数双向协变
+      // "strictPropertyInitialization": false, // 类的实例属性必须初始化
+      // "strictBindCallApply": false,          // 严格的 bind/call/apply 检查
+      // "noImplicitThis": false,               // 不允许 this 有隐式的 any 类型
+
+      // "noUnusedLocals": true,                // 检查只声明，未使用的局部变量
+      // "noUnusedParameters": true,            // 检查未使用的函数参数
+      // "noFallthroughCasesInSwitch": true,    // 防止 switch 语句贯穿
+      // "noImplicitReturns": true,             // 每个分支都要有返回值
+
+      // "esModuleInterop": true,               // 允许 export = 导出，由import from 导入
+      // "allowUmdGlobalAccess": true,          // 允许在模块中访问 UMD 全局变量
+      // "moduleResolution": "node",            // 模块解析策略
+      // "baseUrl": "./",                       // 解析非相对模块的基地址
+      // "paths": {                             // 路径映射，相对于 baseUrl
+      //   "jquery": ["node_modules/jquery/dist/jquery.slim.min.js"]
+      // },
+      // "rootDirs": ["src", "out"],            // 将多个目录放在一个虚拟目录下，用于运行时
+
+      // "listEmittedFiles": true,        // 打印输出的文件
+      // "listFiles": true,               // 打印编译的文件（包括引用的声明文件）
+  }
+}
+```
+
+> 也可以把公共的抽离出来
+
+```js
+// tsconfig.base.json
+
+{
+  "files" : ['src/index.ts'], // 编译的文件列表
+  "include": ['src'], // 指定编译文件
+  "exclude": ['src/lib'], // 排除编译文件
+}
+```
+
+```js
+"extends": './tsconfig.base',
+"exclude": [] // 覆盖之前的
+```
+
+### 4.2 工程引用配置多个项目
+
+> 每个项目都有一份独立的`tsconfig.json`，继承一份公共的配置，最后可单独构建每个子项目工程
+
+> 参考学习`typescript`项目 https://github.com/microsoft/TypeScript/tree/master/src
+
+```js
+// 示例 项目入口
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "composite": true,
+    "declaration": true
+  }
+}
+```
+
+```js
+// 子工程1
+// src/client/tsconfig.json
+{
+    "extends": "../../tsconfig.json", //继承基础配置
+    "compilerOptions": {
+        "outDir": "../../dist/client", // 输出文件
+    },
+    "references": [
+        { "path": "../common" } // 依赖文件
+    ]
+}
+
+```
+
+```js
+// 子工程2
+// src/server/tsconfig.json
+
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/server",
+    },
+    "references": [
+        { "path": "../common" }
+    ]
+}
+```
+
+
+## 五、编译工具ts-loader、ts-lint
+
+**如何选择Typescript编译器**
+
+> - 如果没有使用过`babel`，首选`Typescript`自身编译器(可配合`Ts-loader`使用)
+> - 如果项目中已经使用`babel`，安装`@babel/preset-typescript`(可配合tsc做类型检查)
+> - 两种编译工具不要混用
+
+**typescript-eslint与babel-eslint区别**
+
+> - `babel-eslint`支持`typescript`没有额外的语法检查，抛弃`typescript`,不支持类型检查
+> - `typescript-eslint`基础typescript的AST,基于创建基于类型信息的规则（`tsconfig.json`）
+
+- 两者底层机制不一样，不要一起使用
+- `babel`体系建议使用`babel-eslint`，否则使用`typescript-eslint`
+
+**总结**
+
+- 编译工具
+  - `ts-loader`
+  - `@babel/preset-typescript`
+
+- 代码检查工具
+  - `babel-eslint`
+  - `typescript-eslint`
+
+## 六、使用jest进行单元测试
+
+- 单元测试工具
+  - `ts-jest` -- 能够在测试用例中进行类型检查
+  - `babel-jest` -- 没有进行类型检查
+  
+> 生成配置文件 `ts-jest config:init`
+
+
+
+
+# 第三章 项目实战
+
+## 思维导图
+
+![](http://blog.poetries.top/img-repo/ts-in-action/ts-action-1.png)
+![](http://blog.poetries.top/img-repo/ts-in-action/ts-action-2.png)
+
+
+> [原文地址](https://github.com/poetries/poetries.github.io/edit/dev/source/_posts/ts-in-action.md)
 
