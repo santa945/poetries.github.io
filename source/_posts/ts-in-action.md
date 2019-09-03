@@ -7,6 +7,7 @@ tags:
 categories: Front-End
 ---
 
+
 # 第一章 基础篇
 
 > TS基础篇
@@ -676,6 +677,8 @@ let body: Boy = {
 
 ## 十三、泛型
 
+> 更多详情 http://blog.poetries.top/ts-axios/chapter2/generic.html
+
 > 泛型就是解决 类 接口 方法的复用性、以及对不特定数据类型的支持。**泛型理解为代表类型的参数，只是另一个维度的参数**
 
 **正确的做法**
@@ -866,6 +869,8 @@ function isJava(lang: Java | Javascript): lang is Java {
 
 
 ## 十五、高级类型
+
+> 更多详情 http://blog.poetries.top/ts-axios/chapter2/advance.html
 
 ### 15.1 交叉类型（取并集）
 
@@ -1788,10 +1793,561 @@ export = jQuery;
 
 # 第三章 项目实战
 
-## 思维导图
+## 一、思维导图
 
 ![](http://blog.poetries.top/img-repo/20190903/1.png)
 ![](http://blog.poetries.top/img-repo/20190903/2.png)
 
 
+## 二、React项目实践
+
+### 2.1 手动创建react项目
+
+> 项目代码 https://github.com/poetries/typescript-in-action/tree/master/ts-react
+
+**1. 安装依赖文件**
+
+```js
+yarn add @types/react @types/react-dom
+```
+
+**2. 修改tsconfig.json**配置
+
+> 修改 `compilerOptions`中的`jsx`为`react`
+
+### 2.2 使用脚手架安装
+
+> 项目代码 https://github.com/poetries/typescript-in-action/tree/master/ts-react-app
+
+```
+create-react-app ts-react-app --typescript
+```
+
+#### 2.2.1 函数组件
+
+```js
+import React from 'react';
+import { Button } from 'antd';
+
+interface Greeting {
+    name: string;
+    firstName: string;
+    lastName: string;
+}
+
+const Hello = (props: Greeting) => <Button>Hello {props.name}</Button>
+
+// const Hello: React.FC<Greeting> = ({
+//     name,
+//     firstName,
+//     lastName,
+//     children
+// }) => <Button>Hello {name}</Button>
+
+Hello.defaultProps = {
+    firstName: '',
+    lastName: ''
+}
+
+export default Hello;
+```
+
+#### 2.2.2 类组件
+
+```js
+import React, { Component } from 'react';
+import { Button } from 'antd';
+
+interface Greeting {
+    name: string;
+    firstName?: string;
+    lastName?: string;
+}
+
+interface HelloState {
+    count: number
+}
+
+class HelloClass extends Component<Greeting, HelloState> {
+    state: HelloState = {
+        count: 0
+    }
+    static defaultProps = {
+        firstName: '',
+        lastName: ''
+    }
+    render() {
+        return (
+            <>
+                <p>你点击了 {this.state.count} 次</p>
+                <Button onClick={() => {this.setState({count: this.state.count + 1})}}>
+                    Hello {this.props.name}
+                </Button>
+            </>
+        )
+    }
+}
+
+export default HelloClass;
+```
+
+#### 2.2.3 高阶组件
+
+```js
+import React, { Component } from 'react';
+
+import HelloClass from './HelloClass';
+
+interface Loading {
+    loading: boolean
+}
+
+function HelloHOC<P>(WrappedComponent: React.ComponentType<P>) {
+    return class extends Component<P & Loading> {
+        render() {
+            const { loading, ...props } = this.props;
+            return loading ? <div>Loading...</div> : <WrappedComponent { ...props as P } />;
+        }
+    }
+}
+
+export default HelloHOC(HelloClass);
+```
+
+#### 2.2.4 Hooks组件
+
+```js
+import React, { useState, useEffect } from 'react';
+import { Button } from 'antd';
+
+interface Greeting {
+    name: string;
+    firstName: string;
+    lastName: string;
+}
+
+const HelloHooks = (props: Greeting) => {
+    const [count, setCount] = useState(0);
+    const [text, setText] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (count > 5) {
+            setText('休息一下');
+        }
+    }, [count]);
+
+    return (
+        <>
+            <p>你点击了 {count} 次 {text}</p>
+            <Button onClick={() => {setCount(count + 1)}}>
+                Hello {props.name}
+            </Button>
+        </>
+    )
+}
+
+HelloHooks.defaultProps = {
+    firstName: '',
+    lastName: ''
+}
+
+export default HelloHooks;
+```
+
+#### 2.2.5 事件处理与数据请求
+
+
+```js
+import React, { Component, useState, useEffect } from 'react';
+import { Form, Input, Select, Button } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
+
+import { get } from '../../utils/request';
+import { GET_EMPLOYEE_URL } from '../../constants/urls';
+import { EmployeeRequest, EmployeeResponse } from '../../interface/employee';
+
+const { Option } = Select;
+
+interface Props extends FormComponentProps {
+    onDataChange(data: EmployeeResponse): void
+}
+
+// Hooks version
+// const QueryFormHooks = (props: Props) => {
+//     const [name, setName] = useState('');
+//     const [departmentId, setDepartmentId] = useState<number | undefined>();
+
+//     const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+//         setName(e.currentTarget.value)
+//     }
+
+//     const handleDepartmentChange = (value: number) => {
+//         setDepartmentId(value)
+//     }
+
+//     const handleSubmit = () => {
+//         queryEmployee({name, departmentId});
+//     }
+
+//     const queryEmployee = (param: EmployeeRequest) => {
+//         get(GET_EMPLOYEE_URL, param).then(res => {
+//             props.onDataChange(res.data);
+//         });
+//     }
+
+//     useEffect(() => {
+//         queryEmployee({name, departmentId});
+//     }, [])
+
+//     return (
+//         <>
+//             <Form layout="inline">
+//                 <Form.Item>
+//                     <Input
+//                         placeholder="姓名"
+//                         style={{ width: 120 }}
+//                         allowClear
+//                         value={name}
+//                         onChange={handleNameChange}
+//                     />
+//                 </Form.Item>
+//                 <Form.Item>
+//                 <Select
+//                     placeholder="部门"
+//                     style={{ width: 120 }}
+//                     allowClear
+//                     value={departmentId}
+//                     onChange={handleDepartmentChange}
+//                 >
+//                     <Option value={1}>技术部</Option>
+//                     <Option value={2}>产品部</Option>
+//                     <Option value={3}>市场部</Option>
+//                     <Option value={4}>运营部</Option>
+//                 </Select>
+//                 </Form.Item>
+//                 <Form.Item>
+//                     <Button type="primary" onClick={handleSubmit}>查询</Button>
+//                 </Form.Item>
+//             </Form>
+//         </>
+//     )
+// }
+
+class QueryForm extends Component<Props, EmployeeRequest> {
+    state: EmployeeRequest = {
+        name: '',
+        departmentId: undefined
+    }
+    handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+        this.setState({
+            name: e.currentTarget.value
+        });
+    }
+    handleDepartmentChange = (value: number) => {
+        this.setState({
+            departmentId: value
+        });
+    }
+    handleSubmit = () => {
+        this.queryEmployee(this.state);
+    }
+    componentDidMount() {
+        this.queryEmployee(this.state);
+    }
+    queryEmployee(param: EmployeeRequest) {
+        get(GET_EMPLOYEE_URL, param).then(res => {
+            this.props.onDataChange(res.data);
+        });
+    }
+    render() {
+        return (
+            <Form layout="inline">
+                <Form.Item>
+                    <Input
+                        placeholder="姓名"
+                        style={{ width: 120 }}
+                        allowClear
+                        value={this.state.name}
+                        onChange={this.handleNameChange}
+                    />
+                </Form.Item>
+                <Form.Item>
+                <Select
+                    placeholder="部门"
+                    style={{ width: 120 }}
+                    allowClear
+                    value={this.state.departmentId}
+                    onChange={this.handleDepartmentChange}
+                >
+                    <Option value={1}>技术部</Option>
+                    <Option value={2}>产品部</Option>
+                    <Option value={3}>市场部</Option>
+                    <Option value={4}>运营部</Option>
+                </Select>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" onClick={this.handleSubmit}>查询</Button>
+                </Form.Item>
+            </Form>
+        )
+    }
+}
+
+const WrapQueryForm = Form.create<Props>({
+    name: 'employee_query'
+})(QueryForm);
+
+export default WrapQueryForm;
+```
+
+#### 2.2.6 列表渲染
+
+```js
+import React, { Component, useState } from 'react';
+import { Table } from 'antd';
+
+import './index.css';
+
+import QueryForm from './QueryForm';
+
+import { employeeColumns } from './colums';
+import { EmployeeResponse } from '../../interface/employee';
+
+// Hooks version
+// const Employee = () => {
+//     const [employee, setEmployee] = useState<EmployeeResponse>(undefined);
+
+//     const getTotal = () => {
+//         let total: number;
+//         if (typeof employee !== 'undefined') {
+//             total = employee.length
+//         } else {
+//             total = 0
+//         }
+//         return <p>共 {total} 名员工</p>
+//     }
+
+//     return (
+//         <>
+//             <QueryForm onDataChange={setEmployee} />
+//             {/* {getTotal()} */}
+//             <Table columns={employeeColumns} dataSource={employee} className="table" />
+//         </>
+//     )
+// }
+
+interface State {
+    employee: EmployeeResponse
+}
+
+class Employee extends Component<{}, State> {
+    state: State = {
+        employee: undefined
+    }
+    setEmployee = (employee: EmployeeResponse) => {
+        this.setState({
+            employee
+        });
+    }
+    getTotal() {
+        let total: number;
+        // 类型保护
+        if (typeof this.state.employee !== 'undefined') {
+            total = this.state.employee.length
+        } else {
+            total = 0
+        }
+        return <p>共 {total} 名员工</p>
+    }
+    render() {
+        return (
+            <>
+                <QueryForm onDataChange={this.setEmployee} />
+                {/* {this.getTotal()} */}
+                <Table columns={employeeColumns} dataSource={this.state.employee} className="table" />
+            </>
+        )
+    }
+}
+
+export default Employee;
+```
+
+#### 2.2.7 Redux与类型
+
+> 项目代码 https://github.com/poetries/typescript-in-action/tree/master/ts-redux
+
+```js
+import { Dispatch } from 'redux';
+import _ from 'lodash';
+
+import { get, post } from '../../utils/request';
+import { department, level } from '../../constants/options';
+
+import {
+    GET_EMPLOYEE_URL,
+    CREATE_EMPLOYEE_URL,
+    DELETE_EMPLOYEE_URL,
+    UPDATE_EMPLOYEE_URL
+} from '../../constants/urls';
+
+import {
+    GET_EMPLOYEE,
+    CREATE_EMPLOYEE,
+    DELETE_EMPLOYEE,
+    UPDATE_EMPLOYEE
+} from '../../constants/actions';
+
+import {
+    EmployeeInfo,
+    EmployeeRequest,
+    EmployeeResponse,
+    CreateRequest,
+    DeleteRequest,
+    UpdateRequest
+} from '../../interface/employee';
+
+type State = Readonly<{
+    employeeList: EmployeeResponse
+}>
+
+type Action = {
+    type: string;
+    payload: any;
+}
+
+const initialState: State = {
+    employeeList: undefined
+}
+
+export function getEmployee(param: EmployeeRequest, callback: () => void) {
+    return (dispatch: Dispatch) => {
+        get(GET_EMPLOYEE_URL, param).then(res => {
+            dispatch({
+                type: GET_EMPLOYEE,
+                payload: res.data
+            });
+            callback();
+        });
+    }
+}
+
+export function createEmployee(param: CreateRequest, callback: () => void) {
+    return (dispatch: Dispatch) => {
+        post(CREATE_EMPLOYEE_URL, param).then(res => {
+            dispatch({
+                type: CREATE_EMPLOYEE,
+                payload: {
+                    name: param.name,
+                    department: department[param.departmentId],
+                    departmentId: param.departmentId,
+                    hiredate: param.hiredate,
+                    level: level[param.levelId],
+                    levelId: param.levelId,
+                    ...res.data
+                }
+            });
+            callback();
+        });
+    }
+}
+
+export function deleteEmployee(param: DeleteRequest) {
+    return (dispatch: Dispatch) => {
+        post(DELETE_EMPLOYEE_URL, param).then(res => {
+            dispatch({
+                type: DELETE_EMPLOYEE,
+                payload: param.id
+            })
+        });
+    }
+}
+
+export function updateEmployee(param: UpdateRequest, callback: () => void) {
+    return (dispatch: Dispatch) => {
+        post(UPDATE_EMPLOYEE_URL, param).then(res => {
+            dispatch({
+                type: UPDATE_EMPLOYEE,
+                payload: param
+            });
+            callback();
+        });
+    }
+}
+
+export default function(state = initialState, action: Action) {
+    switch (action.type) {
+        case GET_EMPLOYEE:
+            return {
+                ...state,
+                employeeList: action.payload
+            }
+        case CREATE_EMPLOYEE:
+            let newList = [action.payload, ...(state.employeeList as EmployeeInfo[])]
+            return {
+                ...state,
+                employeeList: newList
+            }
+        case DELETE_EMPLOYEE:
+            let reducedList = [...(state.employeeList as EmployeeInfo[])];
+            _.remove(reducedList, (item: EmployeeInfo) => {
+                return item.id === action.payload
+            });
+            return {
+                ...state,
+                employeeList: reducedList
+            }
+        case UPDATE_EMPLOYEE:
+            let updatedList = [...(state.employeeList as EmployeeInfo[])];
+            let item: UpdateRequest = action.payload;
+            let index = _.findIndex(updatedList, {
+                id: item.id
+            });
+            updatedList[index] = {
+                id: item.id,
+                key: item.id,
+                name: item.name,
+                department: department[item.departmentId],
+                departmentId: item.departmentId,
+                hiredate: item.hiredate,
+                level: level[item.levelId],
+                levelId: item.levelId
+            }
+            return {
+                ...state,
+                employeeList: updatedList
+            }
+        default:
+            return state
+    }
+}
+```
+
+### 2.3 服务端使用Typescript
+
+> 项目地址 https://github.com/poetries/typescript-in-action/tree/master/ts-express
+
+## 三、Vue项目实践
+
+> 项目代码 https://github.com/poetries/typescript-in-action/tree/master/ts-vue
+
+> TS不能识别`.vue`文件，需要声明文件
+
+```js
+// vue-shims.d.ts
+
+declare module '*.vue' {
+    import Vue from 'vue'
+    export default Vue
+  }
+  
+```
+
+
 > [原文地址](https://github.com/poetries/poetries.github.io/edit/dev/source/_posts/ts-in-action.md)
+
+
+
+# 更多资料
+
+- [TypeScript 从零实现 axios](http://blog.poetries.top/ts-axios/chapter1/)
