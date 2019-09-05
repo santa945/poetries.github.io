@@ -227,6 +227,17 @@ interface Person {
 let tom: Person = {
     name: 'Tom'
 };
+// 可索引签名
+interface StringArrary {
+  [index]: string // 数字索引。通过数字索引，返回string类型
+  [string]: string // 字符串索引签名。两者不能混用，一起使用的前提是数字索引是字符串索引的子集
+}
+
+let myArr: StringArrary
+myArr = ['test1','test2']
+let myString = myArr[0]
+
+
   ➖➖➖➖➖➖➖➖➖任意属性➖➖➖➖➖➖➖➖➖
 
 //希望一个接口允许有任意的属性，可以使用如下方式：旦定义了任意属性，那么确定属性和可选属性的类型都必须是它的类型的子集
@@ -287,6 +298,12 @@ let tom: Person = {
 };
 
 tom.id = 89757; // 不能被二次赋值❌
+```
+
+**数组只读属性**
+
+```
+let myARr:readonlyArrary<number> = [1,2,3]
 ```
 
 ## 六、数组的类型
@@ -779,6 +796,16 @@ log({a:1})
 - 函数和类可以轻松支持多种类型，增强程序的扩展性
 - 不必写多条函数重载
 - 灵活控制类型之间的约束
+
+
+**对象属性约束**
+
+```js
+// 泛型约束对象中的属性
+function getProp<T,K extends keyof T>(obj:T,key: K) {
+    return obj[key]
+}
+```
 
 
 ## 十四、类型检查机制
