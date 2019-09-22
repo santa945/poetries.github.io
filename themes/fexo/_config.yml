@@ -35,6 +35,9 @@ home_nav:
   - name: Project
     url: /project
     target_blank: false
+  - name: Browser
+    url: http://blog.poetries.top/browser-working-principle
+    target_blank: true    
   - name: Interview
     url: http://blog.poetries.top/FE-Interview-Questions
     target_blank: true
@@ -306,7 +309,7 @@ home_animal:
 
 # 首页冒泡动画
 home_circle:
-  enable: true
+  enable: false
 
 # 首页波浪动画
 home_wave:
