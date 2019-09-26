@@ -26,7 +26,13 @@ categories: Front-End
 
 > (Android 5.0 及以上)使用 `adb reverse` 命令
 
+** 方式一**
+
 - 运行`adb reverse tcp:8081 tcp:8081`
 - 在命令行执行 `adb shell input keyevent 82` 弹出开发者工具。打开热更新和远程调试
+
+**方式二**
+
+> 摇晃手机即可弹出开发者工具
 
 ![](http://blog.poetries.top/img-repo/20190926/2.png)
