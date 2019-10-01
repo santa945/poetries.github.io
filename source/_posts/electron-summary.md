@@ -145,7 +145,7 @@ npm start
 
 ## 3.1 Electron 运行的流程
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7d07da8dccab3159.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ ![](http://blog.poetries.top/img-repo/20191001/48.png)
 
 ## 3.2 Electron 主进程和渲染进程
 
@@ -154,9 +154,9 @@ npm start
 - 由于 `Electron` 使用了 `Chromium`(谷歌浏览器)来展示 `web` 页面，所以 `Chromium` 的 多进程架构也被使用到。 每个 `Electron` 中的 `web` 页面运行在它自己的渲染进程中。
 - 主进程使用 `BrowserWindow` 实例创建页面。每个 `BrowserWindow` 实例都在自己的渲 染进程里运行页面。 当一个 `BrowserWindow`实例被销毁后，相应的渲染进程也会被终止
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ed01221126a5fe76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ ![](http://blog.poetries.top/img-repo/20191001/49.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d84ba41d44a3e672.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/50.png)
 
 
 - 进程:进程是计算机中的程序关于某数据集合上的一次运行活动，是 系统进行资源分配和调度的基本单位，是操作系统结构的基础。
@@ -187,7 +187,7 @@ button.addEventListener('click',function(e){
  mainWindow.webContents.openDevTools();
  ```
  
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-62c31b57f8b94838.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/51.png)
 
 
 # 四、Electron 模块介绍
@@ -196,7 +196,7 @@ button.addEventListener('click',function(e){
 
 ## 4.1 Electron 主进程和渲染进程中的模块
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3c15bb39e7080862.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/52.png)
 
 ## 4.2 Electron remote 模块
 
@@ -291,12 +291,12 @@ btn.onclick = () => {
 }
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fc3bd825336aac08.png)
+![](http://blog.poetries.top/img-repo/20191001/53.png)
 
 
 # 五、自定义顶部菜单/右键菜单
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-94da6a6688b084d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/54.png)
 
 ## 5.1 主进程中调用Menu模块-自定义软件顶部菜单
 
@@ -373,11 +373,11 @@ const createWindow = () => {
 
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7f8faae7e2a933e4.png)
+![](http://blog.poetries.top/img-repo/20191001/55.png)
 
 > 我们给菜单绑定事件，在命令行控制台可以看到
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d3bf0c07d42771eb.png)
+![](http://blog.poetries.top/img-repo/20191001/56.png)
 
 ## 5.2 渲染进程中调用Menu模块
 
@@ -471,9 +471,7 @@ window.addEventListener('contextmenu', (e)=>{
 }, false)
 ```
 
-
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e241c2350cf1aeba.png)
+![](http://blog.poetries.top/img-repo/20191001/57.png)
 
 
 **2. 引入**
@@ -486,7 +484,7 @@ window.addEventListener('contextmenu', (e)=>{
 
 # 六、进程通信
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2a9dddc335959ec4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/58.png)
 
 - 渲染进程 https://electronjs.org/docs/api/ipc-renderer
 - 主进程 https://electronjs.org/docs/api/ipc-main
@@ -558,9 +556,7 @@ ipcMain.on('sendMsg', (event, data)=> {
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b7e836d9e6539014.png)
-
-
+![](http://blog.poetries.top/img-repo/20191001/59.png)
 
 ### 6.1.2 渲染进程发送消息，主进程接收消息并反馈
 
@@ -633,8 +629,8 @@ ipcRenderer.on('sendFeedbackToRender', (e, data)=>{
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7b22ed78b9a19d5a.png)
 
+![](http://blog.poetries.top/img-repo/20191001/60.png)
 
 ### 6.1.3 渲染进程给主进程发送同步消息
 
@@ -688,7 +684,7 @@ ipcMain.on('sendsync', (event, data)=> {
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-abdff579c3fb74fa.png)
+![](http://blog.poetries.top/img-repo/20191001/61.png)
 
 ### 6.1.4 渲染进程广播通知主进程打开窗口
 
@@ -757,8 +753,7 @@ ipcMain.on('openwindow', (e, data)=> {
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d094a09efe23f09b.png)
-
+![](http://blog.poetries.top/img-repo/20191001/62.png)
 
 
 ## 6.2 渲染进程与渲染进程之间的通信
@@ -1004,13 +999,13 @@ ipcRenderer.on('toNews',(e, userInfo)=>{
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a50aae62116329c2.png)
+![](http://blog.poetries.top/img-repo/20191001/63.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-48de9dfe0df0cd6c.png)
+![](http://blog.poetries.top/img-repo/20191001/64.png)
 
 > 那么，这里有一个问题，`news`进程接收到了广播后如何给出反馈呢？
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-cc88a9c47cbefcd0.png)
+![](http://blog.poetries.top/img-repo/20191001/65.png)
 
 **1. 在主进程中获取窗口ID传递**
 
@@ -1101,14 +1096,11 @@ ipcRenderer.on('toIndex', (e, data)=>{
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1a80c8ad2194b480.png)
-
-
+![](http://blog.poetries.top/img-repo/20191001/66.png)
 
 # 七、Electron Shell 模块
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-eabc8dbe46f65cfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/67.png)
 
 ## 7.1 Shell 模块使用
 
@@ -1292,14 +1284,12 @@ const createWindow = () => {
 };
 ```
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-96d5d9b578ae4503.png)
-
+![](http://blog.poetries.top/img-repo/20191001/68.png)
 
 
 # 八、Electron dialog 弹出框
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7aafe8b93818de91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/69.png)
 
 
 > 文档 https://electronjs.org/docs/api/dialog
@@ -1380,7 +1370,7 @@ saveDialog.onclick = function () {
 remote.dialog.showErrorBox('警告', '操作有误')
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-209b3adbfc2dacac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/70.png)
 
 **showMessageBox**
 
@@ -1395,8 +1385,7 @@ remote.dialog.showMessageBox({
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-89ef356b82380150.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/71.png)
 
 **showOpenDialog**
 
@@ -1412,8 +1401,7 @@ remote.dialog.showOpenDialog({
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2cf5712d5571e731.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/72.png)
 
 **showSaveDialog**
 
@@ -1434,9 +1422,7 @@ remote.dialog.showSaveDialog({
 })
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e97ca8b42a31121b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/20191001/73.png)
 
 # 九、实现一个类似EditPlus的简易记事本代码编辑器
 
@@ -1445,8 +1431,7 @@ remote.dialog.showSaveDialog({
 
 # 十、系统托盘、托盘右键菜单、托盘图标闪烁 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e891469217a99101.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/74.png)
 
 > 文档 https://electronjs.org/docs/api/tray
 
@@ -1499,8 +1484,7 @@ appIcon.setToolTip('hello poetries');
 appIcon.setContextMenu(menu);
 ```
 
-![mac系统托盘](https://upload-images.jianshu.io/upload_images/1480597-5b774901ba687b8d.png)
-
+![](http://blog.poetries.top/img-repo/20191001/75.png)
 
 **3. 监听任务栏图标的单击、双击事件**
 
@@ -1598,9 +1582,7 @@ document.querySelector('#showNotification').onclick = function () {
 
 `mac`上的消息通知
 
-![mac上的消息通知](https://upload-images.jianshu.io/upload_images/1480597-9fbaee5cd9c9ad09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/20191001/76.png)
 
 ## 11.2 监听网络变化
 
@@ -1640,9 +1622,7 @@ document.querySelector('#showNotification').onclick = function () {
  });
  ```
  
- ![image.png](https://upload-images.jianshu.io/upload_images/1480597-e2ae4e20a2229ef5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
- 
+ ![](http://blog.poetries.top/img-repo/20191001/77.png)
  
  
 # 十二、注册全局快捷键/剪切板事件/nativeImage 模块
@@ -1651,9 +1631,8 @@ document.querySelector('#showNotification').onclick = function () {
  
 
 ## 12.1 注册全局快捷键
- 
- 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8d288b412f99b18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/20191001/78.png)
 
 - [keyboard-shortcuts文档]( https://electronjs.org/docs/tutorial/keyboard-shortcuts)
 - [app模块参考文档](https://electronjs.org/docs/api/app)
@@ -1693,7 +1672,7 @@ require('./main/shortCut.js')
 
 ## 12.2  剪切板clipboard、nativeImage 模块
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7e015801fa54f4b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/79.png)
 
 
 - [剪切板clipboard文档](https://electronjs.org/docs/api/clipboard)
@@ -1789,7 +1768,7 @@ yarn run dev # or npm run dev
 
 **3. electron-vue 目录结构分析**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3137d0001e34cf1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/80.png)
 
 ## 13.2 electron-vue 中使用 sass/ElementUi
 
@@ -2204,8 +2183,7 @@ npm run build
 
 **1. 修改package.json**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3d77650ad5e4f1a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/81.png)
 
 **2. 修改src/index.ejs标题信息**
 
@@ -2225,9 +2203,9 @@ var tray = new Tray(path.join(__static,'favicon.ico'))
 
 **2. 模块问题可能会遇到的错误**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-55209a332e74eef6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/82.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a5bd54ac66d34244.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/83.png)
 
 **解决办法**
 
@@ -2237,7 +2215,8 @@ var tray = new Tray(path.join(__static,'favicon.ico'))
 
 > 最后执行`yarn run build`即可
 
-![](https://upload-images.jianshu.io/upload_images/1480597-128e2c02d19b79c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/84.png)
+
 
 > 项目源码 https://github.com/poetries/yuqing-monitor-electron
 

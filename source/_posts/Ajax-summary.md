@@ -14,7 +14,7 @@ categories: Front-End
 
 
 ### 一、Ajax简介、优劣势、应用场景以及技术
----
+
 
 - Ajax简介 :
   -  `Asynchronous Javascript And XML` （异步的
@@ -50,33 +50,31 @@ categories: Front-End
 
 在上面几中技术中，除了`XmlHttpRequest`对象以外，其它所有的技术都是基于`web`标准并且已经得到了广泛使用的，`XMLHttpRequest`虽然目前还没有被`W3C`所采纳，但是它已经是一个事实的标准，因为目前几乎所有的主流浏览器都支持它
 
-
-
-![两张著名的AJAX 介绍的图](http://upload-images.jianshu.io/upload_images/1480597-6937419905da762f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/11.png)
 
 - 第一张图尤其说明了传统` Web` 应用程序的结构与采用了 `AJAX` 技术的 `Web`
 应用程序的结构上的差别
 - 主要的差别，其实不是 `JavaScript`，不是 `HTML/XHTML `和 `CSS`，而是采用
 了 `XMLHttpRequest` 来向服务器异步的请求 `XML` 数据
 
+![](http://blog.poetries.top/img-repo/20191001/12.png)
 
-![AJAX 介绍的图](http://upload-images.jianshu.io/upload_images/1480597-13adc82666fac3a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - 再来看第二张图，传统的 `Web` 应用模式，用户的体验是割裂的，点击->等待->
 看到新的页面->再点击->再等待。而采用了`AJAX`技术之后，大部分的计算工作，都是在用户不察觉的情况下，交由服务器去完成了
 
-![XMLHttpRequest对象的属性](http://upload-images.jianshu.io/upload_images/1480597-4c6beed36bb246c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/13.png)
 
+![](http://blog.poetries.top/img-repo/20191001/14.png)
 
-![XMLHttpRequest对象的方法](http://upload-images.jianshu.io/upload_images/1480597-1092e842e08d9012.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 二、创建ajax的步骤
----
+
 
 >`Ajax`的原理简单来说通过`XmlHttpRequest`对象来向服务器发异步请求，从服务器获得数据，然后用`javascript`来操作`DOM`而更新页面。这其中最关键的一步就是从服务器获得请求数据。原生创建`ajax`可分为以下四步
 
 #### 1、创建`XMLHttpRequest`对象
----
+
 
 `Ajax`的核心是`XMLHttpRequest`对象，它是`Ajax`实现的关键，发送异步请求、接受响应以及执行回调都是通过它来完成
 
@@ -112,8 +110,8 @@ function createRequest (){
 	return xhr;
 }
 ```
+
 #### 2、准备请求
----
 
 - 初始化该`XMLHttpRequest`对象，接受三个参数：
 ```javascript
@@ -134,7 +132,7 @@ xhr.open("POST",demo.php,true);
   - `true`：异步模式发出的请求，请求对象收发数据的同时，浏览器可以继续加载页面，执行其他javascript代码
 
 #### 3、发送请求
----
+
 
 ```javascript
 xhr.send();
@@ -155,7 +153,7 @@ xhr.sen
 ```
 
 #### 4、处理响应
----
+
 
 ```javascript
 xhr.onreadystatechange = function(){
@@ -203,12 +201,10 @@ var sales = JSON.parse(responseText);
 }
 ```
 
-![HTTP状态码](http://upload-images.jianshu.io/upload_images/1480597-ae7614423c64ebb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/20191001/15.png)
 
 
 #### 5、封装例子
----
 
 -  将AJAX请求封装成ajax()方法，它接受一个配置对象params
 
@@ -275,11 +271,9 @@ function ajax(url, success, fail){
 }
 ```
 
-
-![XMLHttpRequest 在异步请求远程数据时的工作流程](http://upload-images.jianshu.io/upload_images/1480597-9ea8be2721ca01c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/20191001/16.png)
 
 ##### 谈谈JSONP
----
 
 - 要访问web服务器的数据除了XMLHttpRequest外还有一种方法是JSONP
 - 如果HTML和JavaScript与数据同时在同一个机器上，就可以使用XMLHttpRequest
@@ -509,8 +503,6 @@ var script = document.createElement("script");
 ```
 
 ### 三、 jQuery中的Ajax
----
-
 
 - jQuery中的`ajax`封装案例
 
@@ -575,12 +567,10 @@ function ajax(aJson){
 ```
 
 #### jQuery中的Ajax的一些方法
----
 
 `jquery`对`Ajax`操作进行了封装，在`jquery`中的`$.ajax()`方法属于最底层的方法，第`2`层是`load()`、`$.get()`、`$.post();`第`3`层是`$.getScript()`、`$.getJSON()`，第`2`层使用频率很高 
 
 ##### `load()`方法
----
 
   - `load()`方法是`jquery`中最简单和常用的`ajax`方法，能载入远程`HTML`代码并插入`DOM`中 结构为：`load(url,[data],[callback])`
    - 使用`url`参数指定选择符可以加载页面内的某些元素 `load`方法中`url`语法：`url selector` 注意：`url`和选择器之间有一个空格
@@ -606,7 +596,6 @@ $("#testTest").load("test.html",function(responseText,textStatus,XMLHttpRequest)
 |`callback(可选)`|`Function`|请求完成时的回调函数，无论是请求成功还是失败|
 
 ##### `$.get()`和`$.post()`方法
----
 
 `load()`方法通常用来从web服务器上获取静态的数据文件。在项目中需要传递一些参数给服务器中的页面，那么可以使用`$.get()`和`$.post()`或`$.ajax()`方法
 - 注意：`$.get()`和`$.post()`方法是`jquery`中的全局函数
@@ -635,7 +624,7 @@ $("#testTest").load("test.html",function(responseText,textStatus,XMLHttpRequest)
   - 使用`load()`、`$.get()`和`$.post()`方法完成了一些常规的`Ajax`程序，如果还需要复杂的`Ajax`程序，就需要用到`$.ajax()`方式
 
 ##### $.ajax()方法
----
+
 
 - `$.ajax()`方法是`jquery`最底层的`Ajax`实现，它的结构为`$.ajax(options)`
 - 该方法只有一个参数，但在这个对象里包含了`$.ajax()`方式所需要的请求设置以及回调函等信息，参数以`key` / `value`存在，所有参数都是可选的

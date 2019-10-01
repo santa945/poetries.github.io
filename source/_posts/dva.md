@@ -81,7 +81,8 @@ dva = React-Router + Redux + Redux-saga
 
 ## 2.2 Dva的五个API
 
-![](https://upload-images.jianshu.io/upload_images/1505342-9ecf9d7d1f0452f9.png)
+ ![](http://blog.poetries.top/img-repo/20191001/43.png)
+
 
 ### 2.2.1 app = dva(Opts)
 
@@ -210,7 +211,7 @@ app.use(createLoading(opts));
 
 > `app.model(ModelObject)`：这个是你数据逻辑处理，数据流动的地方
 
-![](https://upload-images.jianshu.io/upload_images/1505342-7a3cdeb874110d7c.png)
+ ![](http://blog.poetries.top/img-repo/20191001/44.png)
 
 
 ### 2.2.4 app.unmodel(namespace)
@@ -562,7 +563,8 @@ export default connect(mapStateToProps)(App);
 
 ## 2.4 整体架构
 
-![](https://upload-images.jianshu.io/upload_images/1505342-be8059756ba0db38.png)
+ ![](http://blog.poetries.top/img-repo/20191001/45.png)
+
 
 - 首先我们根据 `url` 访问相关的 `Route-Component`，在组件中我们通过 `dispatch `发送 `action` 到 `model` 里面的 `effect` 或者直接 `Reducer`
 - 当我们将`action`发送给`Effect`，基本上是取服务器上面请求数据的，服务器返回数据之后，`effect` 会发送相应的 `action `给 `reducer`，由唯一能改变 `state `的 `reducer` 改变 `state` ，然后通过`connect`重新渲染组件。
@@ -575,7 +577,8 @@ export default connect(mapStateToProps)(App);
 
 > `React` 只负责页面渲染, 而不负责页面逻辑, 页面逻辑可以从中单独抽取出来, 变成 `store`
 
-![](https://cdn.yuque.com/yuque/0/2018/png/103904/1528436167824-7fa834ea-aa6c-4f9f-bab5-b8c5312bcf7e.png)
+ ![](http://blog.poetries.top/img-repo/20191001/46.png)
+
 
 > 使用 `Middleware` 拦截 `action`, 这样一来异步的网络操作也就很方便了, 做成一个 `Middleware`就行了, 这里使用` redux-saga` 这个类库
 
@@ -584,7 +587,7 @@ export default connect(mapStateToProps)(App);
 
 **图解二：Dva表示法**
 
-![](https://cdn.yuque.com/yuque/0/2018/png/103904/1528436195004-cd3800f2-f13d-40ba-bb1f-4efba99cfe0d.png)
+ ![](http://blog.poetries.top/img-repo/20191001/47.png)
 
 > dva做了 3 件很重要的事情
 

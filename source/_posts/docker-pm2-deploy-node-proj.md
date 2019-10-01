@@ -96,7 +96,7 @@ docker build -t mynodeapp .
 
 构建完后查看一下我们的镜像
 
-![](https://upload-images.jianshu.io/upload_images/3791135-63e4fe284b1e68e8.png)
+ ![](http://blog.poetries.top/img-repo/20191001/42.png)
 
 **运行镜像**
 

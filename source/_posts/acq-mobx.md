@@ -12,11 +12,11 @@ categories: Front-End
 
 > 打印`mobx`，看看`mobx`中有什么
 
-![mobx](https://upload-images.jianshu.io/upload_images/1480597-dab61a98feb75db1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![mobx](http://blog.poetries.top/img-repo/20191001/8.png)
 
 > `MobX`的整个流程
 
-![](https://camo.githubusercontent.com/20705ede0bf83c38a187bd911ed417db69701237/687474703a2f2f636e2e6d6f62782e6a732e6f72672f666c6f772e706e67)
+![mobx](http://blog.poetries.top/img-repo/20191001/9.png)
 
 
 **MobX 和 Redux 的比较**
@@ -47,7 +47,7 @@ categories: Front-End
 
 ## 二、核心API
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-25b582583cf82dc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![mobx](http://blog.poetries.top/img-repo/20191001/10.png)
 
 
 ### 2.1 @observable
