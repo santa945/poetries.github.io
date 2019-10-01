@@ -66,6 +66,7 @@ categories: Back-end
 ![](http://images2015.cnblogs.com/blog/848552/201601/848552-20160102185521057-1341380905.png)
 
 - 方法二：查找当前`nginx`进程号，然后输入命令：`kill -HUP` 进程号 实现重启`nginx`服务
+
 ![](http://images2015.cnblogs.com/blog/848552/201601/848552-20160102185838167-234856506.png)
 
 

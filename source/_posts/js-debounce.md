@@ -17,7 +17,7 @@ categories: Front-End
 
 > 持续触发`scroll`事件时，并不执行`handle`函数，当`1000`毫秒内没有触发`scroll`事件时，才会延时触发`scroll`事件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-9ac8da1501c475d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/312.png)
 
 ```js
 // 防抖
@@ -132,7 +132,7 @@ function debounce (func, wait = 50, immediate = true) {
 
 如下图，持续触发`scroll`事件时，并不立即执行`handle`函数，每隔`1000`毫秒才会执行一次`handle`函数
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-81791a77f37fcbb8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/313.png)
 
 **节流版本**
 

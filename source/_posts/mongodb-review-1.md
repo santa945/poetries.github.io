@@ -83,7 +83,7 @@ httpinterface=true
 C:\Program Files\MongoDB\Server\3.4\bin\mongod --config d:\mongodb\data 
 ```
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-a8ee6a8c3346a04e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/349.png)
 
 
 **更加简洁的启动方式**
@@ -93,14 +93,13 @@ C:\Program Files\MongoDB\Server\3.4\bin\mongod --config d:\mongodb\data
 C:\Program Files\MongoDB\Server\3.4\bin\mongod --config d:\mongodb\data --install --serviceName "MongoDB"
 ```
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-d4264668a126d16a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/350.png)
 
 
 **使用MongoVue连接数据库**
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-c95265b254748783.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-e829f03b6d3b27c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/351.png)
+![](http://blog.poetries.top/img-repo/2019/10/352.png)
 
 
 ## 1.3 linux下mongodb环境搭建
@@ -250,14 +249,14 @@ db.addUser # 2.x
 db.auth("admin","admin") # 账号、密码
 ```
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-c909a3f3f48e4bd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/353.png)
 
 
 **3. 给使用的数据库添加用户**
 
 1. 创建用户
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-feec4daf98fa1492.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/354.png)
 
 2. 然后在授权登录试一下
 

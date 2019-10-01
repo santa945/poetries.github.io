@@ -21,9 +21,10 @@ categories: Front-End
 
 具体如下图过程如下图所示
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-08e6f204c42595ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/19.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-365009d6fa2d4b77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/20.png)
+
 
 **渲染**
 
@@ -74,7 +75,7 @@ categories: Front-End
 
 ### 2.3 第三步：把DOM和CSSOM组合成渲染树（render tree）
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c0d854c01697ceda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/21.png)
 
 ### 2.4 第四步：在渲染树的基础上进行布局，计算每个节点的几何结构
 
@@ -235,6 +236,8 @@ for(let i = 0; i < 1000; i++) {
 - `CSS `选择符从右往左匹配查找，避免 `DOM `深度过深
 - 将频繁运行的动画变为图层，图层能够阻止该节点回流影响别的元素。比如对于 `video `标签，浏览器会自动将该节点变为图层。
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7820ddaab0b9710e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/22.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/23.png)
 
 > [重绘与回流](http://blog.poetries.top/2018/01/12/fed-performance-optimization/#%E5%85%AD%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81)

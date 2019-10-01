@@ -124,7 +124,8 @@ server.listen(3000, "127.0.0.1");
 res.writeHead(200,{"Content-Type":"text/html;charset=UTF8"});
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7352063a1e2aa009.png)
+![](http://blog.poetries.top/img-repo/2019/10/356.png)
+
 
 - 我们现在来看一下 `req` 里面能够使用的东西
 - 最关键的就是 `req.url` 属性，表示用户的请求 `URL` 地址。所有的路由设计，都是通过 `req.url` 来实现的。
@@ -140,20 +141,20 @@ res.writeHead(200,{"Content-Type":"text/html;charset=UTF8"});
 
 **1. url.parse()**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fee7d8f6c3b52abb.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-02128f0078266087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/357.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/358.png)
 
 
 **2. url.format()**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8a73964b35be0e78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/359.png)
 
 
 **3. url.resolve()**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-300536bd820366a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/360.png)
 
 ## 2.3 Nodejs 自启动工具 supervisor
 
@@ -167,7 +168,7 @@ npm install -g supervisor
 
 **使用 supervisor 代替 node 命令启动应用**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e8b4685035d33bab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/361.png)
 
 # 三、CommonJs 和 Nodejs 模块
 
@@ -198,7 +199,7 @@ npm install -g supervisor
 1. 我们可以把公共的功能抽离成为一个单独的 `js` 文件作为一个模块，默认情况下面这 个模块里面的方法或者属性，外面是没法访问的。如果要让外部可以访问模块里面的方法或 者属性，就必须在模块里面通过 `exports` 或者 `module.exports` 暴露属性或者方法
 2. 在需要使用这些模块的文件中，通过 `require` 的方式引入这个模块。这个时候就可以 使用模块里面暴露的属性和方法
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8c92d0ade5530642.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/362.png)
 
 ### 3.2.3 定义使用模块
 
@@ -233,8 +234,7 @@ tools.sa yHello(); //使用模块
 
 > `Nodejs` 中除了它自己提供的核心模块外，我们可以自定义模块，也可以使用 第三方的模块。`Nodejs` 中第三方模块由包组成，可以通过包来对一组具有相互依 赖关系的模块进行统一管理
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-73e6c90f9c598ce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/363.png)
 
 **完全符合 CommonJs 规范的包目录一般包含如下这些文件**
 
@@ -506,8 +506,7 @@ console.log("程序执 行完毕");
 
 > 管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-32efa1ce8477ff57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/364.png)
 
 > 如上面的图片所示，我们把文件比作装水的桶，而水就是文件里的内容 ，我们用一根管子(pipe )连接两个桶使得水从一个桶流入另一个桶，这样就慢慢的实现了大文件的复制过程。
 
@@ -626,8 +625,7 @@ setTimeout(function (){
 
 > 路由指的就是针对不同请求的 URL，处理不同的业务逻辑。
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-382a5ff989c629b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/365.png)
 
 ## 8.2 初识 EJS 模块引擎
 
@@ -748,12 +746,11 @@ function() {
 - 非结构型数据库。没有行、列的概念。用 JSON 来存储数据。
 - 集合就相当于“表 ”，文档就相当于“行”。
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-724e216e32e0a752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/366.png)
 
 ## 9.5 NoSql 种类
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1df0e39035d80bda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/367.png)
 
 
 ## 9.6 MongoDb 介绍
@@ -767,14 +764,13 @@ function() {
 
 **1. 双击 MongoDB 软件下一步下一步安装**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1f3e4e3edb6a1a58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/368.png)
 
 **2. 安装完成配置环境变量 C:\Program Files\MongoDB\Server\3.0\bin 加入到系统的path 环境变量中**
  
 **3. 打开 cmd 输入 :mongo命令看看是否成功。如果出来下图说明 mongodb配置成功。**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-57b3c4ffef29858c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/369.png)
 
 
 ## 9.8 使用 MongoDb
@@ -786,7 +782,7 @@ function() {
 
 **开启 MongoDb 服务命令:**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ed9d95532d506ac5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/370.png)
 
 - `--dbpath` 就是选择数据库文档所在的文件夹
 - 也就是说，`mongoDB` 中，真的有物理文件，对应一个个数据库。U 盘可以拷走。
@@ -796,12 +792,12 @@ function() {
 
 > 客户端:`mongo` 使用数据库
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a3366c0d6d197c1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/371.png)
 
 
 > 客户端:`mongo` 使用数据库 `ip` 地址:端口号
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fdd06270f639e5a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/372.png)
 
 
 # 十、MongoDB 数据库创建删除、表（集合）创建删除、数据增删改查
@@ -810,12 +806,12 @@ function() {
 
 >  开启 `mongodb` 服务:要管理数据库，必须先开启服务，开启服务使用 `mongod --dbpath c:\mongodb`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f5e7a65d596a6e24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/373.png)
 
 
 > 管理 `mongodb` 数据库:`mongo` (一定要在新的 `cmd` 中输入)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a2645643b2af3cb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/374.png)
 
 
 > 查看所有数据库列 表
@@ -826,7 +822,7 @@ show dbs
 
 ## 10.2 创建数据库
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-67522a2727a68a7a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/375.png)
 
 **使用数据库、创建 数据库**
 
@@ -1212,8 +1208,7 @@ db.user.ensureIndex( {"username":1},{"backgroun d":true})
 
 > explain 是非常有用的工具，会帮助你获得查询方面诸多有用的信息。只要对游标调用 该方法，就可以得到查询细节。explain 会返回一个文档，而不是游标本身。如
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-69f95cd8f120d0f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/376.png)
 
 > `explain` 会返回查询使用的索引情况，耗时和扫描文档数的统计信息
 
@@ -1772,30 +1767,27 @@ http://localhost:3000/static/hello.html
 
 1. 应用级中间件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-97133346092cfa36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/377.png)
 
 
 2. 路由中间件
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-dafd466efa6541a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/378.png)
 
 
 3. 错误处理中间件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-aa563ec7a42d34d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/379.png)
 
 
 4. 内置中间件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0150aaa3188eac62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/380.png)
 
 5. 第三方中间件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e8ee4075ab5dce5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-52850945b3b14c4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/381.png)
+![](http://blog.poetries.top/img-repo/2019/10/382.png)
 
 ## 14.7 获取 Get Post 请求的参数
 
@@ -1832,8 +1824,7 @@ app.use(function(req, res) {
 
 ## 15.1 Cookie 简介
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-cd564f40d2a68152.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/383.png)
 
 ## 15.2 Cookie 特点
 
@@ -1846,11 +1837,9 @@ app.use(function(req, res) {
 
 ## 15.3 Cookie 的使用
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-91a1cc1a72826f86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-99dc7b4a6cc9af46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-bb67e7e5765577aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/384.png)
+![](http://blog.poetries.top/img-repo/2019/10/385.png)
+![](http://blog.poetries.top/img-repo/2019/10/386.png)
 
 
 **设置 cookie**
@@ -1964,9 +1953,8 @@ app.use(session({
 
 **行加密的字符串.这个**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f1d27cec494eff0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0260ec3b5225186d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/387.png)
+![](http://blog.poetries.top/img-repo/2019/10/388.png)
 
 ## 16.5 express-session 的常用方法
 

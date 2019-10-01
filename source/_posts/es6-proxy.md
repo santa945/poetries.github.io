@@ -11,8 +11,7 @@ categories: Front-End
 
 **Proxy的兼容性**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0dc9afceebb025e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/55.png)
 
 > `proxy`在目标对象的外层搭建了一层拦截，外界对目标对象的某些操作，必须通过这层拦截
 

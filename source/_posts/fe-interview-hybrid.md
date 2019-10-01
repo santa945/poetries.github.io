@@ -7,8 +7,7 @@ tags:
 categories: Front-End
 ---
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c6dfe0f6f12fe034.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/72.png)
 
 ## 一、hybrid 是什么，为何会用 hybrid
 
@@ -19,7 +18,7 @@ categories: Front-End
 - 某些环节也可能涉及到 `server` 端
 - PS：不要以为自己的前端就可以不理会客户端的知识
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8bb6aab836ef1b04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/73.png)
 
 ### 1.2 hybrid 存在价值
 
@@ -32,20 +31,20 @@ categories: Front-End
 - 是 `app` 中的一个组件（ `app` 可以有 `webview` ，也可以没有）
 - 于加载 `h5` 页面，即一个小型的浏览器内核
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-683f8336237ea709.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2c35b8e256628d90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/74.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/75.png)
 
 ### 1.4 file 协议
 
 - 其实在一开始接触 `html `开发，就已经使用了 `file` 协议
 - 只不过你当时没有“协议”“标准”等这些概念
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-658f64270968f795.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/76.png)
 
 ### 1.5 http(s) 协议
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-120c70939dda4f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/77.png)
 
 ### 1.6 两者区别
 
@@ -66,18 +65,17 @@ categories: Front-End
 - 客户端在一个 `webview` 中
 - 使用 `file` 协议加载静态页面
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-78c3827d77e01846.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/78.png)
 
 ## 二、hybrid 更新上线流程
 
 ### 2.1 具体流程图
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-968e9acbd54baf44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/79.png)
 
 **思考（目的，可行途径）**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-da3cb73a39523a77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/80.png)
 
 - 要替换每个客户端的静态文件
 - 只能客户端来做（客户端是我们开发的）
@@ -86,7 +84,7 @@ categories: Front-End
 
 ### 2.2 完整流程
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3ed2e0dcff457b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/81.png)
 
 - 分版本，有版本号，如 `201803211015`
 - 将静态文件压缩成 `zip `包，上传到服务端
@@ -124,24 +122,27 @@ categories: Front-End
 - `JS` 访问客户端能力，传递参数和回调函数
 - 客户端通过回调函数返回内容
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-68700d9920ef0351.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/82.png)
 
 ### 4.2 schema 协议简介和使用
 
 - 之前介绍了 `http(s)` 和 `file` 协议
 - `schema` 协议 —— 前端和客户端通讯的约定
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-728d555cfb705e00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-87869b716de1fee3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a0215dd1a9fcfa34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/83.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/84.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/85.png)
 
 ### 4.3 schema 使用的封装
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-870b827be457e049.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/86.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-725ad0ec319d8d88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/87.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-66d0b2f3f4af2495.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/88.png)
+
 
 ### 4.4 内置上线
  

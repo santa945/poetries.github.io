@@ -13,9 +13,8 @@ https://open.oppomobile.com
 
 > `管理中心`->`快应用智慧服务`->`选择一个快应用`->`找到移动服务`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-00b7280401b78c65.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e019f7e150030e2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/411.png)
+![](http://blog.poetries.top/img-repo/2019/10/412.png)
 
 > 根据`OPPO`快应用帐号服务开启指南开通服务即可，其中回调地址可以随便写，可以使用`oppo`的示例即可
 

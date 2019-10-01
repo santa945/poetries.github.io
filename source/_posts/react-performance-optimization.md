@@ -13,20 +13,20 @@ categories: Front-End
 
 - 在初始化渲染的时候会调用根组件下的所有组件的`render`方法进行渲染，如下图（绿色表示已渲染，这一层是没有问题的）
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-4e5f48026fa614e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/420.png)
 
 但是当我们要更新某个子组件的时候，如下图的绿色组件（从根组件传递下来应用在绿色组件上的数据发生改变）
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-45420a0ffcf40571.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/421.png)
 
 我们的理想状态是只调用关键路径上组件的render
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ebe9c0d2a929600f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/422.png)
 
 但是`react`的默认做法是调用所有组件的`render`，再对生成的虚拟`DOM`进行对比，如不变则不进行更新。这样的`render`和虚拟`DOM`的 对比 明显是在浪费，如下图（黄色表示浪费的`render`和虚拟`DOM`对比）
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5bc0acef05010da5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/423.png)
 
 **Tips**
 
@@ -81,21 +81,21 @@ if (__DEV__) {
 - 打开`console`面板，先输入 `Perf.start()` 执行一些组件操作，引起数据变动，组件更新，然后输入 `Perf.stop()` 。（建议一次只执行一个操作，好进行分析）
 - 再输入 `Perf.printInclusive` 查看所有涉及到的组件`render`，如下图（官方图片）
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d922b251e7fee2e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/424.png)
 
 
 > 或者输入`Perf.printWasted()`查看下不需要的的浪费组件`render`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c3e18e5d32c9cf13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/425.png)
 
 
 优化前
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-4adbca1f43f43ae1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/426.png)
 
 优化后
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-bcd5da4271d03439.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/427.png)
 
 
 ## 五、参考文章

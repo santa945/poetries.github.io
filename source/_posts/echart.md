@@ -12,8 +12,7 @@ categories: Front-End
 
 - 时间轴，每个图表最多仅有一个时间轴控件
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-6a02bd853069b904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/45.png)
 
 二、Title选项
 ---
@@ -22,7 +21,7 @@ categories: Front-End
 
 > 可以对标题文字的大小样式进行设置
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-aeae6a9ace95a4aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/46.png)
 
 
 三、toolbox
@@ -30,7 +29,7 @@ categories: Front-End
 
 - 工具箱，每个图表最多仅有一个工具箱。工具箱里面可以实现图表类型的切换，保存图片，刷新，查看数据等功能。可以对其像素进行设置
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-dcc780629ce8ad78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/47.png)
 
 
 ```javascript
@@ -165,21 +164,21 @@ categories: Front-End
 
 - 提示框，鼠标悬浮交互时的信息提示
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-b9c8f725f2f4a50a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/48.png)
 
 五、legend
 ---
 
 - 图例，每个图表最多仅有一个图例，混搭图表共享
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-0d79caad2b169951.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/49.png)
 
 六、dataRange
 ---
 
 - 值域选择，每个图表最多仅有一个值域控件
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-c0df8ad67dbd51b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/50.png)
 
 七、dataZoom
 ---
@@ -191,14 +190,14 @@ roamController
 
 - [缩放漫游组件](http://echarts.baidu.com/echarts2/doc/example/map1.html)，仅对地图有效
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-15c5718cc0299a2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/51.png)
 
 八、grid
 ---
 
 > 直角坐标系内绘图网格
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-264f17badedea9f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/52.png)
 
 九、xAxis
 ---

@@ -7,7 +7,7 @@ tags:
 categories: Front-End
 ---
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8aa7fa463781cafe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/56.png)
 
 ## 一、说一下对组件化的理解
 
@@ -17,16 +17,16 @@ categories: Front-End
 - 数据
 - 变化逻辑
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8f48ca224806e741.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/57.png)
 
 ### 1.2 组件的复用
 
 - `props` 传递
 - 复用
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2a5e3b0b883ad5f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/58.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3e549b6e59c0ea28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/59.png)
 
 ## 二、JSX 本质是什么
 
@@ -41,7 +41,8 @@ categories: Front-End
 > - JSX 语法根本无法被浏览器所解析
 > - 那么它如何在浏览器运行？
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f1c8a9cbb26570e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/60.png)
+
 
 ### 2.2 JSX 解析
 
@@ -50,11 +51,12 @@ categories: Front-End
 - `JSX` 的写法大大降低了学习成本和编码工作量
 - 同时，`JSX` 也会增加 `debug `成本
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5f19249d793a7cfb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/61.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-11923d891215fd76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/62.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d033075c77441cb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/63.png)
+
 
 ### 2.3 JSX 独立的标准
 
@@ -74,7 +76,7 @@ categories: Front-End
 
 ### 3.2 React.createElement 和 h
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d345399b0ceb7e4f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/64.png)
 
 ### 3.3 何时 patch
 
@@ -85,7 +87,8 @@ categories: Front-End
 
 ### 3.4 自定义组件的解析
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-69788662ca8059d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/65.png)
+
 
 - `‘div’` - 直接渲染 `<div>` 即可，`vdom` 可以做到
 - `Input` 和 `List` ，是自定义组件（`class`），`vdom` 默认不认识
@@ -93,13 +96,13 @@ categories: Front-End
 - 根据 `props` 初始化实例，然后执行实例的 `render` 函数
 - `render` 函数返回的还是 `vnode`对象
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-11a4ca366d944a6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/66.png)
 
 ## 四、说一下 React setState 的过程
 
 ### 4.1 setState 的异步
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-dc8703edc57b0b20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/67.png)
 
 
 **setState 为何需要异步？**
@@ -110,8 +113,7 @@ categories: Front-End
 - 即便是每次重新渲染，用户也看不到中间的效果
 - 只看到最后的结果即可
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-dbca3e81f5b1a4a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/68.png)
 
 
 ### 4.2 vue 修改属性也是异步
@@ -144,11 +146,11 @@ categories: Front-End
 
 > 模板应该和 JS 逻辑分离
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5e3dfde0d813ee64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/69.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d551ac0050d8ecf3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/70.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a9fd44b70c5529d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/71.png)
 
 **组件化区别**
 

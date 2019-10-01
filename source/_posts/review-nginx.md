@@ -11,7 +11,7 @@ categories: Back-end
 
 > `Nginx (engine x)` 是一款轻量级的 `Web` 服务器 、反向代理服务器及电子邮件（`IMAP/POP3`）代理服务器
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0e8a00a0c3c53e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/512.png)
 
 ## 1.2 什么是反向代理
 

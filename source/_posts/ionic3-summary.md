@@ -47,9 +47,7 @@ npm install -g ionic
 
 - `ionic info` (查看当前`ionic`的全部版本信息)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ddad8ba9108c0116.png)
-
-
+![](http://blog.poetries.top/img-repo/2019/10/235.png)
 
 ```bash
 ionic start myApp tabs # 建议使用初始化
@@ -59,8 +57,8 @@ cd myApp
 ionic serve
 ```
 
+![](http://blog.poetries.top/img-repo/2019/10/236.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-514b23b5ea8fd4ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - `ionic serve` 运行项目
 
@@ -84,7 +82,7 @@ chmod -R 777 项目文件夹名
 
 **打开xcode选择platform下中ios文件夹，点击运行项目**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a88aef237eed3ffe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/237.png)
 
 
 ## 2.4 在安卓下体验
@@ -104,12 +102,12 @@ chmod -R 777 项目文件夹名
 
 **2. 下载android studio 打开/platform/andriod文件**
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8491b2c583d0cf3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/238.png)
 
 **3. 然后连接android studio结合geny生成apk调试**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-40771d7cc51e45f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/239.png)
+
 
 ## 2.5 在浏览器/微信下体验
 
@@ -125,9 +123,8 @@ ionic cordova platform add browser
 
 > `ionic cordova build browser`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-bef93f8f07488d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-28d5f0193d87167e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/240.png)
+![](http://blog.poetries.top/img-repo/2019/10/241.png)
 
 **3. 运行**
 
@@ -173,8 +170,7 @@ npm run serve
 
 **1. 整体目录结构**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ec4f35d6e3bab428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/242.png)
 
 - `hooks`:编译 `cordova` 时自定义的脚本命令，方便整合到我们的编译系统和版本控制系统中 
 - `node_modules` :`node` 各类依赖包
@@ -191,7 +187,8 @@ npm run serve
 
 **2. src目录**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ef37273ff97e9c99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/243.png)
+
 
 - `app`:应用根目录
 - `assets`:资源目录(静态文件(图片，js 框架) 
@@ -200,7 +197,7 @@ npm run serve
 
 **3. Ionic3.x src 下面文件分析**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-509d5353e4bb462e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/244.png)
 
 **4. app.module.ts 分析**
 
@@ -272,19 +269,18 @@ export class AppModule {}
 
 > 输入`ionic g`后，可以创建的组件如下
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-05bfbefd2e045576.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/245.png)
 
 3. 创建完成组件以后会在 `src` 目录下面多一个 `components` 的目录，这个目录里面有我们用命令创建的所有的组件
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c7d29e7ab4f12287.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/246.png)
 
 4. 如果我们要使用这些组件必须在 `app.module.ts` 里面注册我们的模块，注册完成后就可以在 `pages` 里面的其页面里面使用这些组件
 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-def738bc118984a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/247.png)
+![](http://blog.poetries.top/img-repo/2019/10/248.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a17b3b0709f0fd48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 ## 3.3 创建页面以及页面跳转
@@ -302,7 +298,7 @@ ionic g page news
 <button ion-button (click)="pushButton">执行button跳转</button>
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e8a74fa40ff90073.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/249.png)
 
 
 # 四、Ionic页面生命周期
@@ -870,7 +866,7 @@ $colors: (
 <ion-icon name="paper" item-start color="primary"></ion-icon>
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-eb3fdf55a868ee63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/250.png)
 
 ## 8.2 自定义样式
 
@@ -989,7 +985,7 @@ export class SettingsProvider {
 
 **5. 在`app.component.ts`中设置**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a5b9fd061ef7462e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/251.png)
 
 然后在`src/app/app.html`中设置`selectedTheme`
 
@@ -1032,8 +1028,7 @@ export class UserCenterPage {
 
 **7. 在整个app启动的时候设置夜间或者白天模式**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-25929bf847491d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/252.png)
 
 # 九、组件化开发-自定义组件
 
@@ -1047,7 +1042,7 @@ export class UserCenterPage {
 ionic g component emojipicker# 组件名称
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d70b2c6719198cc0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/253.png)
 
 **2. 在src/app/app.module.ts中导入**
 
@@ -1080,7 +1075,7 @@ export class AppModule {}
 
 > 在页面中使用即可
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8dd8a29d028096d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/254.png)
 
 
 **4. 组件通过@input()接收外部参数**
@@ -1382,17 +1377,14 @@ doRefresh(refresher) {
 
 > 生成图标的过程可能需要翻墙
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-371b10a6b2edc4d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/255.png)
 
 ```bash
 # 在项目根目录执行 不需要进到resources文件夹
 ionic cordova resources
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-74641ad1216bba91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/2019/10/256.png)
 
 ## 12.2 启动图生成
 
@@ -1413,7 +1405,7 @@ ionic cordova resources
 - `<description>An awesome Ionic/Cordova app.</description>` 修改`app`描述
 - ` <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>` 修改`email`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-597bf0858198958c.png)
+![](http://blog.poetries.top/img-repo/2019/10/257.png)
 
 ## 12.4 打包部署
 
@@ -1436,11 +1428,11 @@ sudo chomd 777 your_project_name
 
 ### 12.5.1 IOS的打包
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ee8903b852215701.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/258.png)
 
 > `app store`上架,需要注册开发者账号
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-67aa89a539c4f215.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/259.png)
 
 ### 12.5.2 安卓版本打包
 
@@ -1479,7 +1471,7 @@ var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 
 > - 把这个资源下载下来(具体下载哪个版本，根据`distributionUrl`来下载)，放到`platforms/android/gradle`
 > - 下载地址：https://services.gradle.org/distributions/gradle-4.1-all.zip
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-34e0956118d63551.png)
+![](http://blog.poetries.top/img-repo/2019/10/300.png)
 
 
 ```js
@@ -1501,7 +1493,8 @@ var distributionUrl = process.env['CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL'] || 
 
 > 在`mac`下编辑`.bash_profile`配置文件， `sudo vi  ~/.bash_profile`。新增一个环境变量，这里的`$HOME`就是`/Users/poetry`路径
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-dd5f9e774031dd00.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/310.png)
 
 **第三步: 使环境变量生效**
 
@@ -1518,8 +1511,7 @@ sudo vi ~/.zshrc
 source .bash_profile
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-db8dd1a25b232020.png)
-
+![](http://blog.poetries.top/img-repo/2019/10/302.png)
 
 **第四步：新开一个终端**
 
@@ -1529,7 +1521,7 @@ source .bash_profile
 echo $PATH
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-cebfc20e00cfff1c.png)
+![](http://blog.poetries.top/img-repo/2019/10/303.png)
 
 **第五步：测试**
 
@@ -1537,7 +1529,7 @@ echo $PATH
 gradle -v
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-951f91866ba4d191.png)
+![](http://blog.poetries.top/img-repo/2019/10/304.png)
 
 
 **4. debug测试版打包**
@@ -1576,12 +1568,12 @@ cordova build android
 
 > 打包后输出`apk`路径 `platforms/android/app/build/outputs/apk/debug/`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-14269923256eada2.png)
+![](http://blog.poetries.top/img-repo/2019/10/305.png)
 
 > 生成的`apk`。此时可以把`apk`，拖入`Genymotion`模拟器调试
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8522876e4b378650.png)
 
+![](http://blog.poetries.top/img-repo/2019/10/306.png)
 
 
 **5. 正式版本打包**
@@ -1595,14 +1587,14 @@ cordova build android
 ionic cordova build android  --release
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a1c678cfc6a87dc0.png)
+![](http://blog.poetries.top/img-repo/2019/10/307.png)
 
 
 > 打包后输出`apk`路径 `platforms/android/app/build/outputs/apk/release`
 
 > 在手机安装示意图，签名版不能安装
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e8c3274ef110d775.png)
+![](http://blog.poetries.top/img-repo/2019/10/308.png)
 
 **5.2 签名版本apk打包**
 
@@ -1624,11 +1616,11 @@ keytool -genkey -v -keystore [自定义秘钥文件名，如 my-app].jks -keyalg
 
 > 秘钥库就是你的密码
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-9a035fc6f5af1c36.png)
+![](http://blog.poetries.top/img-repo/2019/10/309.png)
 
 **3. 设置秘钥库口令后会让输入一些APP信息**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3cdb04cec3db747e.png)
+![](http://blog.poetries.top/img-repo/2019/10/310.png)
 
 
 **4. 按照提示依次输入后会在你的项目根目录生成秘钥文件 my-app.jks**

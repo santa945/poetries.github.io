@@ -8,7 +8,8 @@ categories: Front-End
 一、登录流程
 ---
 
-![](http://upload-images.jianshu.io/upload_images/1781505-f4bda834cc1d7210.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/662.png)
 
 - 小程序内通过`wx.login`接口获得`code`
 - 将`code`传入后台，后台对微信服务器发起一个`https`请求换取`openid`、`session_key`(解密`encryptedData`、`iv`得到的)
@@ -41,7 +42,7 @@ wx.getUserInfo({
 
 返回的信息
 
-![userInfo](https://upload-images.jianshu.io/upload_images/1480597-2f4df6ebf02b9e33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/663.png)
 
 **需要传输的信息有7个参数**
 

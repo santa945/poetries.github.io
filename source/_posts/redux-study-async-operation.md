@@ -154,8 +154,7 @@ function promiseAction(name){
 三、redux异步流程
 ---
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-7ada60211c8b6262.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/492.png)
 
 - 首先发起一个action，然后通过中间件，这里为什么要用中间件呢，因为这样`dispatch`的返回值才能是一个函数。
 - 通过`store.dispatch`，将状态的的改变传给`store`的小弟`reducer`，`reducer`根据`action`的改变，传递新的状态`state`。
@@ -483,8 +482,7 @@ render(
 
 > 这样就完成了`redux`的异步操作。其实最主要的区别还是`action`里面还有中间件的调用，其他的地方基本跟同步的`redux`差不多的。搞懂了中间件，就基本搞懂了`redux`的异步操作
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-7937f0072593a955.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/493.png)
 
 
 

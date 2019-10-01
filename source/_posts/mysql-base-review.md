@@ -16,8 +16,7 @@ categories: DataBase
 brew install mysql
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fa5376b2c9fa8418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/355.png)
 
 ```bash
 # 启动

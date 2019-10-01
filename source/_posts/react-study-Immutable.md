@@ -79,13 +79,10 @@ Immutable.fromJS({a:1, b:2, c:3}).map(function(value, key) { /* do some thing */
 - `Immutable` 实现的原理是 `Persistent Data Structure`（持久化数据结构），也就是使用旧数据创建新数据时，要保证旧数据同时可用且不变
 - 同时为了避免 `deepCopy` 把所有节点都复制一遍带来的性能损耗，`Immutable` 使用了 `Structural Sharing····`（结构共享），即如果对象树中一个节点发生变化，只修改这个节点和受它影响的父节点，其它节点则进行共享。
 
-![](https://segmentfault.com/image?src=http://img.alicdn.com/tps/i2/TB1zzi_KXXXXXctXFXXbrb8OVXX-613-575.gif&objectId=1190000003910357&token=4f994e3bf65c373b010a157dfbab240f)
-
 
 > 打印`immutableJS`看看有什么东西
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-ddbb8fec9c23aa7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/462.png)
 
 **一个说明不可变的例子**
 

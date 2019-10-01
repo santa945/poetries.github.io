@@ -189,7 +189,7 @@ require("./image.png");
   - `output` 出口 让`webpack`把处理完成的文件放在哪里
   - `module` 模块 要用什么不同的模块来处理各种类型的文件
 
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/1480597-476c485bbf2af2f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/661.png)
 
 ### 2.4 安装
 ---

@@ -14,11 +14,11 @@ categories: Front-End
 
 ### 1.1 版本更迭
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-323d70783413ae1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/644.png)
 
 **大版本变化**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-4fe90a7f3cb6712e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/645.png)
 
 ### 1.2 功能进化
 
@@ -436,7 +436,7 @@ module.exports = {
 }
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1c2f22380466b81f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/646.png)
 
 
 ### 3.4 代码分割和懒加载
@@ -499,7 +499,7 @@ export default 'pageA'
 
 运行打包这时`loadash`提取到`vendor`中
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c2189ccbd6ffb75d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/647.png)
 
 这时候还不是我们想要的
 
@@ -528,12 +528,12 @@ require.ensure(['lodash'],function(){
 
 export default 'pageA'
 ```
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e12c1ea015bd7570.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/648.png)
 
 > 这时候这有`pageA`中才有`moduleA`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-30e7721eab315d18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/649.png)
 
 > 新建一个html验证是否动态加载
 
@@ -545,7 +545,8 @@ export default 'pageA'
 </html>
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f6685bdfe1289e17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240) 
+
+![](http://blog.poetries.top/img-repo/2019/10/650.png)
 
 
 **import()动态加载的写法**
@@ -583,11 +584,11 @@ export default 'pageA'
 
 合并了`subPageA`和`subPageB`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-015917ceb59e9741.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/651.png)
 
 来看看打包后的文件，既有A、B
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c993021d1b8aee12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/652.png)
 
 **在`webpack`代码分割中使用`async`异步加载**
 
@@ -719,9 +720,9 @@ if(page === 'subPageA'){
 export default 'pageB'
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f12f6505f80cd43a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/653.png)
+![](http://blog.poetries.top/img-repo/2019/10/654.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-29006f18038b558e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > 这样就把`subpageA`和`subPageB`共同依赖的`moduleA`异步提取出来
 
@@ -956,9 +957,7 @@ module.exports = {
 }
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-f9ad7e2b0f376596.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/2019/10/655.png)
 
 ### 3.6 PostCSS in Webpack
 
@@ -2547,8 +2546,7 @@ app.listen(port, function(){
 
 > 现在我们来优化这个时间
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-016eedc71c63fdb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/656.png)
 
 **第一步：新建`webpack.dll.conf.js`**
 
@@ -2591,8 +2589,7 @@ module.exports = {
 
 > 执行`npm run dll`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-bed6305c04fb2197.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/657.png)
 
 **第三步： 在plugins中增加配置**
 
@@ -2615,7 +2612,7 @@ module.exports = {
 
 > 再次执行`npm run build`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-bd2b95bbac325e1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/658.png)
 
 编译时间大大减少了
 
@@ -2675,9 +2672,7 @@ exports.module = {
 
 这时的编译时间也减小了一些
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1cee221ca808dce0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/2019/10/659.png)
 
 
 #### 6.2.4 方法四：较少babel-loader编译时间
@@ -2720,7 +2715,7 @@ output: {
 }
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-ba288a15ef308d53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/660.png)
 
 > 每次打包`vendor`都不会变化，这样就达到了缓存的目的（服务端开启`cache-ctrol`）
 

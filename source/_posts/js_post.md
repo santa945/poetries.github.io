@@ -51,8 +51,7 @@ var str = 'hfrom_handle=206438&dnid=&dgroup_items__x_countz_=1&dgroup_items=1&dg
 ```
 
 - 提交后表单处理的结果是这样：
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-b684987076cf78b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
+![](http://blog.poetries.top/img-repo/2019/10/311.png)
 
  

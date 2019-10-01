@@ -59,7 +59,8 @@ digraph abc{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1124873-8d236356c51d4c7d.png)
+![](http://blog.poetries.top/img-repo/2019/10/208.png)
+
 
 **定义顶点和边的样式**
 
@@ -98,8 +99,7 @@ digraph abc{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1124873-4653635b22070622.png)
-
+![](http://blog.poetries.top/img-repo/2019/10/209.png)
 
 其他例子
 
@@ -123,8 +123,7 @@ digraph demo{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1037849-99ca7c041266a87c.png)
-
+![](http://blog.poetries.top/img-repo/2019/10/210.png)
 
 ### 2.2 带标签
 
@@ -138,7 +137,7 @@ digraph {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-c1f45fc0df0ee4d6.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/211.jpg)
 
 ### 2.3 子视图
 
@@ -165,8 +164,7 @@ digraph {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-03328145eb139daa.jpg)
-
+![](http://blog.poetries.top/img-repo/2019/10/212.jpg)
 
 ### 2.4 结构视图
 
@@ -182,7 +180,7 @@ digraph {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-e8844314768e83c6.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/213.jpg)
 
 ### 2.5 树形结构
 
@@ -211,7 +209,7 @@ digraph tree {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-a4f13ed1574d12ba.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/214.jpg)
 
 ### 2.6 时序图
 
@@ -256,7 +254,7 @@ digraph time {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-349e4311490c6f86.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/215.jpg)
 
 ### 2.7 一个hash表的数据结构
 
@@ -309,7 +307,7 @@ digraph st2{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1124873-4a2d88dc6716d9e8.png)
+![](http://blog.poetries.top/img-repo/2019/10/216.jpg)
 
 ### 2.8 模块的生命周期图
 
@@ -343,7 +341,7 @@ digraph module_lc{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1124873-43070dec615582d5.png)
+![](http://blog.poetries.top/img-repo/2019/10/217.jpg)
 
 ### 2.9 简单的UML类图
 
@@ -372,7 +370,9 @@ digraph G{
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1124873-b0748577409021da.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/218.jpg)
+
 
 ### 2.10 有限状态机
 
@@ -440,7 +440,7 @@ digraph {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-f727aa1e539e8a22.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/219.jpg)
 
 > 注：需要用命令行`dot test.dot -T png -o test.png`生成，前提是用`brew`安装了`GraphViz`
 
@@ -458,4 +458,4 @@ digraph {
 }
 ```
 
-![](https://upload-images.jianshu.io/upload_images/3265989-f10859f0196ccc26.jpg)
+![](http://blog.poetries.top/img-repo/2019/10/220.jpg)

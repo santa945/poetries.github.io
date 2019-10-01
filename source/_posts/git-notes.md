@@ -8,7 +8,6 @@ categories: Front-End
 > 声明：资料来源互联网
 
 ### 安装
----
 
 - 在 Windows 上安装 Git 同样轻松，有个叫做 msysGit 的项目提供了安装包：
 ```
@@ -17,7 +16,6 @@ http://msysgit.github.io/
 - 完成安装之后，就可以使用命令行的 git 工具（已经自带了 ssh 客户端）了，另外还有一个图形界面的 Git 项目管理工具。
 
 ### 配置
----
 
 
 - 首先是配置帐号信息
@@ -54,7 +52,6 @@ git config --global alias.ci commit #git ci
 ```
 
 ### 新建仓库
----
 
 ```
 git init #初始化
@@ -135,7 +132,6 @@ git stash apply stash@{0} #恢复指定的工作现场，当你保存了不只�
 ```
 
 ### 分支
----
 
 ```
 git branch#列出本地分支
@@ -171,7 +167,6 @@ git rebase --abort# 取消合并
 ```
 
 ### 远端
----
 
 ```
 git fetch origin remotebranch[:localbranch]# 从远端拉去分支[到本地指定分支]
@@ -189,7 +184,6 @@ git checkout -b [--track] test origin/dev#基于远端dev分支，新建本地te
 ```
 
 ### 源
----
 
 > git是一个分布式代码管理工具，所以可以支持多个仓库，在git里，服务器上的仓库在本地称之为remote。
 
@@ -209,8 +203,6 @@ git remote show origin#查看指定源的全部信息
 ```
 
 ### 标签
----
-
 
 > 当开发到一定阶段时，给程序打标签是非常棒的功能。
 

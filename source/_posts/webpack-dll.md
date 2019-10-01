@@ -39,7 +39,7 @@ new CommonsChunkPlugin({
 
 > 通常为了对抗缓存，我们会给售出文件的文件名中加入`hash`的后缀——但是——我们编辑了`app`部分的代码后，重新打包，发现`vendor`的`hash`也变化了
 
-![image](http://upload-images.jianshu.io/upload_images/1480597-9c58ec3982be0665?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/639.png)
 
 > 这么一来，意味着每次发布版本的时候，vendor代码都要刷新，即使我并没有修改其中的代码。这样并不符合我们分开打包的初衷
 
@@ -123,9 +123,7 @@ module.exports = {
 
 > `Webpack`将每个库都进行了编号索引，之后的`dll user`可以读取这个文件，直接用`id`来引用
 
-![](https://upload-images.jianshu.io/upload_images/1480597-bed6305c04fb2197.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
+![](http://blog.poetries.top/img-repo/2019/10/640.png)
 
 
 **第三步： 在plugins中增加配置**
@@ -150,10 +148,10 @@ module.exports = {
 > 再次执行`npm run build`
 
 之前
-![](https://upload-images.jianshu.io/upload_images/1480597-016eedc71c63fdb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/641.png)
 
 之后
-![](https://upload-images.jianshu.io/upload_images/1480597-bd2b95bbac325e1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/642.png)
 
 
 ## 二、happypack 多线程打包
@@ -194,7 +192,7 @@ exports.module = {
 
 这时的编译时间也减小了一些
 
-![](https://upload-images.jianshu.io/upload_images/1480597-1cee221ca808dce0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/643.png)
 
 > 更多详情 http://blog.poetries.top/2018/11/21/webpack-review/#6-1-%E5%88%86%E6%9E%90%E6%89%93%E5%8C%85%E7%BB%93%E6%9E%9C
 

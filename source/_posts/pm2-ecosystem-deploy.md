@@ -8,14 +8,7 @@ categories: Back-end
 ---
 
 
-## 一、node项目部署流程
-
-![](http://7xq6al.com1.z0.glb.clouddn.com/bushu-1.png)
-![](http://7xq6al.com1.z0.glb.clouddn.com/bushu-2.png)
-![](http://7xq6al.com1.z0.glb.clouddn.com/bushu-3.png)
-
-
-## 二、配置部署脚本文件
+## 一、配置部署脚本文件
 
 > 部署参考 http://blog.poetries.top/2018/11/18/react-ssr-next-deploy/
 
@@ -52,7 +45,7 @@ categories: Back-end
 }
 ```
 
-## 三、配置Nginx的server
+## 二、配置Nginx的server
 
 > 在`nginx`安装目录下的`vhost`中新建一个`xx-3000.conf`的配置文件
 
@@ -83,7 +76,7 @@ server {
 }
 ```
 
-## 四、开启防火墙
+## 三、开启防火墙
 
 > Ubuntu的设置
 
@@ -97,7 +90,7 @@ server {
 -A OUTPUT -s 127.0.0.1 -p tcp --destination-port 3001 -m state ESTABLISHED -j ACCEPT
 ```
 
-## 五、部署命令
+## 四、部署命令
 
 - `pm2 deploy ecosystem.json production setup` 初始化
 - `pm2 deploy ecosystem.json production ` 部署

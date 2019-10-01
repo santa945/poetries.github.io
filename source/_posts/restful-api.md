@@ -9,11 +9,9 @@ categories: Front-End
 
 ## 一、RESTful API 简介
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-29b46c90a92006d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-ee530718ab42bd0f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-f645ac53d435d6de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/509.png)
+![](http://blog.poetries.top/img-repo/2019/10/510.png)
+![](http://blog.poetries.top/img-repo/2019/10/511.png)
 
 **总结一下什么是RESTful架构**
 

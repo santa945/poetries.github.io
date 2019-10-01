@@ -9,8 +9,7 @@ categories: Front-End
 
 ## 一、介绍
 
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/1480597-628462457f124619.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/635.png)
 
 
 - `Vue`是一套构建用户界面的 渐进式框架。`Vue` 的核心库只关注视图层，并且非常容易学习，非常容易与其它库或已有项目整合。

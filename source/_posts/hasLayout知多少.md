@@ -6,13 +6,12 @@ categories: Front-End
 ---
 
 ### 什么是haslayout
----
+
 
 -  什么是`hasLayout`？`hasLayout`是`IE`特有的一个属性。很多的`ie`下的`css bug`都与其息息相关。在`ie`中，一个元素要么自己对自身的内容进行计算大小和组织，要么依赖于父元素来计算尺寸和组织内容。当一个元素的`hasLayout`属性值为`true`时，它负责对自己和可能的子孙元素进行尺寸计算和定位。虽然这意味着这个元素需要花更多的代价来维护自身和里面的内容，而不是依赖于祖先元素来完成这些工作
 <!--more-->
 
 ### 默认拥有haslayout属性
----
 
 - `<html>`, `<body>`
 - `<table>`, `<tr>`, `<th>`,` <td>`
@@ -24,7 +23,7 @@ categories: Front-End
 
 
 ### 触发haslayout属性
----
+
 
 - 很多情况下，我们把` hasLayout`的状态改成`true `就可以解决很大部分`ie`下显示的`bug`。 
 `hasLayout`属性不能直接设定，你只能通过设定一些特定的`css`属性来触发并改变 `hasLayout `状态。下面列出可以触发`hasLayout`的一些`CSS`属性值
@@ -61,6 +60,6 @@ categories: Front-End
 	- `position: fixed `
 
 ### 发现及使用
----
+
 
 - 因元素`hasLayout`而导致的问题其实一般都很容易发现：往往是内容出现错位甚至完全不可见，比如含浮动或者绝对定位子元素的容器高度会塌陷，在`ie6/ie7`下我们为其添加`zoom：1`属性就触发了`haslayout`，从而修复高度塌陷的问题;再比如，我们经常会碰到`ie6`和`ie7`同时出现的`bug`，这个时候可以考虑是否源于 `haslayout`，可以添加一些可以触发`haslayout`的属性来解决

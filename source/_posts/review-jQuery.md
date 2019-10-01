@@ -13,7 +13,6 @@ categories: Front-End
 首先，来了解一下`jQuery`学习的整体思路
 
 
-![jQuery系统学习篇](http://7xq6al.com1.z0.glb.clouddn.com/jquery1.png)
 <!--more-->
 -  [XMind源文件提供参考下载](http://pan.baidu.com/s/1slq212l)
 

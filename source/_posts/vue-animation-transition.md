@@ -7,7 +7,7 @@ categories: Front-End
 
 ## 一、transition标签结合css
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-08967bd611312202.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/614.png)
 
 > `vue.2.0`中的过渡动画利用自身的`transition`组件实现
 
@@ -22,11 +22,13 @@ categories: Front-End
 > - 这两中状态再细分，可分出6种状态，对应6个类名
 > - 在进入/离开的过渡中，会有 6 个 `class` 切换
 
-![transition](https://upload-images.jianshu.io/upload_images/1480597-cdb6a6cb0faa21b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-![](https://cn.vuejs.org/images/transition.png)
+![](http://blog.poetries.top/img-repo/2019/10/615.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d2cb3498acd43afd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/616.png)
+
+![](http://blog.poetries.top/img-repo/2019/10/617.png)
+
 
 > 控制元素的滑入与滑出，例如：`DOM`结构，要在`transition`组件上添加`name`属性，并在`css`中使用`name`的属性值替代以上`v-`状态种的`v`作为类名
 
@@ -108,7 +110,7 @@ categories: Front-End
 
 ## 二、自定义过渡类名实现动画
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1460f61d58e3115c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/618.png)
 
 > `animate.css`结合`transition`
 
@@ -130,8 +132,7 @@ categories: Front-End
 
 ## 三、js钩子函数实现动画
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-eefc46df55457ac2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/619.png)
 
 > 这些钩子函数可以结合 `CSS transitions/animations `使用，也可以单独使用。
 

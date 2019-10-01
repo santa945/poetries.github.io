@@ -12,7 +12,7 @@ categories: Front-End
 
 - 我们在实际的开发项目的时候，不会只用几个组件，有时候遇到大型的项目，可能会有成千上百的组件，难免会遇到有功能重复的组件。要进行修改，就会修改大部分的文件。所以我们需要进行组件的协同开发。
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-ca3cbaafe961fa83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/451.png)
 
 
 二、什么是组件的协同使用？
@@ -36,7 +36,7 @@ categories: Front-End
 
 - 组件嵌套的本质是父子关系
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-dc00c2b2c9ac3807.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/452.png)
 
 五、组件嵌套的优缺点
 ---
@@ -57,7 +57,7 @@ categories: Front-End
 - `Mixin=一组方法`。
 - 他的目的是横向抽离出组件的相似代码，把组件的共同作用以及效果的代码提出来
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-ceca4b322b820239.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/453.png)
 
 **Mixin的优缺点**
 
@@ -72,7 +72,7 @@ categories: Front-End
 七、不可控组件
 ---
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-34b3ac31175733e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/454.png)
 
 - 上图：`defaultValue`的值是固定的，这就是一个不可控组件
 - 如果要获取`input`的`value`值，只有使用`ref`获取节点来获取值
@@ -80,7 +80,7 @@ categories: Front-End
 八、可控组件
 ---
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-daeeefc5cd7c054d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/455.png)
 
 - `defaultValue`的值是根据状态确定了，只需要拿到`this.state.value`的值就可以了
 - 这里需要注意一下：使用`value`的值是不可修改的，`defaultValue`的值是可以修改的

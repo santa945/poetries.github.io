@@ -24,25 +24,25 @@ categories: Back-end
 - `$ pm2 start app.js` 启动`app`项目
 - `$ pm2 list` 列出由`pm2`管理的所有进程信息，还会显示一个进程会被启动多少次，因为没处理的异常
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-be14ef99e4b29407.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/395.png)
 
 - `pm2 describe id` 查看启动程序的详细信息
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c7cb95b62468c91f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/396.png)
 
 - `$ pm2 monit` 监视每个`node`进程的`CPU`和内存的使用情况
 
-![pm2 monit](https://upload-images.jianshu.io/upload_images/1480597-6fdaf82f5a9d8628.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/397.png)
 
 - `$ pm2 logs` 显示所有进程日志
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5a7ef879798770a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/398.png)
 
 - 强大API： `pm2 web`
 
 > 你想要监控所有被`PM2`管理的进程,而且同时还想监控运行这些进程的机器的状态
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0053e28ded2dc5c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/399.png)
 
 > 启动程序的时候顺便在浏览器访问：`http://localhost:9615`。部署的服务器的信息和程序的信息都显示出来了
 
@@ -72,7 +72,7 @@ categories: Back-end
 
 > 推荐使用`pm2 start npm --watch --name <taskname> -- run start`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-fb873ab0aeefca60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/400.png)
 
 ## 三、配置pm2启动文件
 

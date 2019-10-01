@@ -39,8 +39,7 @@ npm install --save koa / cnpm install --save koa
 
 **简单使用**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-28dd6664f16614dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/494.png)
 
 # 二、koa 路由 get传值、动态路由
 
@@ -56,7 +55,7 @@ npm install --save koa / cnpm install --save koa
 npm install --save koa-router
 ```
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e0f9010c94ec7b6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/495.png)
 
 ## 2.2 Koa 路由 get 传值
 
@@ -65,19 +64,20 @@ npm install --save koa-router
 - `query`:返回的是格式化好的参数对象。 
 - `querystring`:返回的是请求字符串
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d5c0aff08397ed37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/496.png)
 
 
 ## 2.3 Koa 动态路由
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7a0cb97be00dac7c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/497.png)
 
 
 # 三、koa 中间件及执行流程
 
 ## 3.1 koa中间件的洋葱图执行流程
 
-![koa 中间件 以及koa中间件的洋葱图执行流程](https://upload-images.jianshu.io/upload_images/1480597-ab071d8ebec15ea5.gif?imageMogr2/auto-orient/strip)
+![](http://blog.poetries.top/img-repo/2019/10/498.gif)
+
 
 
 ## 3.2 koa 中间件
@@ -101,28 +101,26 @@ npm install --save koa-router
 
 **1. 应用级中间件**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a847b013186d503e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/499.png)
 
 **2. 路由中间件**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-42851c9f6379f1be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/500.png)
 
 **3. 错误处理中间件**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-36132b0ed634e822.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/501.png)
 
 
 **4. 第三方中间件**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d92ea5fbbd7f92ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/502.png)
 
 ### 3.2.3 Koa 中间件的执行顺序
 
 > `Koa` 的中间件和 `Express` 不同，`Koa` 选择了洋葱圈模型
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c588c0835dd97f1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/503.png)
 
 
 # 四、koa ejs模板引擎使用 以及ejs配置全局数据
@@ -267,10 +265,10 @@ app.use(static(
 - `art-template` 支持 `ejs` 的语法，也可以用自己的类似 `angular` 数据绑定的语法
 - 中文文档: http://aui.github.io/art-template/zh-cn/docs
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b6332c32691c9003.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+![](http://blog.poetries.top/img-repo/2019/10/504.png)
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e3586b04b6a6de62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/505.png)
 
 
 ## 7.2 在 Koa 中使用 art-template 模板引擎
@@ -313,8 +311,7 @@ ctx.cookies.set(name, value, [options])
 
 > 通过 `options` 设置 `cookie name` 的 `value` 
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8bf3aaf808f25923.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/506.png)
 
 **2. Koa 中获取 Cookie 的值**
 
@@ -429,8 +426,8 @@ npm start
 2. 在 `routes` 里面配置对应的子页面
 3. 比如在 `routes` 新建 `index.js`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8e27412a3c7b8bc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/507.png)
 
 4. 然后在主应用中加载子路由模块:
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a4664d9ea7449a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/508.png)

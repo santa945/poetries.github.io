@@ -77,7 +77,8 @@ plugins.concat(process.env.ANALYZE?[
  
  > 在对应地址后面添加端口`8888`，即可得到一个可视化模块大小界面
  
- ![image.png](https://upload-images.jianshu.io/upload_images/1480597-1d25e48d13694226.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ ![](http://blog.poetries.top/img-repo/2019/10/636.png)
+
 
 > 这个插件就是从`stats.json`中获取`chunks`然后最终使用`Canvas`画图。具体代码位于`analyzer.js`中的`getViewerData`方法
 
@@ -85,4 +86,4 @@ plugins.concat(process.env.ANALYZE?[
 
 > `webpack --proile --json > stats.json` 生成一份`json`文件上传到http://webpack.github.io/analyse 分析
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-530d438145397ca8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+ ![](http://blog.poetries.top/img-repo/2019/10/637.png)

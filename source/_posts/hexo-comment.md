@@ -11,7 +11,7 @@ categories: Front-End
 
 > https://github.com/settings/applications/new
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3dd76fc4b2d0cfe7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/226.png)
 
 - `Application name`： # 应用名称，随意
 - `Homepage URL`： # 网站URL，如http://blog.poetries.top

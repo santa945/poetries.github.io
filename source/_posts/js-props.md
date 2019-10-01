@@ -94,8 +94,7 @@ console,log(test.clientHeight); // 200
 console.log(test.clientWidth); // 
 ```
 
-![window7下test.clientWidth](http://upload-images.jianshu.io/upload_images/1480597-5f4a093d6f95b47e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/322.png)
 
 - **小结clientWidth和clientHeight**
 
@@ -270,16 +269,14 @@ document.body.scrollWidth; //
 - 无滚动轴时：
   - scrollWidth = clientWidth = 盒子宽度 + 盒子padding*2 
 
-
-![无滚动轴时](http://upload-images.jianshu.io/upload_images/1480597-1370209704289653.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/323.png)
 
 - 有滚动轴时：
   - scrollWidth = 实际内容的宽度 + padding*2
   - scrollHeight = 实际内容的高度 + padding*2
 
 
-![有滚动轴时](http://upload-images.jianshu.io/upload_images/1480597-f2e4e49734f8ea46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/324.png)
 
 - **document.body.scrollLeft**
 - **document.body.scrollTop**
@@ -306,11 +303,9 @@ mydiv.scrollLeft ; //默认情况下是0
 
 mydiv.scrollTop = 20;
 console.log(mydiv.scrollTop)
-
 ```
 
-
-![scrollTop和scrollLeft  ](http://upload-images.jianshu.io/upload_images/1480597-8a31ecd4fd0a59a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/325.png)
 
 **obj.style.width和obj.style.height**
 
@@ -347,7 +342,7 @@ console.log(document.documentElement); //html
 console.log(document.body); //body
 ```
 
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/1480597-a0840d36969a6ca9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/326.png)
 
 - 兼容问题推荐使用 获取浏览器窗口可视区域大小
 
@@ -359,7 +354,7 @@ document.body.clientHeight || document.documentElement.clientHeight;
 ### 三、Event对象的5种坐标
 ---
 
-![Event对象的5种坐标](http://upload-images.jianshu.io/upload_images/1480597-3dfa83edaa181ab2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/327.png)
 
 例：
 
@@ -379,7 +374,7 @@ example.onclick = function(e){
 }
 ```
 
-![Event对象的5种坐标](http://upload-images.jianshu.io/upload_images/1480597-8596ee9ee7d11e15.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/328.png)
 
 ### 四、 js各种宽高的应用
 ---
@@ -387,7 +382,7 @@ example.onclick = function(e){
 - **example1：可视区域加载**
 
 
-![用来解决offset的兼容性难问题 ](http://upload-images.jianshu.io/upload_images/1480597-6aba0d1bb4eb7b3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/329.png)
 
 ```html
 <div id="example1" ></div>
@@ -548,17 +543,14 @@ div.onscroll = divScroll;
 
 
 ### 五、js中的宽高属性总结
----
 
 
-![](http://upload-images.jianshu.io/upload_images/1480597-41da370c1bd5e927.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/330.png)
 
 ![](https://camo.githubusercontent.com/3318530334bbc8f5e7ce267866c43ba72fa01f32/687474703a2f2f6f61376436647871742e626b742e636c6f7564646e2e636f6d2f626c6f672f696d616765732f3038313734323039323736363338392e6a7067)
 
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/1480597-3f7c4f7f4e7f132a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![document相关的宽高](http://upload-images.jianshu.io/upload_images/1480597-b2343bbf8a94bf8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/331.png)
+![](http://blog.poetries.top/img-repo/2019/10/332.png)
 
 
 ## 第二部分 jQuery中的宽高属性
@@ -570,29 +562,22 @@ div.onscroll = divScroll;
 - **1.1 width()**
   - 特殊元素`window.document`只可以读，普通元素可以读写，`width()`返回结果无单位，`css("width")`的结果有单位
 
-
-![width--height](http://upload-images.jianshu.io/upload_images/1480597-ff70f303d36189a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![width](http://upload-images.jianshu.io/upload_images/1480597-3165dd16c1b1f88a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/333.png)
+![](http://blog.poetries.top/img-repo/2019/10/334.png)
 
 - **1.2 innerWidth()**
   - 包含padding（不推荐window,document调用）
 - **1.3 innerHeight()**
 
-![innerWidth--innerHeight](http://upload-images.jianshu.io/upload_images/1480597-d3307f8d63859946.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![innerWidth](http://upload-images.jianshu.io/upload_images/1480597-687789708690ae32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/335.png)
+![](http://blog.poetries.top/img-repo/2019/10/336.png)
 
 - **1.4 outerWidth()**
   - 包含padding和border，当传true时包含marging，不传时不包含marging（不推荐window,document调用）
 - **1.5 outerHeight()**
 
-![outerWidth--outerHeight](http://upload-images.jianshu.io/upload_images/1480597-d9db57f1d727af9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![outerWidth](http://upload-images.jianshu.io/upload_images/1480597-e8120f1da588eeae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/337.png)
+![](http://blog.poetries.top/img-repo/2019/10/338.png)
 
 - **1.6 scrollLeft():**
   - 相对于水平滚动条左边的距离，如果滚动条非常左、或者元素不能被滚动，这个值为0；
@@ -605,15 +590,14 @@ div.onscroll = divScroll;
   - 相对于offset parent的当前坐标值(相对于offset parent元素的左上角的left、top的值)
 
 
-![offset和position区别](http://upload-images.jianshu.io/upload_images/1480597-82d3c27b3e6297dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/339.png)
 
 ### 二、jquery相关宽高举例
 ---
 
 **2.1 exmaple1**
 
-![example1](http://upload-images.jianshu.io/upload_images/1480597-be57bb2c67d1618b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/340.png)
 
 ```html
 	<div class="parentDiv">
@@ -685,11 +669,9 @@ console.log('$(".childrenDiv").position().top '+$(".childrenDiv").position().lef
 
 ```
 
+![](http://blog.poetries.top/img-repo/2019/10/341.png)
+![](http://blog.poetries.top/img-repo/2019/10/342.png)
 
-![Paste_Image.png](http://upload-images.jianshu.io/upload_images/1480597-295c298172ac58b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![offset-position](http://upload-images.jianshu.io/upload_images/1480597-d01e48f20b7cc5eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 [在线演示](http://codepen.io/poetries/pen/yVRqZO)
 

@@ -40,8 +40,7 @@ categories: Back-end
 - 增加机器数
 - 增加每台机器CPU数-多核
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-64c380eb78d068a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/347.png)
 
 **进程、线程**
 

@@ -108,7 +108,7 @@ npm run watch
 
 > https://www.quickapp.cn/docCenter/post/69
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-5b4e639317894e37.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/405.png)
 
 ## 1.4 连接手机进行调试
 
@@ -126,13 +126,12 @@ npm run server
 
 > 打开之前安装的快应用调试助手扫描即可预览
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-32579fff42fb9530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/406.png)
 
 > 扫描二维码之后点击开始调试，会调出devtool工具本地调试
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-3cd020c83fd15543.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-afd1d41337c7a3a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/407.png)
+![](http://blog.poetries.top/img-repo/2019/10/408.png)
 
 ## 1.5 安装Hap Extension
 
@@ -905,8 +904,7 @@ export default {
 
 > 当前为APP的生命周期提供了两个回调函数：`onCreate`, `onDestroy`；可在`app.ux`中定义回调函数
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-7761414ce847115c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/409.png)
 
 ```javascript
 import {
@@ -1572,7 +1570,7 @@ npm run release -- --debug
 
 > 快应用注册账号 https://www.quickapp.cn/docCenter/post/74
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-a34a5b0d94b25e17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/410.png)
 
 # 十六、一些问题
 

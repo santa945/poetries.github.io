@@ -38,10 +38,8 @@ categories: Front-End
 四、React、ReactDOM中有什么
 ---
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-57b13a4de85f4636.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-5139d73619a38b77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/449.png)
+![](http://blog.poetries.top/img-repo/2019/10/450.png)
 
 
 五、yeoman环境

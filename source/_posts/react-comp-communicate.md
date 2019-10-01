@@ -8,7 +8,7 @@ categories: Front-End
 ---
 
 
-![组件通信](https://upload-images.jianshu.io/upload_images/1480597-e9f0c8c8e859eed9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/413.png)
 
 
 > 组件之进行通信的几种情况

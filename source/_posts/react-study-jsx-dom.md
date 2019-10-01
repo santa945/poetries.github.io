@@ -34,7 +34,7 @@ categories: Front-End
 三、JSX语法
 ---
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-8f3a88ee90738d7b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/463.png)
 
 ```javascript
 /*

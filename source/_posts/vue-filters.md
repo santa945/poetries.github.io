@@ -48,24 +48,24 @@ Vue.filter('date', function (input, format = 'yyyy-MM-dd hh:mm:ss'）{
 
 **创建一个filters专门放各种过滤器**
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0bab828b656d1753.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/622.png)
 
 > filter.js
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2fd4231409acdea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/623.png)
 
 >  main.js
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-631dabdbf85a1bd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/624.png)
 
 > 页面上直接用 ’｜过滤器名‘ 即可
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0941a212212fa3aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/625.png)
 
 > 或者直接在`main.js`中直接自定义全局过滤器
 
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0efefc41d3b8e530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/626.png)
 
 
 ## 二、局部过滤器

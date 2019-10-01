@@ -7,7 +7,7 @@ categories: Front-End
 
 ## 一、Vue之实例属性
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-464e2c77b92ade46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/613.png)
 
 > `Vue` 实例暴露了一些有用的实例属性与方法。这些属性与方法都有前缀 `$`，以便与代理的数据属性区分
 

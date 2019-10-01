@@ -8,28 +8,24 @@ categories: Front-End
 ---
 
 #### 一、作用域
----
 
 - 块级作用域
 - 块级变量`let`
 - 块级常量 `const`
   
 #### 二、箭头函数
----
 
 - `sum = (a,b)=> a + b`
 - `nums.forEach(v=> {console.log(v)})`
 - 词法 `this`
  
 #### 三、参数处理
----
 
 - 默认参数值
 - 剩余参数
 - 展开运算符
 
 #### 四、模板字面量
----
 
 - 多行字符串
 - 字符串插值
@@ -37,7 +33,6 @@ categories: Front-End
 - 原始字符串
 
 #### 五、原有字面量加强
----
 
 - 更安全的二进制字面量(0b1111101)
 - 更安全的八进制字面量(0o767)
@@ -52,46 +47,43 @@ categories: Front-End
   - 添加`__proto__`属性，但不建议使用
   
 #### 六、解构赋值
----
 
 - 匹配 `[b,a] = [a,b]`
 - 对象匹配 `let {a,b,c} = objABC`
 - 参数匹配 `function g({name:n,val:v}){}`
 
 #### 七、模块
----
+
 
 - 导入(`import`)
 - 导出(`export`)
 - 默认导出(`export default`)
 
 #### 八、类
----
+
 
 - 使用`extends`继承
 - 重写构造器
 - `super`关键字
 
 #### 九、迭代
----
+
 
 - 迭代器
 - `for of`
 
 #### 十、生成器
----
+
 
 #### 十一、promise
----
+
 
 #### 十二、元编程
----
 
 - 代理(`proxy`)
 - 反射(`Reflex`)
 
 #### 十三、新增数据类型
----
 
 - `Symbol`类型
 - `Set`类型
@@ -101,7 +93,6 @@ categories: Front-End
 - `TypedArray`类型
 
 #### 十四、原有内置对象`API`增强
----
 
 - `Object.assign`
 

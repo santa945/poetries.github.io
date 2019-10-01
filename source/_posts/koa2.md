@@ -37,7 +37,7 @@ npm install koa-generator -g
 
 > 创建一个项目 `koa2 -e hello-koa2` `-e`表示`ejs`语法，不写则是`jade`语法
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-1f13c3fb768c8910.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/346.png)
 
 > 打开浏览器，访问` http://127.0.0.1:3000` 
 

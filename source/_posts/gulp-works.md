@@ -12,13 +12,13 @@ categories: Build
 
 
 ###  一、目录结构
----
 
-![一套基于gulp的工作流](http://upload-images.jianshu.io/upload_images/1480597-12325acbb263363b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/221.png)
 
 
 ### 二、 package.json
----
+
 
 ```javascript
 {
@@ -53,7 +53,7 @@ categories: Build
 ```
 
 ### 三、 gulpfile.js
----
+
 
 ```javascript
 //组件

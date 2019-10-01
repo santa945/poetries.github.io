@@ -218,8 +218,7 @@ scp -P36000  -r deployBuildFiles/.next user_00@192.168.1.201:/home/data/services
 
 - 在Nginx目录`/etc/nginx`下执行 `sudo /usr/sbin/nginx -t` 检测配置文件是否成功
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b20774768f5457db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/10/435.png)
 
 ```nginx
 upstream goodsapp { // website项目的目录名称
@@ -300,18 +299,18 @@ sudo /usr/local/nginx/sbin/nginx -t
 
 本机`ip`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b4c23bbb8b6ef4a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/437.png)
 
 公网`ip`
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-0025cb4374eaf72b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/438.png)
 
 
 - 阿里云防火墙规则设置
 
 > 这里访问了 `8080`需要在阿里云后台配置一下
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-474e713c0e391592.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/436.png)
 
 **第二步：pm2部署到服务器**
 
@@ -325,22 +324,22 @@ npm i pm2 -g
 
 > 一定要做建立软链这步，否则出现如下问题
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-b7ab06fbb2b468da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c31ca4fcf895cd74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/439.png)
+![](http://blog.poetries.top/img-repo/2019/10/440.png)
 
 
 > 建立`npm` 软链
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-e7a00bce1d6464ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/441.png)
 
 > 建立`node` 软链
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-8f398f843d5909cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](http://blog.poetries.top/img-repo/2019/10/442.png)
 
 > 建立`pm2` 软链
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-d59e7a8766509b40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/443.png)
 
 **正式部署**
 
@@ -387,11 +386,11 @@ npm i pm2 -g
 
 - `pm2 list`查看启动的项目
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-6e9e0da78cdb1121.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/444.png)
 
 - `pm2 logs`查看启动日志
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-c50950aa2d0fa38b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/445.png)
 
 > 然后在浏览器访问`http://39.108.74.36:8080`（http://公网ip:端口）即可看到，到此部署结束
 

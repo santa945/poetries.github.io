@@ -108,12 +108,11 @@ var asyncSayActionCreator = function (message) {
 }
 ```
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-ce57255f3fd73efc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/466.png)
 
 - 上图表达的是 `redux` 中一个简单的同步数据流动的场景，点击` button` 后，在回调中 `dispatch` 一个 `action`，`reducer` 收到` action` 后，更新 `state` 并通知 `view` 重新渲染
 
-
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-195f2150c8aebccb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/467.png)
 
 - 上面这张图展示了应用` middleware` 后 `redux` 处理事件的逻辑，每一个 `middleware` 处理一个相对独立的业务需求，通过串联不同的 `middleware`，实现变化多样的的功能。那么问题来了：
   - `middleware` 怎么写？

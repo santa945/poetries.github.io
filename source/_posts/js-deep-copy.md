@@ -29,7 +29,7 @@ var obj1 = {//定义了一个objr类型
 
 > 在执行这段代码后，内存空间里是这样的
 
-![image.png](https://upload-images.jianshu.io/upload_images/1480597-2123b32287c6f82a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/10/314.png)
 
 > 因为这种保存方式的存在，所以我们在操作变量的时候，如果是基本数据类型，则按值访问，操作的就是变量保存的值；如果是引用类型的值，我们只是通过保存在变量中的引用类型的地址类操作实际对象。从而也引出了所谓的深浅复制问题
 

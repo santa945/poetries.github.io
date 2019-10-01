@@ -11,7 +11,7 @@ categories: Front-End
 
 > `Redux`是将整个应用状态存储到一个地方上称为`store,`里面保存着一个状态树`store tree`,组件可以派发(`dispatch`)行为(`action`)给`store`,而不是直接通知其他组件，组件内部通过订阅`store`中的状态`state`来刷新自己的视图
 
-![](https://upload-images.jianshu.io/upload_images/6548744-df461a22f59ef7da.png)
+![](http://blog.poetries.top/img-repo/2019/10/428.png)
 
 ### 1.1 Redux三大原则
 
