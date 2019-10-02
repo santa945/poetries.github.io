@@ -46,7 +46,7 @@ body {
     border: 1px solid rgba(76, 175, 80, 0.16);
 }
 .content-post figure.highlight {
-	background: rgba(246,246,246,0.88) url(https://sf-static.b0.upaiyun.com/v-57ecc802/global/img/blueprint.png);
+	background: #f5f2f0;
     margin: 20px 0;
     padding: 15px;
     overflow: auto;
@@ -55,6 +55,10 @@ body {
     font-size: 15px;
     color: #8a8192;
     line-height: 1.6;
+    border-width: 0.3em;
+    border-color: #e0dfcc;
+    border-style: solid;
+    border-radius: 1em;
 }
 .content-post  hr {
 	max-width: 800px;
