@@ -80,6 +80,8 @@ categories: Front-End
 
 ## 二、iOS证书配置
 
+> 建议阅读这篇文章更详细。[React Native打包前凑之iOS证书配置](http://blog.poetries.top/2019/10/03/rn-ios-cert-config)
+
 > 首先你的有一个开发者账号才可以进行以下步骤
 
 > 在mac上搜索钥匙串打开
@@ -178,7 +180,3 @@ categories: Front-End
 ![](http://blog.poetries.top/img-repo/2019/10/709.png)
 ![](http://blog.poetries.top/img-repo/2019/10/710.png)
 
-
-## 四、更多资料
-
-- [React Native打包前凑之iOS证书配置](http://blog.poetries.top/2019/10/03/rn-ios-cert-config)
