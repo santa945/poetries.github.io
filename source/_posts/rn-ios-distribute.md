@@ -180,3 +180,4 @@ categories: Front-End
 ![](http://blog.poetries.top/img-repo/2019/10/709.png)
 ![](http://blog.poetries.top/img-repo/2019/10/710.png)
 
+> 以上只是测试版本打包，打包成`disctibute App`发布版本同理，这里不再赘述
