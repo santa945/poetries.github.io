@@ -184,6 +184,7 @@ drawable-xxxhdpi
 
 ![](http://blog.poetries.top/img-repo/2019/10/754.png)
 
+![](http://blog.poetries.top/img-repo/2019/10/755.png)
 
 > 点击 `Images.xcassets > LaunchImage`，在右侧属性栏处选择要支持的设备。接着，添加对应分辨率的图片，分辨率对照如下
 
