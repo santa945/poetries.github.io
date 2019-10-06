@@ -111,4 +111,4 @@ categories: Tools
 
 ## 字体美化
 
-下载链接 https://pan.baidu.com/s/1jJHRgF0
+> 参考这里配置 https://github.com/tonsky/FiraCode
