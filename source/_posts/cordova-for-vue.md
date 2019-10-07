@@ -158,6 +158,11 @@ cordova create cordovademo02  com.baidu.cordova  Cordovademo
 - 3.把ios的平台添加到项目里面  `cordova platform add ios`
 - 4. 用xcode打开项目运行
 
+
+## 三、cordova插件的使用
+
+> cordova插件拍照插件 、定位插件、文件上传插件 以及vconsole开启真机（手机）调试模式
+
 **cordova安装插件**
 
 > 如果我们要在自己的`html`里面调用手机原生的功能（拍照、扫描二维码、获取地理位置...）,借助`cordova`的插件
@@ -224,10 +229,6 @@ cordova plugin add cordova-plugin-geolocation
 - 文件插件: https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-file/index.html
 - 文件传输插件：https://www.npmjs.com/package/cordova-plugin-file-transfer
 
-
-## 三、cordova插件的使用
-
-> cordova插件拍照插件 、定位插件、文件上传插件 以及vconsole开启真机（手机）调试模式
 
 ## 四、cordova结合vue
 
