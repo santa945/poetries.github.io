@@ -7,6 +7,7 @@ tags:
 categories: Front-End
 ---
 
+> 结合这篇文章一起看 http://blog.poetries.top/2019/10/07/Ionic-ios-build
 
 > `React Native` 应用程序开发完成后，需要先打包一个测试版，由测试人员安装应用并测试。对于 `iOS` 应用，一般来说，开发者如果需要将应用安装到某些用户的设备上，就需要将应用导出为这些设备可以直接安装的安装包（`.ipa` 文件）。本文总结了如何打包 `ipa` 并发布到应用内测分发平台供安装测试
 
@@ -157,12 +158,11 @@ categories: Front-End
 
 > 点击`distribute App`
 
-![](http://blog.poetries.top/img-repo/2019/10/722.png)
-![](http://blog.poetries.top/img-repo/2019/10/723.png)
+![](http://blog.poetries.top/img-repo/2019/10/ionic/16.png)
+![](http://blog.poetries.top/img-repo/2019/10/ionic/17.png)
+![](http://blog.poetries.top/img-repo/2019/10/ionic/18.png)
+![](http://blog.poetries.top/img-repo/2019/10/ionic/19.png)
 
-> 导出文件
-
-![](http://blog.poetries.top/img-repo/2019/10/724.png)
 
 > 最后打包成`ipa`文件
 
