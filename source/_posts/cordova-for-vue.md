@@ -121,6 +121,8 @@ cordova create cordovademo02  com.baidu.cordova  Cordovademo
 
 - 点击右上角对应箭头按钮配置
 
+> 查看当前连接上的手机
+
 ![](http://blog.poetries.top/img-repo/2019/10/cordova/12.png)
 
 - 手机必须开启调试模式（百度搜 xxx手机开启调试模式）
@@ -152,7 +154,7 @@ cnpm install -g cordova
 cordova create cordovademo02  com.baidu.cordova  Cordovademo	
 ```
 
-- 2. cd  cordovademo02
+- 2. `cd  cordovademo02`
 - 3.把ios的平台添加到项目里面  `cordova platform add ios`
 - 4. 用xcode打开项目运行
 
