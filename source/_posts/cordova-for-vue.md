@@ -43,7 +43,7 @@ categories: Front-End
 - 安装cordova
 
 ```bash
-## 切换淘宝源
+## 淘宝源安装
 npm install -g cordova --registry=https://registry.npm.taobao.org
 ```
 
@@ -59,6 +59,7 @@ cnpm install -g cordova
 cordova create cordovademo02  com.baidu.cordova  Cordovademo	
 ```
 
+
 > 创建项目的时候注意包名称：发布上线打包的时候用到包名称，注意
 
 > 修改应用包名名称参考：http://www.ionic.wang/article-index-id-91.html
@@ -68,10 +69,64 @@ cordova create cordovademo02  com.baidu.cordova  Cordovademo
 - 修改`config.xml`里面的包名称
 - 修改完成以后重新执行`cordova platform add android`
 
+![](http://blog.poetries.top/img-repo/2019/10/cordova/2.png)
+
 > cd 到项目里面 `cd cordovademo02`
 
 - 把`android`的平台添加到项目里面 `cordova platform add android`
 - 把项目导入到 `android studio` 进行运行调试  （或者运行   `cordova  run  android`）   注意可能遇到的问题参考（安装遇到问题图文解决方案文件夹
+
+> 导入`platform`下的`Android`文件
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/3.png)
+
+**导入android studio可能遇到的错误解决方法**
+
+1. 导入后提示：`Android Studio Error:Connection timed out: connect`
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/4.png)
+
+> 解决方案参考：https://blog.csdn.net/u013020000/article/details/73159754
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/5.png)
+![](http://blog.poetries.top/img-repo/2019/10/cordova/6.png)
+
+2. 遇到错误 `failed  to  find with hash string  'android-26'`
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/7.png)
+
+> 解决方案点击 图上蓝色链接进行安装
+
+3. `Gradle build` 没有反应如
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/8.png)
+![](http://blog.poetries.top/img-repo/2019/10/cordova/9.png)
+
+> 解决方案 ：点击`build`见图箭头。如果有下载内容 耐心等待 （30分钟-2小时）
+
+4. 提示 `please configure Android SDK`
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/10.png)
+
+> 解决方案：点击蓝色 `configure`，然后选择对应的sdk   （前提是sdk已经安装）
+
+5. 真机调试,手机连上没有反应
+
+- 关闭或者卸载自己电脑上面的360手机助手或者其他连手机的软件
+- 安装你手机对应的`sdk`
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/11.png)
+
+> 建议 `android 5-到android8` sdk都安装 （安装sdk  ： Tools->SDK Manager）
+
+- 点击右上角对应箭头按钮配置
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/12.png)
+
+- 手机必须开启调试模式（百度搜 xxx手机开启调试模式）
+- 手机拔下来重启`android studio`，重新插入手机重试
+- 百度搜（`android studio` 连不上手机...）
+
 
 **运行项目 ：注意**
 
