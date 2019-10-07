@@ -279,6 +279,11 @@ vue init webpack-simple  #项目名称
 - 修改：`config/index.js` 把 `assetsPublicPath: '/'`,	
 - 修改成 `assetsPublicPath: './'`
 
+![](http://blog.poetries.top/img-repo/2019/10/cordova/14.png)
+
+> ios下打开效果。这样很方便打包原有的项目为app
+
+![](http://blog.poetries.top/img-repo/2019/10/cordova/16.png)
 
 ### 4.2 vue调用cordova插件
 
