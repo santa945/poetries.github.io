@@ -1,5 +1,5 @@
 ---
-title: ES2015、ES2016、ES2017、ES2018、ES2019、ES新提案
+title: ES2015/ES2016/ES2017/ES2018/ES2019
 date: 2019-11-17 19:50:43
 tags: 
   - JavaScript
