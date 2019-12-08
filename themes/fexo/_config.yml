@@ -287,7 +287,7 @@ project:
 
 # Online contact 
 daovoice: true
-daovoice_app_id: 9d241ea0  #这里输入获取的app_id
+daovoice_app_id: 7f0abfd8  #这里输入获取的app_id
 
 #栗子动画 https://github.com/theme-next/theme-next-canvas-nest
 canvas_nest:
