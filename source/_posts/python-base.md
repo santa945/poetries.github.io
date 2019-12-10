@@ -1,9 +1,12 @@
 ---
-title: Python基础
-date: 2019-12-10 17:20:39
+title: Python基础小结
+date: 2019-12-10 17:40:39
 tags: python
 categories: Back-end
 ---
+
+
+> 最近需要用`python`做数据分析，决定开始学`python`，总结一些基础笔记
 
 ## 一、导语
 
