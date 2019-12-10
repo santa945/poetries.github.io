@@ -1,5 +1,5 @@
 ---
-title: Python基础篇（一）
+title: Python基础
 date: 2019-12-10 17:20:39
 tags: python
 categories: Back-end
@@ -186,7 +186,6 @@ with open(os.path.dirname(__file__) + '/blog.text','w') as f:
   - `value`可以是：`int/str/float/list/set/dict`
   - 定义一个空的字典 `{}`
 
-
 > 两个整型相除得到整型 type(1//2) ==>int 整除会保留整数
 
 ```
@@ -217,7 +216,7 @@ oct(0b100)
 
 **转译字符**
 
-```
+```py
 \n 换行
 \t 横向制表符
 ```
@@ -235,7 +234,7 @@ oct(0b100)
 
 **内置的字符串处理方法（共43个，常用16个）**
 
-- 在Python解释器内部，所有数据类型都采用面向对象的方式实现，封装为一个类
+- 在`Python`解释器内部，所有数据类型都采用面向对象的方式实现，封装为一个类
 - 字符串是一个类，具有类似`<a>.<b>()`形式的字符串处理函数，称为方法
 
 |方法|	描述|
@@ -246,28 +245,27 @@ oct(0b100)
 |`str.isprintable()`|	当str所有字符都是可打印的，返回`Ture`，否则返回`False`|
 |`str.isnumeric()`|	当str所有字符都是数字时，返回`Ture`，否则返回`False`|
 |`str.isspace()`|	当str所有字符都是空格，返回`Ture`，否则返回`Flase`|
-|`str.endswith(suffix[,start[,end]])`|	`str[start:end]`以`suffix`结尾返回Ture，否则返回Flase|
+|`str.endswith(suffix[,start[,end]])`|	`str[start:end]`以`suffix`结尾返回`Ture`，否则返回`Flase`|
 |`str.srartswith(prefix[,start[,end]])`|	`str[start:end]`以`prefix`开始返回`Ture`，否则返回`Flase`|
 |`str.split(sep=None,maxsplit=-1)`|	返回一个列表，由`str`根据`sep`被分割的部分构成|
 |`str.count(sub[,start[,end]]`|	返回`str[start:end]`中`sub`子串出现的次数|
 |`str.replace(old,new[,count])`|	返回字符串`str`的副本，所有`old`子串被替换为`new`，如果`count`给出，则前`count`次`old`出现被替换|
 |`str.center(width[,fillchar])`|	字符串居中函数|
-|`str.strip([chars])`|	返回字符串`str`的副本，在其左侧和右侧去掉`chars`中列出的字符|
-|`str.zfill(width)`|	返回字符串`str`副本，长度为`width`。不足部分在其左侧添加`0`|
-|`str.format()`|	返回字符串`str`的一种排版格式|
-|`str.join(iterable)`|	返回一个新字符串，由组合数据类型`iterable`变量的每个元素组成，元素间用`str`分隔|
+|`str.strip([chars])`|返回字符串`str`的副本，在其左侧和右侧去掉`chars`中列出的字符|
+|`str.zfill(width)`|返回字符串`str`副本，长度为`width`。不足部分在其左侧添加`0`|
+|`str.format()`|返回字符串`str`的一种排版格式|
+|`str.join(iterable)`|返回一个新字符串，由组合数据类型`iterable`变量的每个元素组成，元素间用`str`分隔|
 
 **字符串类型的格式化**
 
-> 字符串通过format()方法进行格式化处理
+> 字符串通过`format()`方法进行格式化处理
 
-- 字符串`format()`方法的基本使用格式：`<字模板符串>.format(<逗号分隔的参数>`)
+- 字符串`format()`方法的基本使用格式：`字模板符串.format(<逗号分隔的参数>)`
 - 模板字符串由一系列槽组成，用来控制修改字符串中嵌入值出现的位置（槽用`{}`表示，如果`{}`中没有序号，则按照出现顺序替换）
 - 如需输入`{}`，采用`{{表示{；}}`表示}
 
-```
-"圆周率{{{1}{2}}}是{0}".format("无理数",3.1415926,"……")
-```
+
+> `"圆周率{{{1}{2}}}`是`{0}".format("无理数",3.1415926,"……")`
 
 ## 四、序列-元组、字符串、列表
 
@@ -1051,7 +1049,111 @@ datetime.datetime(2018, 5, 13, 17, 0)
 
 > 生成随机数之前可通过`seed()`函数指定随机数种子，随机数种子一般是一个整数，只要种子相同，每次生成的随机数序列也相同
 
+## 十八、技巧
 
-## 更多参考
+**查看命令信息**
+
+```js
+// 例如
+help(filter)
+```
+
+**列表中取出符合条件的元素**
+
+```js
+// 取出大于5的元素
+
+arr = [1,2,3,4,5,6,7,8]
+
+arr1 = filter(lambda x: x>5, arr)
+
+// 转化为列表
+list(arr1)
+```
+
+**列表推导式**
+
+> 代替for和if嵌套循环。最常用的方式
+
+```js
+// for循环列子
+list = []
+
+for x in range(10):
+ if x % 2 == 0:
+    list.append(x*x)
+```
+
+```js
+// 等价于上面写法
+[x*x for x in range(10) if x%2 == 0]
+```
+
+**字典推导式**
+
+```js
+// 一般写法
+d = {}
+for i in 'xxx':
+  d[i] = i
+ 
+// 字典推导写法
+{i:i for i in 'xxx'}
+```
+
+
+**文件读取**
+
+```py
+# f = open('test.txt',encoding='utf-8')
+
+# data = f.readlines()
+# for line in data:
+#   print(line.strip('\n'))
+  
+# f.close()
+
+# 推荐用with处理
+with open('test.txt') as f:
+  for line in f.readlines():
+    print(line.strip('\n'))
+```
+
+
+**函数作用域**
+
+```js
+def test():
+    global a // 定义一个全局变量
+```
+
+
+**装饰器**
+
+> 本质是返回一个闭包
+
+```py
+def log(func):
+    def wrapper():
+        print('start')
+        func()
+        print('end')
+    return wrapper
+    
+@log
+def test():
+    print('测试')
+```
+
+
+**交换两个变量**
+
+```py
+>>> x = 10
+>>> y = 20
+>>> x,y = y,x
+```
+
+## 十九、更多参考
 
 - [廖雪峰python3教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
