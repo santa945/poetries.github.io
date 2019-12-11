@@ -1,5 +1,5 @@
 ---
-title: Python基础小结
+title: Python基础小结(一)
 date: 2019-12-10 17:40:39
 tags: python
 categories: Back-end
@@ -11,13 +11,12 @@ categories: Back-end
 ## 一、导语
 
 - `python`是解析性语言
-- 优缺点
 - `python`能做什么
-- 大数据分析
-- 自动化运维与自动化测试
-- web开发：`flask`、`jdango`
-- 机器学习 `TensorFlow`
-- 胶水语言：如混合c++、java编程，能够把其他语法编写的模块连接在一起
+    - 大数据分析
+    - 自动化运维与自动化测试
+    - web开发：`flask`、`jdango`
+    - 机器学习 `TensorFlow`
+    - 胶水语言：如混合c++、java编程，能够把其他语法编写的模块连接在一起
 
 **Python语言的特点**
 
