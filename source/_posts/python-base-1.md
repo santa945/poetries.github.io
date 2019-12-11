@@ -149,6 +149,12 @@ with open(os.path.dirname(__file__) + '/blog.text','w') as f:
     f.write(json.dumps(data))
 ```
 
+![路径操作模块](http://blog.poetries.top/img-repo/2019/12/131.png)
+![图片](http://blog.poetries.top/img-repo/2019/12/132.png)
+![Excel](http://blog.poetries.top/img-repo/2019/12/133.png)
+![文本其他](http://blog.poetries.top/img-repo/2019/12/134.png)
+
+
 ## 三、基本类型
 
 ![python基本数据类型](http://blog.poetries.top/img-repo/2019/12/112.png)
@@ -307,6 +313,8 @@ year,month,day = (2019,10,12)
 ```
 
 > 如果只有一个元素，应该这样表示元组 `(1,)`,一个元素都没有的元组 `type( () )`
+
+![python类型转换](http://blog.poetries.top/img-repo/2019/12/126.png)
 
 
 ## 五、运算符
@@ -782,6 +790,8 @@ https://docs.python.org/3/library/functions.html
 
 
 ## 十四、异常处理
+
+![python异常类型](http://blog.poetries.top/img-repo/2019/12/127.png)
 
 > `try-except`语句
 
