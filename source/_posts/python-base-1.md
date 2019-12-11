@@ -1156,7 +1156,11 @@ def test():
 >>> x,y = y,x
 ```
 
-## 十九、更多参考
+## 十九、Python知识体系
+
+![Python知识体系](http://blog.poetries.top/img-repo/2019/12/181.png)
+
+## 二十、更多参考
 
 - [廖雪峰python3教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
 - [Jupyter Notebook](https://jupyter.org/)
