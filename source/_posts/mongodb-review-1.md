@@ -31,8 +31,8 @@ categories: DataBase
 
 - 在任意目录创建几个文件夹
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-5831e0dfd11d0593.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-a003b9fd9732c9c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](http://blog.poetries.top/img-repo/2019/12/182.png)
+![](http://blog.poetries.top/img-repo/2019/12/183.png)
 
 
 **通过命令行启动服务**
@@ -44,8 +44,7 @@ categories: DataBase
 C:\Program Files\MongoDB\Server\3.4\bin\mongod --dbpath d:\mongodb\data
 ```
 
-![image.png](http://upload-images.jianshu.io/upload_images/1480597-c7b26e6dfcfbbf2c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![](http://blog.poetries.top/img-repo/2019/12/184.png)
 
 **通配置启动服务**
 
