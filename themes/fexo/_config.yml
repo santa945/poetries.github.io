@@ -32,9 +32,6 @@ home_nav:
   - name: Notes
     url: http://blog.poetries.top/js-knowledge-note
     target_blank: true
-  - name: Project
-    url: /project
-    target_blank: false
   - name: Browser
     url: http://blog.poetries.top/browser-working-principle
     target_blank: true
@@ -63,9 +60,9 @@ page_nav:
   - name: 搜索
     url: /search/
     target_blank: false # 在新页面打开
-  - name: 项目
-    url: /project/
-    target_blank: false # 在新页面打开
+  # - name: 项目
+    #url: /project/
+    #target_blank: false # 在新页面打开
   - name: 友链
     url: /link/
     target_blank: false
