@@ -3,8 +3,8 @@ title: 持续集成 Travis CI
 date: 2018-02-23 12:12:08
 tags: 
    - Travis CI
-   - 部署
-categories: Back-end
+   - CI
+categories: CI
 ---
 
 > 来源于互联网
