@@ -35,9 +35,12 @@ home_nav:
   - name: Browser
     url: http://blog.poetries.top/browser-working-principle
     target_blank: true
+  - name: Node
+    url: http://blog.poetries.top/node-learning-notes
+    target_blank: true   
   - name: TS
     url: http://blog.poetries.top/ts-axios
-    target_blank: true    
+    target_blank: true   
   - name: Interview
     url: http://blog.poetries.top/FE-Interview-Questions
     target_blank: true
