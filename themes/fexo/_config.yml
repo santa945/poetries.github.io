@@ -32,17 +32,14 @@ home_nav:
   - name: Notes
     url: http://blog.poetries.top/js-knowledge-note
     target_blank: true
-  - name: Browser
-    url: http://blog.poetries.top/browser-working-principle
-    target_blank: true
+  #- name: Browser
+    #url: http://blog.poetries.top/browser-working-principle
+    #target_blank: true
   - name: Node
     url: http://blog.poetries.top/node-learning-notes
     target_blank: true   
-  - name: TS
-    url: http://blog.poetries.top/ts-axios
-    target_blank: true   
-  #- name: Interview
-    #url: http://blog.poetries.top/FE-Interview-Questions
+  #- name: TS
+    #url: http://blog.poetries.top/ts-axios
     #target_blank: true
   - name: Css
     url: http://blog.poetries.top/css-reference
