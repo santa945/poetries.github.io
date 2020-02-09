@@ -41,9 +41,9 @@ home_nav:
   - name: TS
     url: http://blog.poetries.top/ts-axios
     target_blank: true   
-  - name: Interview
-    url: http://blog.poetries.top/FE-Interview-Questions
-    target_blank: true
+  #- name: Interview
+    #url: http://blog.poetries.top/FE-Interview-Questions
+    #target_blank: true
   - name: Css
     url: http://blog.poetries.top/css-reference
     target_blank: true
