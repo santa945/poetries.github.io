@@ -283,7 +283,7 @@ project:
     intro: Electron构建多平台应用
 
 # Online contact 
-daovoice: true
+daovoice: false
 daovoice_app_id: 7f0abfd8  #这里输入获取的app_id
 
 #栗子动画 https://github.com/theme-next/theme-next-canvas-nest
@@ -299,13 +299,13 @@ canvas_nest:
 # 首页动画
 home_bg:
   lizi: false
-  yu: true
-  star: false
+  yu: false
+  star: true
   sky: false
 
 # 首页动物
 home_animal:
-  enable: true
+  enable: false
 
 # 首页冒泡动画
 home_circle:
