@@ -1,9 +1,10 @@
 language: node_js
-node_js: stable
+node_js:
+  - 10.14.1
 
 # S: Build Lifecycle
 install:
-  - npm install hexo-cli -g
+  - npm install hexo-cli@2.0.0 -g
   - npm install
 
 
