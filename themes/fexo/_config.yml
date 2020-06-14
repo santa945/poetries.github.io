@@ -325,3 +325,10 @@ post_wordcount:
   min2read: true          # 单篇 阅读时长
   totalcount: false       # 网站 字数统计
   separated_meta: true
+
+# openwrite 博客导流公众号配置 https://my.openwrite.cn
+openwrite:
+  blogId: '22699-1592137983091-414'
+  name: '前端进阶之旅'
+  qrcode: 'https://blog.poetries.top/img-repo/2020/06/qrcode.jpg'
+  keyword: '验证码'
